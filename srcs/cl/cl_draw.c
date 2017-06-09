@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 07:00:44 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/09 22:16:50 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,23 @@
 static void	cl_set_arg(t_env *e, t_cl *cl)
 {
 	(void)e;
+	int	iter;
+
+	iter = (int)e->iter;
+	cl->err = clEnqueueWriteBuffer(cl->cq, cl->mem, CL_TRUE, 0, sizeof(char) * MEM_OPENCL, e->img->data, 0, NULL, NULL);
+	cl_check_err(cl->err, "clEnqueueWriteBuffer");
 	cl->err = clSetKernelArg(cl->kernel, 0, sizeof(cl_mem), (void *)&(cl->mem));
-	cl_check_err(cl->err, "clSetKernelArg");
 	cl->err = clSetKernelArg(cl->kernel, 1, sizeof(float), &(e->zoom));
 	cl_check_err(cl->err, "clSetKernelArg");
-	cl->err = clSetKernelArg(cl->kernel, 2, sizeof(int), &(e->iter));
+	cl->err = clSetKernelArg(cl->kernel, 2, sizeof(int), &(iter));
+	cl_check_err(cl->err, "clSetKernelArg");
+	cl->err = clSetKernelArg(cl->kernel, 3, sizeof(float), &(e->ajj_y));
+	cl_check_err(cl->err, "clSetKernelArg");
+	cl->err = clSetKernelArg(cl->kernel, 4, sizeof(float), &(e->ajj_x));
+	cl_check_err(cl->err, "clSetKernelArg");
+	cl->err = clSetKernelArg(cl->kernel, 5, sizeof(int), &(e->move_y));
+	cl_check_err(cl->err, "clSetKernelArg");
+	cl->err = clSetKernelArg(cl->kernel, 6, sizeof(int), &(e->move_x));
 	cl_check_err(cl->err, "clSetKernelArg");
 }
 
@@ -30,7 +42,11 @@ static void	cl_run_kernel(t_env *e, t_cl *cl)
 	size_t local_item_size;
 
 	global_item_size = WIDTH * HEIGHT;
-	local_item_size = 1;
+	local_item_size = 3;
+	cl->err = clGetKernelWorkGroupInfo(cl->kernel, cl->device_id,
+				CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &local_item_size, NULL);
+	cl_check_err(cl->err, "clGetKernelWorkGroupInfo");
+	ft_printf("Local : %li\n", local_item_size);
 	cl->err = clEnqueueNDRangeKernel(cl->cq, cl->kernel, 1, NULL,
 			&global_item_size, &local_item_size, 0, NULL, NULL);
 //	clEnqueueTask(cl->cq, cl->kernel, 0, NULL,NULL);
@@ -41,38 +57,12 @@ static void	cl_run_kernel(t_env *e, t_cl *cl)
 int			cl_draw(t_env *e)
 {
 	t_cl	*cl;
-	t_res	res;
-	char	*ret;
 
-	ret = ft_strnew(HEIGHT * WIDTH);
 	cl = &(e->cl);
-	ft_bzero(&res, sizeof(t_res));
 	cl_set_arg(e, &(e->cl));
 	cl_run_kernel(e, &(e->cl));
 	cl->err = clEnqueueReadBuffer(cl->cq, cl->mem, CL_TRUE, 0,
-			HEIGHT * WIDTH * sizeof(char), ret, 0, NULL, NULL);
+			MEM_OPENCL * sizeof(char), e->img->data, 0, NULL, NULL);
 	cl_check_err(cl->err, "clEnqueueReadBuffer");
-
-	t_px px;
-
-	px.r = 0;
-	px.g = 0;	
-	int i = 0;
-	int y = 0, x;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			px.b = 0;
-			if (ret[i] && ret[i] != 50)
-				px.b = i * 255 / 50;
-			if (x > 0 && y > 0 && x < WIDTH - 50 && y < HEIGHT - 50)
-			mlxji_put_pixel(e->img, x, y, &px);
-			i++;
-			x++;
-		}
-		y++;
-	}
 	return (1);
 }
