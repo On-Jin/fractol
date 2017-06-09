@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   event_key_off.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/03 17:55:23 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/08 03:57:27 by ntoniolo         ###   ########.fr       */
+/*   Created: 2017/06/09 00:12:50 by ntoniolo          #+#    #+#             */
+/*   Updated: 2017/06/09 00:13:29 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "fractol.h"
 
-size_t	ft_strlen(const char *s)
+int			event_key_off(int keycode, t_env *e)
 {
-	int i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (keycode)
+		e->key[keycode] = 1;
+	return (1);
 }

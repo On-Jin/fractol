@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/03 17:55:23 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/08 03:57:27 by ntoniolo         ###   ########.fr       */
+/*   Created: 2017/06/09 00:21:09 by ntoniolo          #+#    #+#             */
+/*   Updated: 2017/06/09 01:50:53 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "fractol.h"
 
-size_t	ft_strlen(const char *s)
+int			loop(t_env *e)
 {
-	int i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	mlxji_clear_img(e->img);
+	draw(e);
+	mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
+	return (1);
 }

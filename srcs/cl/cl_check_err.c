@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   cl_check_err.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/03 17:55:23 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/08 03:57:27 by ntoniolo         ###   ########.fr       */
+/*   Created: 2017/06/08 03:02:35 by ntoniolo          #+#    #+#             */
+/*   Updated: 2017/06/08 03:27:30 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "fractol.h"
 
-size_t	ft_strlen(const char *s)
+void	cl_check_err(cl_int err, const char *name)
 {
-	int i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (err != CL_SUCCESS)
+	{
+		ft_printf("Error : %s (%i)\n", name, err);
+		exit(EXIT_FAILURE);
+	}
 }

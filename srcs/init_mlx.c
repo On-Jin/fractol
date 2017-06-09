@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/03 17:55:23 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/08 03:57:27 by ntoniolo         ###   ########.fr       */
+/*   Created: 2017/06/08 17:54:19 by ntoniolo          #+#    #+#             */
+/*   Updated: 2017/06/08 17:56:41 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "fractol.h"
 
-size_t	ft_strlen(const char *s)
+void		init_mlx(t_env *e)
 {
-	int i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	e->mlx = mlx_init();
+	e->img = mlxji_new_img(e->mlx, WIDTH, HEIGHT);
+	e->win = mlx_new_window(e->mlx, WIDTH, HEIGHT, "lotcarf");
 }

@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/06/08 02:30:53 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/06/09 00:22:34 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,20 @@ DIR_LIB = lib/
 
 FLAGS = -Wall -Werror -Wextra -g -I ./include/
 
-FRAMEWORK = -framework OpenGL -framework AppKit
+FRAMEWORK = -framework OpenGL -framework AppKit -framework Opencl
 
-SRC_PS = main.c
+SRC_PS = main.c \
+		 init_mlx.c \
+		 draw.c \
+		 loop.c \
+		 end_of_program.c \
+		 event/event_key_off.c \
+		 event/event_key_on.c \
+		 event/event_mouse.c \
+		 event/event_move_mouse.c \
+		 cl/cl_check_err.c \
+		 cl/cl_end_opencl.c \
+		 cl/cl_init_opencl.c
 
 SRC_GRAPH =
 
@@ -42,12 +53,14 @@ OBJ_DIR = objs/
 
 all: lib $(NAME)
 
-$(NAME): $(OBJ_DIR) $(OBJ_GRAPH) $(addprefix $(OBJ_DIR), $(OBJET)) $(INC_FILES)
+$(NAME): $(OBJ_DIR) $(addprefix $(OBJ_DIR), $(OBJET)) $(INC_FILES)
 	@$(CC) -I$(INC) $(addprefix $(OBJ_DIR), $(OBJET)) -L./$(DIR_LIB) -lft -lmlx -lmlxji  $(FRAMEWORK) -o $(NAME)
 	@echo "\033[4m\033[1m\033[32m>$(NAME) done.\033[0m"
 
 $(OBJ_DIR) :
 	@mkdir $(OBJ_DIR)
+	@mkdir $(OBJ_DIR)/cl
+	@mkdir $(OBJ_DIR)/event
 
 $(OBJ_GRAPH) :
 	@mkdir $(OBJ_GRAPH)
@@ -60,7 +73,7 @@ end:
 
 $(OBJ_DIR)%.o: $(addprefix $(SRC_DIR), %.c) $(INC_FILES)
 	@echo "\033[34m$^ \033[0m-> \033[1m\033[37m$@\033[0m"
-	@($(CC) $(FLAGS)  -I$(INC) -c -o $@ $<)
+	@($(CC) $(FLAGS)  -I./$(INC) -c -o $@ $<)
 
 lib:
 	@(mkdir lib)
