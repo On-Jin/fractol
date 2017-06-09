@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 05:36:44 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/09 06:45:20 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define HEIGHT 1080
 # define WIDTH 1920
 
-# define MEM_OPENCL (HEIGHT * WIDTH * 4)
+# define MEM_OPENCL (HEIGHT * WIDTH)
 # define MAX_SOURCE_SIZE (900)
 
 typedef struct	s_res

@@ -9,8 +9,10 @@ typedef struct	s_res
 	int		ret_iter[WIDTH * HEIGHT];
 }				t_res;
 
+//ajout e->move && e->ajj
+
 __kernel void	mandelbrot(
-__global t_res *res,
+__global char *out,
 float zoom,
 int iter)
 {
@@ -27,12 +29,14 @@ int iter)
 	i = 0;
 	c_r = (x) / zoom + X1;
 	c_i = (y) / zoom + Y1;
-	while (z_r * z_r + z_i * z_i < 4 && i < iter)
+/*
+	while (z_r * z_r + z_i * z_i < 4 && i < 50)
 	{
 		tmp = z_r;
 		z_r = z_r * z_r - z_i * z_i + c_r;
 		z_i = 2 * z_i * tmp + c_i;
 		i++;
 	}
-	res->ret_iter[recup] = i;
+*/
+	out[recup] = i;
 }

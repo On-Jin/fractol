@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 05:43:07 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/09 06:48:11 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,34 @@ static void	cl_run_kernel(t_env *e, t_cl *cl)
 	local_item_size = 1;
 	cl->err = clEnqueueNDRangeKernel(cl->cq, cl->kernel, 1, NULL,
 			&global_item_size, &local_item_size, 0, NULL, NULL);
+//	clEnqueueTask(cl->cq, cl->kernel, 0, NULL,NULL);
 	cl_check_err(cl->err, "clEnqueueNDRangeKernel");
+	clFinish(cl->cq);
 }
 
 int			cl_draw(t_env *e)
 {
 	t_cl	*cl;
 	t_res	res;
+	char	*ret;
 
+	ret = ft_strnew(HEIGHT * WIDTH);
 	cl = &(e->cl);
 	ft_bzero(&res, sizeof(t_res));
 	cl_set_arg(e, &(e->cl));
 	cl_run_kernel(e, &(e->cl));
 	cl->err = clEnqueueReadBuffer(cl->cq, cl->mem, CL_TRUE, 0,
-			HEIGHT * WIDTH * sizeof(int), res.ret_iter, 0, NULL, NULL);
+			HEIGHT * WIDTH * sizeof(char), ret, 0, NULL, NULL);
 	cl_check_err(cl->err, "clEnqueueReadBuffer");
+	
 	int i = 0;
 	while (i < HEIGHT * WIDTH)
 	{
-		if (!(i%WIDTH))
-			ft_printf("\n");
-		ft_printf("%i_", res.ret_iter[i]);
+//		if (!(i%WIDTH))
+//			ft_printf("\n");
+//	ft_printf("%i_", res.ret_iter[i]);
+		if (ret[i] > 0)
+			ft_printf("%i\n", ret[i]);
 		i++;
 	}
 	while (1);
