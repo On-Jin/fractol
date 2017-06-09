@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 01:12:45 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/09 05:08:09 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 static void	init_env(t_env *e)
 {
-	e->zoom = 100;
+	e->zoom = 300;
 	e->iter = 50;
+	e->move_x = (WIDTH / 2 * -1) + ((2.1) * e->zoom);
+	e->move_y = (HEIGHT / 2 * -1) + ((1.2) * e->zoom);
 }
 
 int			main(void)
@@ -26,7 +28,6 @@ int			main(void)
 	init_env(&e);
 	init_mlx(&e);
 	cl_init_opencl(&e);
-	draw(&e);
 	mlx_hook(e.win, 2, 0, &event_key_on, &e);
 	mlx_key_hook(e.win, &event_key_off, &e);
 	mlx_mouse_hook(e.win, &event_mouse, &e);

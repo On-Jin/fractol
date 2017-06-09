@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 02:20:48 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/09 05:36:44 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@
 
 typedef struct	s_res
 {
-	int			y;
-	int			x;
+	int			ret_iter[HEIGHT * WIDTH];
 }				t_res;
 
 typedef struct	s_cl
@@ -54,10 +53,12 @@ typedef struct	s_env
 	int			key[269];
 	int			mouse_x;
 	int			mouse_y;
+	int			move_x;
+	int			move_y;
 	float		zoom;
 	float		iter;
-	int		ajj_x;
-	int		ajj_y;
+	float		ajj_x;
+	float		ajj_y;
 }				t_env;
 
 void			init_mlx(t_env *e);
@@ -70,6 +71,8 @@ int				event_key_off(int keycode, t_env *e);
 void			cl_check_err(cl_int err, const char *name);
 void			cl_end_opencl(t_env *e, t_cl *cl);
 int				cl_init_opencl(t_env *e);
+
+int				cl_draw(t_env *e);
 
 int				draw(t_env *e);
 int				loop(t_env *e);

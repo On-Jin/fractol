@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:17:35 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 02:58:11 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/09 04:48:18 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,22 @@ int				event_mouse(int button, int x, int y, t_env *e)
 		ft_printf("Button :%i | Y[%i] X[%i]\n", button, y, x);
 	if (button == 1)
 	{
-		e->ajj_x += (x / 3.6);
-		e->ajj_y += (y / 3.6);
-		ft_printf("%i / 6 = %i\n%i / 6 = %i\n\n", y, e->ajj_y, x, e->ajj_x);
-		e->zoom *=  1.4;
-		e->ajj_y *= 1.4;
-		e->ajj_x *= 1.4;
+		//image poussé par le zoom
+		//donc je la rattrape :risitas:
+		e->ajj_x += ((x + e->move_x) / 6);//3.6 4
+		e->ajj_y += ((y + e->move_y) / 6);
+/*
+		e->ajj_x += (-1 * ((((float)x) / WIDTH) *
+					(0.6 + 2.1)));
+		e->ajj_y += (((((float)y) / HEIGHT) *
+					(1.2)));
+		ft_printf("x = %f\n", (((float)x) / WIDTH));
+		ft_printf("x = %f\n", (((float)y) / HEIGHT));
+*/
+		ft_printf("ajj_x %f", e->ajj_x);
+		e->zoom *=  1.2;
+		e->ajj_y *= 1.2;
+		e->ajj_x *= 1.2;
 		ft_printf("Ajj_y = %i\n Ajj_x = %i\n", e->ajj_y, e->ajj_x);
 		ft_printf("Zoom %f\n", e->zoom);
 	}

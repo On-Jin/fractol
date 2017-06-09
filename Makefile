@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/06/09 00:22:34 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/06/09 05:08:24 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC_PS = main.c \
 		 event/event_key_on.c \
 		 event/event_mouse.c \
 		 event/event_move_mouse.c \
+		 cl/cl_draw.c \
 		 cl/cl_check_err.c \
 		 cl/cl_end_opencl.c \
 		 cl/cl_init_opencl.c

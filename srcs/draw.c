@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 22:46:52 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 02:58:07 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/09 04:49:55 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ static void		mandelbrot(t_env *e, t_px *px,  int y, int x)
 	int		i = 0;
 (void)x2;(void)y2;
 	//ft_bzero(&res, sizeof(t_res));
-	c_r = (x + e->ajj_x) / e->zoom + x1;
-	c_i = (y + e->ajj_y) / e->zoom + y1;
+	c_r = (x + e->ajj_x + e->move_x) / e->zoom + x1;
+	c_i = (y + e->ajj_y + e->move_y) / e->zoom + y1;
+//	c_r = (x) / e->zoom + x1 + e->ajj_x;
+//	c_i = (y) / e->zoom + y1 + e->ajj_y;
 
 	while (z_r * z_r + z_i * z_i < 4 && i < e->iter)
 	{
@@ -43,8 +45,10 @@ static void		mandelbrot(t_env *e, t_px *px,  int y, int x)
 		if (i == e->iter)
 				mlxji_put_pixel(e->img, x, y, px);
 		else
+		{
 			px->b = i * 255 / e->iter;
 				mlxji_put_pixel(e->img, x, y, px);
+		}
 	}
 //	return (res);
 }
