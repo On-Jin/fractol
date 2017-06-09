@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 06:48:11 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/09 07:00:44 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,27 @@ int			cl_draw(t_env *e)
 	cl->err = clEnqueueReadBuffer(cl->cq, cl->mem, CL_TRUE, 0,
 			HEIGHT * WIDTH * sizeof(char), ret, 0, NULL, NULL);
 	cl_check_err(cl->err, "clEnqueueReadBuffer");
-	
+
+	t_px px;
+
+	px.r = 0;
+	px.g = 0;	
 	int i = 0;
-	while (i < HEIGHT * WIDTH)
+	int y = 0, x;
+	while (y < HEIGHT)
 	{
-//		if (!(i%WIDTH))
-//			ft_printf("\n");
-//	ft_printf("%i_", res.ret_iter[i]);
-		if (ret[i] > 0)
-			ft_printf("%i\n", ret[i]);
-		i++;
+		x = 0;
+		while (x < WIDTH)
+		{
+			px.b = 0;
+			if (ret[i] && ret[i] != 50)
+				px.b = i * 255 / 50;
+			if (x > 0 && y > 0 && x < WIDTH - 50 && y < HEIGHT - 50)
+			mlxji_put_pixel(e->img, x, y, &px);
+			i++;
+			x++;
+		}
+		y++;
 	}
-	while (1);
 	return (1);
 }
