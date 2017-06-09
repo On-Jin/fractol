@@ -1,23 +1,15 @@
 
-#define X1 -2.1
-#define Y1 -1.2
-#define WIDTH 1920
-#define HEIGHT 1080
-#define OPP 4
-
-typedef struct	s_res
-{
-	int		ret_iter[WIDTH * HEIGHT];
-}				t_res;
+#include "fractol.hl"
 
 __kernel void	mandelbrot(
 __global char *out,
 float zoom,
-int iter,
+float iter,
 float ajj_y,
 float ajj_x,
 int move_y,
-int move_x)
+int move_x,
+int clock)
 {
 	int		recup = get_global_id(0);
 	int		x = recup % WIDTH;
@@ -30,6 +22,10 @@ int move_x)
 	float	z_i = 0;
 	float	tmp;
 	int		i;
+	t_px	px;
+	float	h = clock;
+	float	s = 0.7;
+	float	v = 0.7;
 
 	i = 0;
 	c_r = (d_x) / zoom + X1;
@@ -43,5 +39,26 @@ int move_x)
 		i++;
 	}
 	if (i != iter)
-		out[x * OPP + y * (WIDTH * 4)] = i * 255 / iter;
+	{
+		h += (360 / iter) * i;
+		if (h > 360)
+		{
+			h -= 360;
+		}
+//		s = s + (0.30 / iter) * i;
+//		v = v + (0.10 / iter) * i;
+		mlxji_hsv_to_rgb(&px, h, s, v);
+//		px.r = (255 / iter) * i;
+//		px.r = 0;
+//		px.g = 0;
+//		px.b = 0;
+		out[x * OPP + y * (WIDTH * 4)] = px.b;
+		out[x * OPP + y * (WIDTH * 4) + 1] = px.g;
+		out[x * OPP + y * (WIDTH * 4) + 2] = px.r;
+	}
 }
+/*
+HSV baic
+g = 0;
+b = 0;
+*/

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 03:02:43 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/08 04:39:54 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/09 23:27:25 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void		cl_compile_kernel(t_env *e, t_cl *cl)
 	size_t		len;
 
 	(void)e;
-	cl->err = clBuildProgram(cl->program, 0, NULL, NULL/*"-I."*/, NULL, NULL);
+	cl->err = clBuildProgram(cl->program, 0, NULL, "-I.", NULL, NULL);
 	if (cl->err != CL_SUCCESS)
 	{
 		cl->err = clGetProgramBuildInfo(cl->program, cl->device_id,

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:17:35 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 04:48:18 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/09 23:06:38 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ int				event_mouse(int button, int x, int y, t_env *e)
 		e->ajj_x *= 1.2;
 		ft_printf("Ajj_y = %i\n Ajj_x = %i\n", e->ajj_y, e->ajj_x);
 		ft_printf("Zoom %f\n", e->zoom);
+	}
+	else if (button == 5) //AV
+	{
+		e->ajj_x += ((x + e->move_x) / 6);//3.6 4
+		e->ajj_y += ((y + e->move_y) / 6);
+		e->zoom *=  1.2;
+		e->ajj_y *= 1.2;
+		e->ajj_x *= 1.2;
+	}
+	else if (button == 4) //AR
+	{
+		e->zoom /=  1.2;
+		e->ajj_y /= 1.2;
+		e->ajj_x /= 1.2;
+		e->ajj_x -= ((x + e->move_x) / 6);//3.6 4
+		e->ajj_y -= ((y + e->move_y) / 6);
 	}
 	return (1);
 }

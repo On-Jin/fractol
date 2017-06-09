@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 19:44:22 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/10 00:45:55 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,12 @@
 # include "../libmlxji/includes/mlxji.h"
 # include "mlx.h"
 # include <OpenCL/opencl.h>
-
+# include <sys/time.h>
 # define HEIGHT 1080
 # define WIDTH 1920
 
 # define MEM_OPENCL (HEIGHT * WIDTH * 4)
-# define MAX_SOURCE_SIZE (900)
-
-typedef struct	s_res
-{
-	int			ret_iter[HEIGHT * WIDTH];
-}				t_res;
+# define MAX_SOURCE_SIZE (9000)
 
 typedef struct	s_cl
 {
@@ -50,13 +45,19 @@ typedef struct	s_env
 	void		*win;
 	t_img		*img;
 
+	struct		timeval step;
+	struct		timeval cur;
+	int			fps;
+
 	int			key[269];
 	int			mouse_x;
 	int			mouse_y;
 	int			move_x;
 	int			move_y;
+	int			dir_clock;
+	int			clock;
+	float			iter;
 	float		zoom;
-	float		iter;
 	float		ajj_x;
 	float		ajj_y;
 }				t_env;
