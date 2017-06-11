@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/11 15:39:39 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/11 20:25:19 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,24 @@
 # include "mlx.h"
 # include <OpenCL/opencl.h>
 # include <sys/time.h>
-# define HEIGHT 1080
-# define WIDTH 1920
+
+#if defined(MODE_GPU)
+	# define HEIGHT 1080
+	# define WIDTH 1920
+	# define GPU 1
+#else
+	# define HEIGHT 600
+	# define WIDTH 1000
+	# define GPU 0
+#endif
+
+#if defined(MODE_PRECI)
+	#define M_PRECI 1
+	#define V_PRECI double
+#else
+	#define M_PRECI 0
+	#define V_PRECI float
+#endif
 
 # define MEM_OPENCL (HEIGHT * WIDTH * 4)
 # define MAX_SOURCE_SIZE (9000)
@@ -56,10 +72,10 @@ typedef struct	s_env
 	int			move_y;
 	int			dir_clock;
 	int			clock;
-	double		iter;
-	double		zoom;
-	double		ajj_x;
-	double		ajj_y;
+	long int			iter;
+	long int	zoom;
+	V_PRECI		ajj_x;
+	V_PRECI		ajj_y;
 }				t_env;
 
 void			init_mlx(t_env *e);

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 03:02:43 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 23:27:25 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/11 20:25:23 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ static void		cl_compile_kernel(t_env *e, t_cl *cl)
 	size_t		len;
 
 	(void)e;
-	cl->err = clBuildProgram(cl->program, 0, NULL, "-I.", NULL, NULL);
+	if (M_PRECI)
+		cl->err = clBuildProgram(cl->program, 0, NULL, "-D MODE_PRECI -I.", NULL, NULL);
+	else
+		cl->err = clBuildProgram(cl->program, 0, NULL, "-I.", NULL, NULL);
 	if (cl->err != CL_SUCCESS)
 	{
 		cl->err = clGetProgramBuildInfo(cl->program, cl->device_id,

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/11 14:29:24 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/11 20:25:46 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static void	cl_set_arg(t_env *e, t_cl *cl)
 	cl->err = clEnqueueWriteBuffer(cl->cq, cl->mem, CL_TRUE, 0, sizeof(char) * MEM_OPENCL, e->img->data, 0, NULL, NULL);
 	cl_check_err(cl->err, "clEnqueueWriteBuffer");
 	cl->err = clSetKernelArg(cl->kernel, 0, sizeof(cl_mem), (void *)&(cl->mem));
-	cl->err = clSetKernelArg(cl->kernel, 1, sizeof(double), &(e->zoom));
+	cl->err = clSetKernelArg(cl->kernel, 1, sizeof(long int), &(e->zoom));
 	cl_check_err(cl->err, "clSetKernelArg");
-	cl->err = clSetKernelArg(cl->kernel, 2, sizeof(double), &(e->iter));
+	cl->err = clSetKernelArg(cl->kernel, 2, sizeof(long int), &(e->iter));
 	cl_check_err(cl->err, "clSetKernelArg");
-	cl->err = clSetKernelArg(cl->kernel, 3, sizeof(double), &(e->ajj_y));
+	cl->err = clSetKernelArg(cl->kernel, 3, sizeof(V_PRECI), &(e->ajj_y));
 	cl_check_err(cl->err, "clSetKernelArg");
-	cl->err = clSetKernelArg(cl->kernel, 4, sizeof(double), &(e->ajj_x));
+	cl->err = clSetKernelArg(cl->kernel, 4, sizeof(V_PRECI), &(e->ajj_x));
 	cl_check_err(cl->err, "clSetKernelArg");
 	cl->err = clSetKernelArg(cl->kernel, 5, sizeof(int), &(e->move_y));
 	cl_check_err(cl->err, "clSetKernelArg");

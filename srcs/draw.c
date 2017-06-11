@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 22:46:52 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 04:49:55 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/11 19:28:09 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 static void		mandelbrot(t_env *e, t_px *px,  int y, int x)
 {
 	//t_res	res;
-	float	c_r = 0;
-	float	c_i = 0;
-	float	z_r = 0;
-	float	z_i = 0;
-	float x1 = -2.1;
-	float x2 = 0.6;
-	float y1 = -1.2;
-	float y2 = 1.2;
-	float tmp;
+	V_PRECI	c_r = 0;
+	V_PRECI	c_i = 0;
+	V_PRECI	z_r = 0;
+	V_PRECI	z_i = 0;
+	V_PRECI x1 = -2.1;
+	V_PRECI x2 = 0.6;
+	V_PRECI y1 = -1.2;
+	V_PRECI y2 = 1.2;
+	V_PRECI tmp;
 	int		i = 0;
 (void)x2;(void)y2;
 	//ft_bzero(&res, sizeof(t_res));

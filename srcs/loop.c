@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:21:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/11 14:54:59 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/11 18:46:53 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ int			loop(t_env *e)
 	if (e->clock > 360)
 		e->clock = 0;
 	mlxji_clear_img(e->img);
+#if (GPU == 1)
 	cl_draw(e);
+#else
+	draw(e);
+#endif
 	mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
 	e->fps++;
 	return (1);

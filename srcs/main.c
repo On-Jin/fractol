@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 18:24:00 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/11 17:04:43 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int			main(void)
 {
 	t_env e;
 
+	ft_printf("%i\n", GPU);
 	ft_bzero(&e, sizeof(t_env));
 	init_env(&e);
 	init_mlx(&e);

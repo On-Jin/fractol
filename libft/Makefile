@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/02/28 13:28:48 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/06/11 17:17:56 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ OBJET = $(SRC:.c=.o)
 
 .PHONY: all, clean, fclean, re, $(NAME)
 
-all: start $(NAME) end
+all: $(NAME)
 
 $(NAME): $(OBJET)
 	@ar rc $(NAME) $(OBJET) && ranlib $(NAME)

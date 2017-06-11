@@ -7,6 +7,12 @@
 #define HEIGHT 1080
 #define OPP 4
 
+#if defined(MODE_PRECI)
+	#define V_PRECI double
+#else
+	#define V_PRECI float
+#endif
+
 typedef struct		s_px
 {
 	int			r;

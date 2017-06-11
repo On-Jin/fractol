@@ -6,10 +6,10 @@
 
 __kernel void	mandelbrot(
 __global char *out,
-double zoom,
-double iter,
-double ajj_y,
-double ajj_x,
+long int zoom,
+long int  iter,
+V_PRECI ajj_y,
+V_PRECI ajj_x,
 int move_y,
 int move_x,
 int clock)
@@ -19,13 +19,15 @@ int clock)
 		return ;
 	int		x = recup % WIDTH;
 	int		y = recup / WIDTH;
-	long int		d_x = x + ajj_x + move_x;
-	long int		d_y = y + ajj_y + move_y;
-	double	c_r = 0;
-	double	c_i = 0;
-	double	z_r = 0;
-	double	z_i = 0;
-	double	tmp;
+	long int		d_x = x + (V_PRECI)ajj_x + move_x;
+	long int		d_y = y + (V_PRECI)ajj_y + move_y;
+//	V_PRECI aj_x = (V_PRECI)ajj_x;
+//	V_PRECI aj_y = (V_PRECI)ajj_y;
+	V_PRECI	c_r = 0;
+	V_PRECI	c_i = 0;
+	V_PRECI	z_r = 0;
+	V_PRECI	z_i = 0;
+	V_PRECI	tmp;
 	int		i;
 	t_px	px;
 	float	h = clock;
@@ -33,8 +35,8 @@ int clock)
 	float	v = 0.7;
 
 	i = 0;
-	c_r = (d_x) / zoom + X1;
-	c_i = (d_y) / zoom + Y1;
+	c_r = (d_x) / (V_PRECI)zoom + X1;
+	c_i = (d_y) / (V_PRECI)zoom + Y1;
 
 	while (z_r * z_r + z_i * z_i < 4 && i < iter)
 	{
@@ -45,7 +47,7 @@ int clock)
 	}
 	if (i != iter)
 	{
-		h += (360 / iter) * i;
+		h += (360 / (float)iter) * i;
 		if (h > 360)
 		{
 			h -= 360;
