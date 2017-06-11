@@ -1,26 +1,31 @@
 
 #include "fractol.hl"
 
+#pragma OPENCL EXTENSION cl_khr_printf : enable
+#pragma OPENCL EXTENSION cl_khr_double : enable
+
 __kernel void	mandelbrot(
 __global char *out,
-float zoom,
-float iter,
-float ajj_y,
-float ajj_x,
+double zoom,
+double iter,
+double ajj_y,
+double ajj_x,
 int move_y,
 int move_x,
 int clock)
 {
 	int		recup = get_global_id(0);
+	if (recup < 0 || recup >= WIDTH * HEIGHT)
+		return ;
 	int		x = recup % WIDTH;
 	int		y = recup / WIDTH;
-	int		d_x = x + ajj_x + move_x;
-	int		d_y = y + ajj_y + move_y;
-	float	c_r = 0;
-	float	c_i = 0;
-	float	z_r = 0;
-	float	z_i = 0;
-	float	tmp;
+	long int		d_x = x + ajj_x + move_x;
+	long int		d_y = y + ajj_y + move_y;
+	double	c_r = 0;
+	double	c_i = 0;
+	double	z_r = 0;
+	double	z_i = 0;
+	double	tmp;
 	int		i;
 	t_px	px;
 	float	h = clock;
@@ -45,18 +50,18 @@ int clock)
 		{
 			h -= 360;
 		}
-//		s = s + (0.30 / iter) * i;
-//		v = v + (0.10 / iter) * i;
 		mlxji_hsv_to_rgb(&px, h, s, v);
-//		px.r = (255 / iter) * i;
-//		px.r = 0;
-//		px.g = 0;
-//		px.b = 0;
 		out[x * OPP + y * (WIDTH * 4)] = px.b;
 		out[x * OPP + y * (WIDTH * 4) + 1] = px.g;
 		out[x * OPP + y * (WIDTH * 4) + 2] = px.r;
 	}
 }
+//		px.r = (255 / iter) * i;
+//		px.r = 0;
+//		px.g = 0;
+//		px.b = 0;
+//		s = s + (0.30 / iter) * i;
+//		v = v + (0.10 / iter) * i;
 /*
 HSV baic
 g = 0;

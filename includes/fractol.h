@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/10 00:45:55 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/11 15:39:39 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ typedef struct	s_env
 	int			move_y;
 	int			dir_clock;
 	int			clock;
-	float			iter;
-	float		zoom;
-	float		ajj_x;
-	float		ajj_y;
+	double		iter;
+	double		zoom;
+	double		ajj_x;
+	double		ajj_y;
 }				t_env;
 
 void			init_mlx(t_env *e);
