@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/06/11 20:30:28 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/06/13 05:22:10 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = fractol
 
 DIR_LFT = libft/
 DIR_MLXJI = libmlxji/
-DIR_MLX = minilibx_macos/
+DIR_MLX = minilibxcaptain/
 DIR_LIB = all_lib/
 
 FLAGS = -Wall -Werror -Wextra -g -I ./include/
@@ -25,6 +25,7 @@ SRC = main.c \
 		 init_mlx.c \
 		 draw.c \
 		 loop.c \
+		 buddhabrot_color.c \
 		 end_of_program.c \
 		 event/event_key_off.c \
 		 event/event_key_on.c \

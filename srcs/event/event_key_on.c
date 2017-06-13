@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/10 01:12:22 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/13 00:34:25 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,22 @@ int			event_key_on(int keycode, t_env *e)
 	{
 		if (e->iter < 2000)
 			e->iter += 10;
-		ft_printf("Iter [%0.f]\n", e->iter);
+		ft_printf("Iter [%i]\n", e->iter);
 	}
 	else if (keycode == 78)
 	{
 		if (e->iter > 20)
 			e->iter -= 10;
+	}
+	else if (keycode == 92)
+	{
+		if (e->iter > 2)
+			e->iter--;
+	}
+	else if (keycode == 88)
+	{
+		if (e->iter < 2000)
+			e->iter++;
 	}
 	else if (keycode == 123) //G
 		e->move_x -= 10;
@@ -44,6 +54,10 @@ int			event_key_on(int keycode, t_env *e)
 	{
 		if (e->dir_clock > 0)
 			e->dir_clock--;
+	}
+	else if (keycode == 67)
+	{
+		e->iter += 1000;
 	}
 	if (keycode)
 		e->key[keycode] = 1;

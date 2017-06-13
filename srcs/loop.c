@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:21:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/11 18:46:53 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/12 03:39:53 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int			loop(t_env *e)
 		ft_printf("\033[31mFps : %i\033[0m\n", e->fps);
 		e->fps = 0;
 		gettimeofday(&e->step, NULL);
-		ft_printf("Zoom : %lf Ajj [%lf]\n", e->zoom, e->iter);
+		ft_printf("Zoom : %li Ajj [%i]\nJulia : [%.3f][%.3f]\n", e->zoom, e->iter, e->jul_y, e->jul_x);
 	}
 	e->clock += e->dir_clock;
 	if (e->clock > 360)

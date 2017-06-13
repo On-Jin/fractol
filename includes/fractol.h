@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/11 20:25:19 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/13 05:21:27 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@
 	#define V_PRECI float
 #endif
 
+# define NUM_BUDD 0
+# define NUM_MANDEL 1
+# define NUM_JULIA 2
+
 # define MEM_OPENCL (HEIGHT * WIDTH * 4)
-# define MAX_SOURCE_SIZE (9000)
+# define MAX_SOURCE_SIZE (11000)
 
 typedef struct	s_cl
 {
@@ -65,14 +69,24 @@ typedef struct	s_env
 	struct		timeval cur;
 	int			fps;
 
+	int			gain;
+	int			seuil;
+
+	int			num;
+	int			pal_color;
+	char		open_var_jul;
+	float		jul_y;
+	float		jul_x;
+
 	int			key[269];
+	int			dir_clock;
+	int			clock;
+
 	int			mouse_x;
 	int			mouse_y;
 	int			move_x;
 	int			move_y;
-	int			dir_clock;
-	int			clock;
-	long int			iter;
+	long int	iter;
 	long int	zoom;
 	V_PRECI		ajj_x;
 	V_PRECI		ajj_y;
@@ -88,6 +102,8 @@ int				event_key_off(int keycode, t_env *e);
 void			cl_check_err(cl_int err, const char *name);
 void			cl_end_opencl(t_env *e, t_cl *cl);
 int				cl_init_opencl(t_env *e);
+
+void			buddhabrot_color(t_env *e);
 
 int				cl_draw(t_env *e);
 

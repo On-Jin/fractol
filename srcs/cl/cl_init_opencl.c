@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 03:02:43 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/11 20:25:23 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/13 04:59:15 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static void		cl_load_src(t_env *e, char *k_src, size_t *src_size)
 
 	(void)e;
 	*src_size = 0;
-	fd = open("./mandelbrot.cl", O_RDONLY);
+	if (e->num)
+		fd = open("./mandelbrot.cl", O_RDONLY);
+	else
+		fd = open("./buddhabrot.c", O_RDONLY);
 	if (!fd)
 	{
 		ft_putstr_fd("Failed to load source.\n", 2);
@@ -92,7 +95,10 @@ int		cl_init_opencl(t_env *e)
 {
 	cl_create_base(e, &e->cl);
 	cl_compile_kernel(e, &e->cl);
-	e->cl.kernel = clCreateKernel(e->cl.program, "mandelbrot", &(e->cl.err));
+	if (e->num)
+		e->cl.kernel = clCreateKernel(e->cl.program, "mandelbrot", &(e->cl.err));
+	else
+		e->cl.kernel = clCreateKernel(e->cl.program, "buddhabrot", &(e->cl.err));
 	cl_check_err(e->cl.err, "clCreateKernel");
 	return (1);
 }

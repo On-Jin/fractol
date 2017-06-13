@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/11 17:04:43 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/13 05:16:05 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,27 @@ static void	init_env(t_env *e)
 	e->iter = 50;
 	e->move_x = (WIDTH / 2 * -1) + ((2.1) * e->zoom);
 	e->move_y = (HEIGHT / 2 * -1) + ((1.2) * e->zoom);
+	e->gain = 1;
 }
 
-int			main(void)
+static int get_arg(t_env *e, int argc, char **argv)
+{
+	if (argc == 1)
+		return (0);
+	e->num = ft_atoi(argv[1]);
+	if (e->num < 0 || e->num > 2)
+		return (0);
+	return (1);
+}
+
+int			main(int argc, char **argv)
 {
 	t_env e;
 
-	ft_printf("%i\n", GPU);
+	ft_printf("%i %i\n", GPU, M_PRECI);
 	ft_bzero(&e, sizeof(t_env));
+	if (!(get_arg(&e, argc, argv)))
+		return (0);
 	init_env(&e);
 	init_mlx(&e);
 	cl_init_opencl(&e);

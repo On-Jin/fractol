@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/11 20:25:46 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/13 05:21:52 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ static void	cl_set_arg(t_env *e, t_cl *cl)
 	cl_check_err(cl->err, "clSetKernelArg");
 	cl->err = clSetKernelArg(cl->kernel, 7, sizeof(int), &(e->clock));
 	cl_check_err(cl->err, "clSetKernelArg");
+	if (e->num)
+	{
+		cl->err = clSetKernelArg(cl->kernel, 8, sizeof(int), &(e->num));
+		cl_check_err(cl->err, "clSetKernelArg");
+		cl->err = clSetKernelArg(cl->kernel, 9, sizeof(float), &(e->jul_y));
+		cl_check_err(cl->err, "clSetKernelArg");
+		cl->err = clSetKernelArg(cl->kernel, 10, sizeof(float), &(e->jul_x));
+		cl_check_err(cl->err, "clSetKernelArg");
+	}
+	else
+	{
+		cl->err = clSetKernelArg(cl->kernel, 8, sizeof(int), &(e->seuil));
+		cl_check_err(cl->err, "clSetKernelArg");
+	}
 }
 
 static void	cl_run_kernel(t_env *e, t_cl *cl)
@@ -59,5 +73,7 @@ int			cl_draw(t_env *e)
 	cl->err = clEnqueueReadBuffer(cl->cq, cl->mem, CL_TRUE, 0,
 			MEM_OPENCL * sizeof(char), e->img->data, 0, NULL, NULL);
 	cl_check_err(cl->err, "clEnqueueReadBuffer");
+	if (!e->num)
+		buddhabrot_color(e);
 	return (1);
 }

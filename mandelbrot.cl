@@ -12,7 +12,10 @@ V_PRECI ajj_y,
 V_PRECI ajj_x,
 int move_y,
 int move_x,
-int clock)
+int clock,
+int	num,
+float jul_y,
+float jul_x)
 {
 	int		recup = get_global_id(0);
 	if (recup < 0 || recup >= WIDTH * HEIGHT)
@@ -21,31 +24,47 @@ int clock)
 	int		y = recup / WIDTH;
 	long int		d_x = x + (V_PRECI)ajj_x + move_x;
 	long int		d_y = y + (V_PRECI)ajj_y + move_y;
-//	V_PRECI aj_x = (V_PRECI)ajj_x;
-//	V_PRECI aj_y = (V_PRECI)ajj_y;
 	V_PRECI	c_r = 0;
 	V_PRECI	c_i = 0;
 	V_PRECI	z_r = 0;
 	V_PRECI	z_i = 0;
 	V_PRECI	tmp;
 	int		i;
+	int		fx, fy;
+	V_PRECI	kx, ky;
 	t_px	px;
 	float	h = clock;
 	float	s = 0.7;
 	float	v = 0.7;
 
 	i = 0;
-	c_r = (d_x) / (V_PRECI)zoom + X1;
-	c_i = (d_y) / (V_PRECI)zoom + Y1;
-
-	while (z_r * z_r + z_i * z_i < 4 && i < iter)
+	if (num == 1)
 	{
-		tmp = z_r;
-		z_r = z_r * z_r - z_i * z_i + c_r;
-		z_i = 2 * z_i * tmp + c_i;
-		i++;
+		c_r = (d_x) / (V_PRECI)zoom + X1;
+		c_i = (d_y) / (V_PRECI)zoom + Y1;
+		while (z_r * z_r + z_i * z_i < 4 && i < iter)
+		{
+			tmp = z_r;
+			z_r = z_r * z_r - z_i * z_i + c_r;
+			z_i = 2 * z_i * tmp + c_i;
+			i++;
+		}
 	}
-	if (i != iter)
+	else
+	{
+		z_r = (d_x) / (V_PRECI)zoom + X1;
+		z_i = (d_y) / (V_PRECI)zoom + Y1;
+		c_r = jul_x;
+		c_i = jul_y;
+		while (z_r * z_r + z_i * z_i < 4 && i < iter)
+		{
+			tmp = z_r;
+			z_r = z_r * z_r - z_i * z_i + c_r;
+			z_i = 2 * z_i * tmp + c_i;
+			i++;
+		}
+	}
+	if (i != iter)// && (i > 1)
 	{
 		h += (360 / (float)iter) * i;
 		if (h > 360)
