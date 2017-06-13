@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/13 05:21:27 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/13 19:09:19 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 #if defined(MODE_GPU)
 	# define HEIGHT 1080
 	# define WIDTH 1920
+	# define HEIGHT_BUD (1080 * 4)
+	# define WIDTH_BUD (1920 * 4)
+	# define MEM_OPENCL_BUD (HEIGHT_BUD * WIDTH_BUD * 4)
 	# define GPU 1
 #else
 	# define HEIGHT 600
@@ -43,6 +46,7 @@
 
 # define MEM_OPENCL (HEIGHT * WIDTH * 4)
 # define MAX_SOURCE_SIZE (11000)
+# define OPP 4
 
 typedef struct	s_cl
 {
@@ -99,11 +103,13 @@ int				event_mouse(int button, int x, int y, t_env *e);
 int				event_key_on(int keycode, t_env *e);
 int				event_key_off(int keycode, t_env *e);
 
+void			over_sampling_resize(t_env *e, char *tab);
+
 void			cl_check_err(cl_int err, const char *name);
 void			cl_end_opencl(t_env *e, t_cl *cl);
 int				cl_init_opencl(t_env *e);
 
-void			buddhabrot_color(t_env *e);
+void			buddhabrot_color(t_env *e, char *tab);
 
 int				cl_draw(t_env *e);
 

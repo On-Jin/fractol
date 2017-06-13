@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 03:02:43 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/13 04:59:15 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/13 16:58:31 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,16 @@ static void		cl_create_base(t_env *e, t_cl *cl)
 	cl_check_err(cl->err, "clCreateCommandQueue");
 
 	cl_load_src(e, k_src, &src_size);
-	cl->mem = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
-			MEM_OPENCL * sizeof(char), NULL, &(cl->err));
+	if (e->num)
+	{
+		cl->mem = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
+				MEM_OPENCL * sizeof(char), NULL, &(cl->err));
+	}
+	else
+	{
+		cl->mem = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
+				MEM_OPENCL_BUD * sizeof(char), NULL, &(cl->err));
+	}
 	cl_check_err(cl->err, "clCreateBuffer");
 
 	cl->program = clCreateProgramWithSource(cl->context, 1, (const char **)&k_src,

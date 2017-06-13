@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 22:46:52 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/13 05:21:13 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/13 17:22:16 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,6 @@ int			draw(t_env *e)
 		y++;
 	}
 	if (!e->num)
-		buddhabrot_color(e);
+		buddhabrot_color(e, NULL);
 	return (1);
 }

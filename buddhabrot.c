@@ -4,6 +4,8 @@
 #pragma OPENCL EXTENSION cl_khr_printf : enable
 #pragma OPENCL EXTENSION cl_khr_double : enable
 
+# define WIDTH_BUD (1920 * 4)
+# define HEIGHT_BUD (1080 * 4)
 
 __kernel void	buddhabrot(
 		__global char *out,
@@ -17,10 +19,10 @@ __kernel void	buddhabrot(
 		int seuil)
 {
 	int		recup = get_global_id(0);
-	if (recup < 0 || recup >= WIDTH * HEIGHT)
+	if (recup < 0 || recup >= WIDTH_BUD * HEIGHT_BUD)
 		return ;
-	int			x = recup % WIDTH;
-	int			y = recup / WIDTH;
+	int			x = recup % WIDTH_BUD;
+	int			y = recup / WIDTH_BUD;
 	long int	d_x = x + (V_PRECI)ajj_x + move_x;
 	long int	d_y = y + (V_PRECI)ajj_y + move_y;
 	V_PRECI		c_r = 0;
@@ -58,25 +60,25 @@ __kernel void	buddhabrot(
 	{
 		while (k < i)
 		{
-			if (tab_y[k] > 0 && tab_y[k] < HEIGHT &&
-					tab_x[k] > 0 && tab_x[k] < WIDTH)
+			if (tab_y[k] > 0 && tab_y[k] < HEIGHT_BUD &&
+					tab_x[k] > 0 && tab_x[k] < WIDTH_BUD)
 			{
-				if (i > seuil  && i < 1000 && out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH * 4)] < 254)
+				if (i > seuil && out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4)] < 254)
 				{
-					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH * 4)]++;
-//					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH * 4) + 1]++;
-//					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH * 4) + 2]++;
+					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4)]++;
+					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4) + 1]++;
+					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4) + 2]++;
 				}
-
-				if (i > seuil && i < 2000 && out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH * 4)] < 250)
+/*
+				if (i > seuil && i < 2000 && out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4)] < 250)
 				{
-					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH * 4) + 1]++;
+					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4) + 1]++;
 				}
-				if (i > seuil && i < 3000 && out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH * 4)] < 250)
+				if (i > seuil && i < 3000 && out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4)] < 250)
 				{
-					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH * 4) + 2]++;
+					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4) + 2]++;
 				}
-
+*/
 			}
 			k++;
 		}

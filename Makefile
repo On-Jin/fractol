@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/06/13 05:22:10 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/06/13 16:27:16 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC = main.c \
 		 init_mlx.c \
 		 draw.c \
 		 loop.c \
+		 over_sampling_resize.c \
 		 buddhabrot_color.c \
 		 end_of_program.c \
 		 event/event_key_off.c \
