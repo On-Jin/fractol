@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/13 19:51:03 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/14 01:24:23 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	init_env(t_env *e)
 	}
 	else
 	{
+		e->over = 4;
 		e->iter = 50;
 		e->zoom = 1200;
 		e->move_x = (WIDTH_BUD / 2 * -1) + ((2.1) * e->zoom);

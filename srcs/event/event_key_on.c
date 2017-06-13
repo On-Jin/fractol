@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/13 00:34:25 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/13 23:24:52 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ int			event_key_on(int keycode, t_env *e)
 	{
 		if (e->dir_clock > 0)
 			e->dir_clock--;
+	}
+	else if (keycode == 49)
+	{
+		mlxji_clear_img(e->img);
+		cl_draw(e);
+		mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
 	}
 	else if (keycode == 67)
 	{

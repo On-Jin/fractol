@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/13 19:09:19 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/14 01:36:27 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,16 @@
 #if defined(MODE_GPU)
 	# define HEIGHT 1080
 	# define WIDTH 1920
-	# define HEIGHT_BUD (1080 * 4)
-	# define WIDTH_BUD (1920 * 4)
-	# define MEM_OPENCL_BUD (HEIGHT_BUD * WIDTH_BUD * 4)
 	# define GPU 1
 #else
 	# define HEIGHT 600
 	# define WIDTH 1000
 	# define GPU 0
 #endif
+
+# define HEIGHT_BUD (1080 * 4)
+# define WIDTH_BUD (1920 * 4)
+	# define MEM_OPENCL_BUD (HEIGHT_BUD * WIDTH_BUD * 4)
 
 #if defined(MODE_PRECI)
 	#define M_PRECI 1
@@ -73,8 +74,9 @@ typedef struct	s_env
 	struct		timeval cur;
 	int			fps;
 
-	int			gain;
+	float		gain;
 	int			seuil;
+	int			over;
 
 	int			num;
 	int			pal_color;

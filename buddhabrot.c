@@ -40,7 +40,8 @@ __kernel void	buddhabrot(
 	int			tab_y[10000];
 	int			k;
 
-	//	init_tab(tab_x, tab_y, 500);
+	if (!(recup % 1000000))
+	printf("++\n");
 	i = 0;
 	c_r = (d_x) / (V_PRECI)zoom + X1;
 	c_i = (d_y) / (V_PRECI)zoom + Y1;

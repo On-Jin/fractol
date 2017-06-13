@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/13 19:09:17 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/14 01:32:56 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static void	cl_run_kernel(t_env *e, t_cl *cl)
 	cl->err = clEnqueueNDRangeKernel(cl->cq, cl->kernel, 1, NULL,
 			&global_item_size, &local_item_size, 0, NULL, NULL);
 	cl_check_err(cl->err, "clEnqueueNDRangeKernel");
+	ft_printf("Max Work size : %i\n", local_item_size);
 	clFinish(cl->cq);
 }
 
@@ -96,6 +97,7 @@ int			cl_draw(t_env *e)
 		cl->err = clEnqueueReadBuffer(cl->cq, cl->mem, CL_TRUE, 0,
 				MEM_OPENCL_BUD * sizeof(char), tab, 0, NULL, NULL);
 		cl_check_err(cl->err, "clEnqueueReadBuffer");
+		ft_printf("End\n");
 		if (!e->num)
 			buddhabrot_color(e, tab);
 		if (!e->num)
