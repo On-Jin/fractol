@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/14 01:24:23 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/14 05:39:26 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,18 @@ static void	init_env(t_env *e)
 	else
 	{
 		e->over = 4;
+		e->varover[0] = 0;
+		e->varover[1] = 1;
+		e->varover[2] = 2;
+		e->varover[3] = 4;
+		e->varover[4] = 8;
+		e->width_bud = WIDTH * e->varover[e->over];
+		e->height_bud = HEIGHT * e->varover[e->over];
+		e->mem_opencl_bud = e->width_bud * e->height_bud * 4;
 		e->iter = 50;
-		e->zoom = 1200;
-		e->move_x = (WIDTH_BUD / 2 * -1) + ((2.1) * e->zoom);
-		e->move_y = (HEIGHT_BUD / 2 * -1) + ((1.2) * e->zoom);
+		e->zoom = 700 * e->over; // 600 over = 2
+		e->move_x = (e->width_bud / 2 * -1) + ((2.1) * e->zoom);
+		e->move_y = (e->height_bud / 2 * -1) + ((1.2) * e->zoom);
 	}
 	e->gain = 1;
 }

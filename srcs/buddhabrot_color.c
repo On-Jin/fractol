@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 05:13:30 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/13 23:54:54 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/14 05:31:44 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void	buddhabrot_color(t_env *e, char *tab)
 //	img = e->img->data;
 	img = tab;
 	i = 0;
-	while (i < HEIGHT_BUD)
+	while (i < e->height_bud)
 	{
 		j = 0;
-		while (j < WIDTH_BUD)
+		while (j < e->width_bud)
 		{
-			px_b = img[(j * 4) + (i * WIDTH_BUD * 4)];
-			px_g = img[(j * 4) + (i * WIDTH_BUD * 4) + 1];
-			px_r = img[(j * 4) + (i * WIDTH_BUD * 4) + 2];
+			px_b = img[(j * 4) + (i * e->width_bud * 4)];
+			px_g = img[(j * 4) + (i * e->width_bud * 4) + 1];
+			px_r = img[(j * 4) + (i * e->width_bud * 4) + 2];
 			if (px_r > max_r)
 				max_r = px_r;
 			if (px_g > max_g)
@@ -48,29 +48,29 @@ void	buddhabrot_color(t_env *e, char *tab)
 	i = 0;
 	///////////////////////// Les couleurs sont géré indépendament... Ensemble ? :)
 	e->gain = 1.4;
-	while (i < HEIGHT_BUD)
+	while (i < e->height_bud)
 	{
 		j = 0;
-		while (j < WIDTH_BUD)
+		while (j < e->width_bud)
 		{
-			px_b = img[(j * 4) + (i * WIDTH_BUD * 4)];
+			px_b = img[(j * 4) + (i * e->width_bud * 4)];
 			ret = 255 / (max_b / e->gain) * px_b;
 //			ret = px_b / (max_b / e->gain) * 255;
 			if (ret > 255)
 				ret = 255;
-			img[(j * 4) + (i * WIDTH_BUD * 4)] = ret;
-			img[(j * 4) + (i * WIDTH_BUD * 4) + 1] = 0;
-			img[(j * 4) + (i * WIDTH_BUD * 4) + 2] = 0;
-/*			px_g = img[(j * 4) + (i * WIDTH_BUD * 4) + 1];
+			img[(j * 4) + (i * e->width_bud * 4)] = ret;
+			img[(j * 4) + (i * e->width_bud * 4) + 1] = 0;
+			img[(j * 4) + (i * e->width_bud * 4) + 2] = 0;
+/*			px_g = img[(j * 4) + (i * e->width_bud * 4) + 1];
 			ret = 255 / (max_g / e->gain) * px_g;
 			if (ret > 255)
 				ret = 255;
-			img[(j * 4) + (i * WIDTH_BUD * 4) + 1] = ret;
-			px_r = img[(j * 4) + (i * WIDTH_BUD * 4) + 2];
+			img[(j * 4) + (i * e->width_bud * 4) + 1] = ret;
+			px_r = img[(j * 4) + (i * e->width_bud * 4) + 2];
 			ret = 255 / (max_r / e->gain)* px_r;
 			if (ret > 255)
 				ret = 255;
-			img[(j * 4) + (i * WIDTH_BUD * 4) + 2] = ret;
+			img[(j * 4) + (i * e->width_bud * 4) + 2] = ret;
 */
 			j++;
 		}

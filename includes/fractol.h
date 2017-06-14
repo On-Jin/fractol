@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/14 01:36:27 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/14 05:38:52 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 	# define GPU 0
 #endif
 
-# define HEIGHT_BUD (1080 * 4)
-# define WIDTH_BUD (1920 * 4)
-	# define MEM_OPENCL_BUD (HEIGHT_BUD * WIDTH_BUD * 4)
+//# define HEIGHT_BUD (1080 * 8)
+//# define WIDTH_BUD (1920 * 8)
+//# define MEM_OPENCL_BUD (HEIGHT_BUD * WIDTH_BUD * 4)
 
 #if defined(MODE_PRECI)
 	#define M_PRECI 1
@@ -61,6 +61,8 @@ typedef struct	s_cl
 	cl_uint				ret_num_devices;
 	cl_uint				ret_num_platforms;
 	cl_int				err;
+	size_t				global_item_size;
+	size_t				local_item_size;
 }				t_cl;
 
 typedef struct	s_env
@@ -78,6 +80,10 @@ typedef struct	s_env
 	int			seuil;
 	int			over;
 
+	int			varover[5];
+	int			width_bud;
+	int			height_bud;
+	int			mem_opencl_bud;
 	int			num;
 	int			pal_color;
 	char		open_var_jul;

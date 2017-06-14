@@ -4,8 +4,9 @@
 #pragma OPENCL EXTENSION cl_khr_printf : enable
 #pragma OPENCL EXTENSION cl_khr_double : enable
 
-# define WIDTH_BUD (1920 * 4)
-# define HEIGHT_BUD (1080 * 4)
+//# define width_bud (1920 * 8)
+//# define height_bud (1080 * 8)
+
 
 __kernel void	buddhabrot(
 		__global char *out,
@@ -16,13 +17,17 @@ __kernel void	buddhabrot(
 		int move_y,
 		int move_x,
 		int clock,
-		int seuil)
+		int seuil,
+		int over)
 {
+	int tab[5] = {0, 1, 2, 4, 8};
+	int			width_bud = WIDTH * tab[over];
+	int			height_bud = HEIGHT * tab[over];
 	int		recup = get_global_id(0);
-	if (recup < 0 || recup >= WIDTH_BUD * HEIGHT_BUD)
+	if (recup < 0 || recup >= width_bud * height_bud)
 		return ;
-	int			x = recup % WIDTH_BUD;
-	int			y = recup / WIDTH_BUD;
+	int			x = recup % width_bud;
+	int			y = recup / width_bud;
 	long int	d_x = x + (V_PRECI)ajj_x + move_x;
 	long int	d_y = y + (V_PRECI)ajj_y + move_y;
 	V_PRECI		c_r = 0;
@@ -31,17 +36,9 @@ __kernel void	buddhabrot(
 	V_PRECI		z_i = 0;
 	V_PRECI		tmp;
 	int			i;
-	V_PRECI		kx, ky;
-	t_px		px;
-	float		h = clock;
-	float		s = 0.7;
-	float		v = 0.7;
-	int			tab_x[10000];
-	int			tab_y[10000];
+	int		kx, ky;
 	int			k;
 
-	if (!(recup % 1000000))
-	printf("++\n");
 	i = 0;
 	c_r = (d_x) / (V_PRECI)zoom + X1;
 	c_i = (d_y) / (V_PRECI)zoom + Y1;
@@ -50,38 +47,60 @@ __kernel void	buddhabrot(
 		tmp = z_r;
 		z_r = z_r * z_r - z_i * z_i + c_r;
 		z_i = 2 * z_i * tmp + c_i;
-		ky = (z_i - Y1) * (V_PRECI)zoom - (V_PRECI)ajj_y - move_y;
-		kx = (z_r - X1) * (V_PRECI)zoom - (V_PRECI)ajj_x - move_x;
-		tab_y[i] = (int)ky;
-		tab_x[i] = (int)kx;
+//		ky = (z_i - Y1) * (V_PRECI)zoom - (V_PRECI)ajj_y - move_y;
+//		kx = (z_r - X1) * (V_PRECI)zoom - (V_PRECI)ajj_x - move_x;
 		i++;
 	}
-	k = 0;
 	if (i != iter)
 	{
+		k = 0;
+		z_r = 0;
+		z_i = 0;
+		c_r = (d_x) / (V_PRECI)zoom + X1;
+		c_i = (d_y) / (V_PRECI)zoom + Y1;
 		while (k < i)
 		{
-			if (tab_y[k] > 0 && tab_y[k] < HEIGHT_BUD &&
-					tab_x[k] > 0 && tab_x[k] < WIDTH_BUD)
+			tmp = z_r;
+			z_r = z_r * z_r - z_i * z_i + c_r;
+			z_i = 2 * z_i * tmp + c_i;
+			ky = (int)((z_i - Y1) * (V_PRECI)zoom - (V_PRECI)ajj_y - move_y);
+			kx = (int)((z_r - X1) * (V_PRECI)zoom - (V_PRECI)ajj_x - move_x);
+			if (ky > 0 && ky < height_bud &&
+					kx > 0 && kx < width_bud)
 			{
-				if (i > seuil && out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4)] < 254)
+				if (i > seuil && out[(kx * OPP) + (ky * width_bud * 4)] < 254)
 				{
-					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4)]++;
-					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4) + 1]++;
-					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4) + 2]++;
+					out[(kx * OPP) + (ky * width_bud * 4)]++;
+					out[(kx * OPP) + (ky * width_bud * 4) + 1]++;
+					out[(kx * OPP) + (ky * width_bud * 4) + 2]++;
 				}
-/*
-				if (i > seuil && i < 2000 && out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4)] < 250)
-				{
-					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4) + 1]++;
-				}
-				if (i > seuil && i < 3000 && out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4)] < 250)
-				{
-					out[(tab_x[k] * OPP) + (tab_y[k] * WIDTH_BUD * 4) + 2]++;
-				}
-*/
 			}
 			k++;
 		}
 	}
 }
+/*
+		while (k < i)
+		{
+			if (tab_y[k] > 0 && tab_y[k] < height_bud &&
+					tab_x[k] > 0 && tab_x[k] < width_bud)
+			{
+				if (i > seuil && out[(tab_x[k] * OPP) + (tab_y[k] * width_bud * 4)] < 254)
+				{
+					out[(tab_x[k] * OPP) + (tab_y[k] * width_bud * 4)]++;
+					out[(tab_x[k] * OPP) + (tab_y[k] * width_bud * 4) + 1]++;
+					out[(tab_x[k] * OPP) + (tab_y[k] * width_bud * 4) + 2]++;
+				}
+
+//				if (i > seuil && i < 2000 && out[(tab_x[k] * OPP) + (tab_y[k] * width_bud * 4)] < 250)
+//				{
+//					out[(tab_x[k] * OPP) + (tab_y[k] * width_bud * 4) + 1]++;
+//				}
+//				if (i > seuil && i < 3000 && out[(tab_x[k] * OPP) + (tab_y[k] * width_bud * 4)] < 250)
+//				{
+//					out[(tab_x[k] * OPP) + (tab_y[k] * width_bud * 4) + 2]++;
+//				}
+			}
+			k++;
+		}
+*/

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 03:02:43 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/13 16:58:31 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/14 05:29:38 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void		cl_create_base(t_env *e, t_cl *cl)
 	else
 	{
 		cl->mem = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
-				MEM_OPENCL_BUD * sizeof(char), NULL, &(cl->err));
+				e->mem_opencl_bud * sizeof(char), NULL, &(cl->err));
 	}
 	cl_check_err(cl->err, "clCreateBuffer");
 
@@ -101,6 +101,9 @@ static void		cl_compile_kernel(t_env *e, t_cl *cl)
 
 int		cl_init_opencl(t_env *e)
 {
+	t_cl *cl;
+
+	cl = &e->cl;
 	cl_create_base(e, &e->cl);
 	cl_compile_kernel(e, &e->cl);
 	if (e->num)
@@ -108,5 +111,12 @@ int		cl_init_opencl(t_env *e)
 	else
 		e->cl.kernel = clCreateKernel(e->cl.program, "buddhabrot", &(e->cl.err));
 	cl_check_err(e->cl.err, "clCreateKernel");
+	if (e->num)
+		e->cl.global_item_size = WIDTH * HEIGHT;
+	else
+		e->cl.global_item_size = e->width_bud * e->height_bud;
+	cl->err = clGetKernelWorkGroupInfo(cl->kernel, cl->device_id,
+			CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &e->cl.local_item_size, NULL);
+	cl_check_err(e->cl.err, "clGetKernelWorkGroup");
 	return (1);
 }

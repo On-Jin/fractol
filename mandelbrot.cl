@@ -30,8 +30,6 @@ float jul_x)
 	V_PRECI	z_i = 0;
 	V_PRECI	tmp;
 	int		i;
-	int		fx, fy;
-	V_PRECI	kx, ky;
 	t_px	px;
 	float	h = clock;
 	float	s = 0.7;
