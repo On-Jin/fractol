@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/14 05:30:36 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/14 06:12:42 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int			cl_draw(t_env *e)
 				e->mem_opencl_bud * sizeof(char), tab, 0, NULL, NULL);
 		cl_check_err(cl->err, "clEnqueueReadBuffer");
 		clFinish(cl->cq);
+		clFlush(cl->cq);
 		ft_printf("End\n");
 		if (!e->num)
 			buddhabrot_color(e, tab);

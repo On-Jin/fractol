@@ -6,13 +6,13 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 16:26:01 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/14 05:32:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/14 05:58:43 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static int	add_val(t_env *e, int y, int x, char *data)
+static int	add_val(t_env *e, int y, int x, char *data, int add)
 {
 	int y_s, x_s, i = 0, val = 0;
 (void)e;
@@ -22,7 +22,7 @@ static int	add_val(t_env *e, int y, int x, char *data)
 		x_s = 0;
 		while (x_s < e->over)
 		{
-			val += data[(x + x_s) * OPP + (y + y_s) * (e->width_bud * 4)];
+			val += data[(x + x_s) * OPP + (y + y_s) * (e->width_bud * 4) + add];
 			i++;
 			x_s++;
 		}
@@ -50,9 +50,11 @@ void		over_sampling_resize(t_env *e, char *tab)
 		while (x < e->width_bud)
 		{
 			val = 0;
-			val = add_val(e, y, x, data);
+			val = add_val(e, y, x, data, 0);
 			new_data[(x / div) * OPP + (y / div) * (WIDTH * 4)] = val;
+			val = add_val(e, y, x, data, 1);
 			new_data[(x / div) * OPP + (y / div) * (WIDTH * 4) + 1] = val;
+			val = add_val(e, y, x, data, 2);
 			new_data[(x / div) * OPP + (y / div) * (WIDTH * 4) + 2] = val;
 			x += nb;
 		}

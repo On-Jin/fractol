@@ -68,10 +68,18 @@ __kernel void	buddhabrot(
 			if (ky > 0 && ky < height_bud &&
 					kx > 0 && kx < width_bud)
 			{
-				if (i > seuil && out[(kx * OPP) + (ky * width_bud * 4)] < 254)
+				if (k > seuil && k < 200 && out[(kx * OPP) + (ky * width_bud * 4)] < 254)
 				{
 					out[(kx * OPP) + (ky * width_bud * 4)]++;
+//					out[(kx * OPP) + (ky * width_bud * 4) + 1]++;
+//					out[(kx * OPP) + (ky * width_bud * 4) + 2]++;
+				}
+				if (k > seuil && k < 2000 && out[(kx * OPP) + (ky * width_bud * 4)] < 254)
+				{
 					out[(kx * OPP) + (ky * width_bud * 4) + 1]++;
+				}
+				if (k > seuil && k < 20000 && out[(kx * OPP) + (ky * width_bud * 4)] < 254)
+				{
 					out[(kx * OPP) + (ky * width_bud * 4) + 2]++;
 				}
 			}
