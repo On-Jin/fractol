@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/14 19:38:58 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/15 21:56:10 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ int			event_key_on(int keycode, t_env *e)
 	{
 		if (e->iter > 2)
 			e->iter--;
+	}
+	else if (keycode == 82)
+	{
+			e->iter+=100000;
 	}
 	else if (keycode == 88)
 	{

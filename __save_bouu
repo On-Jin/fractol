@@ -5,10 +5,13 @@
 #pragma OPENCL EXTENSION cl_khr_int64_base_atomics : enable
 #pragma OPENCL EXTENSION cl_khr_global_int64_base_atomics : enable
 #pragma OPENCL EXTENSION cl_khr_printf : enable
-#pragma OPENCL EXTENSION cl_intel_printf : enable
+
+//# define width_bud (1920 * 8)
+//# define height_bud (1080 * 8)
+
 
 __kernel void	buddhabrot(
-		__global volatile int *out,
+		__global char *out,
 		long int zoom,
 		long int  iter,
 		V_PRECI ajj_y,
@@ -17,9 +20,7 @@ __kernel void	buddhabrot(
 		int move_x,
 		int clock,
 		int seuil,
-		int over,
-		__global volatile int *out2,
-		__global volatile int *out3)
+		int over)
 {
 	int tab[5] = {0, 1, 2, 4, 8};
 	int			width_bud = WIDTH * tab[over];
@@ -39,7 +40,7 @@ __kernel void	buddhabrot(
 	int			i;
 	int		kx, ky;
 	int			k;
-	volatile __global int *ptr;
+volatile __global int *ptr;
 	i = 0;
 
 	c_r = (d_x) / (V_PRECI)zoom + X1;
@@ -50,9 +51,7 @@ __kernel void	buddhabrot(
 		z_r = z_r * z_r - z_i * z_i + c_r;
 		z_i = 2 * z_i * tmp + c_i;
 		i++;
-		barrier(CLK_GLOBAL_MEM_FENCE);
 	}
-	barrier(CLK_GLOBAL_MEM_FENCE);
 	if (i != iter)
 	{
 		k = 0;
@@ -60,6 +59,7 @@ __kernel void	buddhabrot(
 		z_i = 0;
 		c_r = (d_x) / (V_PRECI)zoom + X1;
 		c_i = (d_y) / (V_PRECI)zoom + Y1;
+//		barrier(CLK_GLOBAL_MEM_FENCE);
 		while (k < i)
 		{
 			tmp = z_r;
@@ -70,25 +70,30 @@ __kernel void	buddhabrot(
 			if (ky > 0 && ky < height_bud &&
 					kx > 0 && kx < width_bud)
 			{
-				if (out[(kx * OPP) + (ky * width_bud) + 0] < 254)
+				/*
+				if (k > seuil && k < 200 && out[(kx * OPP) + (ky * width_bud * 4)] < 254)
 				{
-					ptr = (&(out[((kx) + (ky * width_bud) + 0)]));
-					atom_inc(ptr);
-				}
-				if (out2[(kx * OPP) + (ky * width_bud) + 1] < 254)
+//					out[(kx * OPP) + (ky * width_bud * 4)]++;
+					atom_inc((volatile global unsigned int *)&out[(kx * OPP) + (ky * width_bud * 4)]);
+
+//					out[(kx * OPP) + (ky * width_bud * 4) + 1]++;
+//					out[(kx * OPP) + (ky * width_bud * 4) + 2]++;
+				}*/
+				if (k > seuil && k < 2000 && out[(kx * OPP) + (ky * width_bud * 4) + 1] < 254)
 				{
-					ptr = (&(out2[((kx) + (ky * width_bud) + 1)]));
+					ptr = (&(out[((kx * OPP) + (ky * width_bud * 4) + 1)]));
 					atom_inc(ptr);
+//					atom_inc((volatile global unsigned int *)&out[(kx * OPP) + (ky * width_bud * 4) + 1]);
+//					out[(kx * OPP) + (ky * width_bud * 4) + 1]++;
 				}
-				if (out3[(kx * OPP) + (ky * width_bud) + 2] < 254)
+				if (k > seuil && out[(kx * OPP) + (ky * width_bud * 4) + 2] < 254)
 				{
-					ptr = (&(out3[((kx) + (ky * width_bud) + 2)]));
-					atom_inc(ptr);
+	//				atom_inc((volatile __global int *)(&(out[((kx * OPP) + (ky * width_bud * 4) + 2)])));
+// 						   					out[(kx * OPP) + (ky * width_bud * 4) + 2]++;
 				}
+
 			}
-			barrier(CLK_GLOBAL_MEM_FENCE);
 			k++;
 		}
 	}
-	barrier(CLK_GLOBAL_MEM_FENCE);
 }

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 22:46:52 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/15 00:46:26 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/15 20:32:43 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void		buddhabrot(t_env *e, int y, int x)
 		i++;
 	}
 	k = 0;
-	if (i == e->iter)
+	if (i != e->iter)
 	{
 		c_r = (x + e->ajj_x + e->move_x) / e->zoom + x1;
 		c_i = (y + e->ajj_y + e->move_y) / e->zoom + y1;

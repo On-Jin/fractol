@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 03:02:43 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/15 03:16:23 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/15 05:06:36 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ static void		cl_create_base(t_env *e, t_cl *cl)
 	else
 	{
 		cl->mem = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
-				e->mem_opencl_bud * sizeof(char), NULL, &(cl->err));
+				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
+		cl->mem2 = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
+				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
+		cl->mem3 = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
+				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
 	}
 	cl_check_err(cl->err, "clCreateBuffer");
 

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 05:13:30 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/15 00:23:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/15 20:54:58 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	buddhabrot_color(t_env *e, char *tab)
 	}
 	i = 0;
 	///////////////////////// Les couleurs sont géré indépendament... Ensemble ? :)
-	e->gain = 1.4;
+	e->gain = 1;
 	while (i < e->height_bud)
 	{
 		j = 0;
@@ -55,22 +55,21 @@ void	buddhabrot_color(t_env *e, char *tab)
 		{
 			px_b = img[(j * 4) + (i * e->width_bud * 4)];
 			ret = 255 / (max_b / e->gain) * px_b;
-			if (ret > 255)
-				ret = 255;
+			if (ret > 250)
+				ret = 250;
 			img[(j * 4) + (i * e->width_bud * 4)] = ret;
-//			img[(j * 4) + (i * e->width_bud * 4) + 1] = 0;
-//			img[(j * 4) + (i * e->width_bud * 4) + 2] = 0;
+
 			px_g = img[(j * 4) + (i * e->width_bud * 4) + 1];
 			ret = 255 / (max_g / e->gain) * px_g;
-			if (ret > 255)
-				ret = 255;
+			if (ret > 250)
+				ret = 250;
 			img[(j * 4) + (i * e->width_bud * 4) + 1] = ret;
+
 			px_r = img[(j * 4) + (i * e->width_bud * 4) + 2];
 			ret = 255 / (max_r / e->gain)* px_r;
-			if (ret > 255)
-				ret = 255;
+			if (ret > 250)
+				ret = 250;
 			img[(j * 4) + (i * e->width_bud * 4) + 2] = ret;
-
 			j++;
 		}
 		i++;
