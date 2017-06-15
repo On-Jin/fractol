@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/15 21:53:49 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/16 00:42:16 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,9 @@ int			cl_draw(t_env *e)
 		}
 		if (!e->num)
 			buddhabrot_color(e, ftab);
-		if (!e->num)
-			over_sampling_resize(e, ftab);
-//		ft_memcpy(e->img->data, ftab, e->mem_opencl_bud * 4);
+	//	if (!e->num)
+	//		over_sampling_resize(e, ftab);
+		ft_memcpy(e->img->data, ftab, e->mem_opencl_bud * 4);
 		free(tab);
 		free(tab2);
 		free(tab3);

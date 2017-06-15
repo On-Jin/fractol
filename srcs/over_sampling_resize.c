@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 16:26:01 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/15 05:10:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/16 00:41:19 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	add_val(t_env *e, int y, int x, char *data, int add)
 {
-	int y_s, x_s, i = 0, val = 0;
+	int y_s, x_s, i = 0, val = 0, ret;
 (void)e;
 	y_s = 0;
 	while (y_s < e->over)
@@ -28,7 +28,12 @@ static int	add_val(t_env *e, int y, int x, char *data, int add)
 		}
 		y_s++;
 	}
-	return (val / i);
+	ret = val / i;
+	if (ret < 0)
+		ret = 0;
+	if (ret > 254)
+		ret = 254;
+	return (ret);
 }
 
 void		over_sampling_resize(t_env *e, char *tab)
