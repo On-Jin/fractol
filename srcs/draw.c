@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 22:46:52 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/13 17:22:16 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/15 00:46:26 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,8 @@ static void		buddhabrot(t_env *e, int y, int x)
 	V_PRECI x1 = -2.1;
 	V_PRECI y1 = -1.2;
 	V_PRECI tmp;
-	int         tab_x[10000];
-	int         tab_y[10000];
 	int         k;
-	V_PRECI     kx, ky;
+	int     kx, ky;
 	int		i = 0;
 	c_r = (x + e->ajj_x + e->move_x) / e->zoom + x1;
 	c_i = (y + e->ajj_y + e->move_y) / e->zoom + y1;
@@ -99,28 +97,34 @@ static void		buddhabrot(t_env *e, int y, int x)
 	{
 		tmp = z_r;
 		z_r = z_r * z_r - z_i * z_i + c_r;
-		z_i = 2 * z_i * tmp + c_i;
-		ky = (z_i - y1) * (V_PRECI)e->zoom - (V_PRECI)e->ajj_y - e->move_y;
-		kx = (z_r - x1) * (V_PRECI)e->zoom - (V_PRECI)e->ajj_x - e->move_x;
-		tab_y[i] = (int)ky;
-		tab_x[i] = (int)kx;
+		z_i = (z_i + z_i) * tmp + c_i;
 		i++;
 	}
 	k = 0;
-	if (i != e->iter)
+	if (i == e->iter)
 	{
+		c_r = (x + e->ajj_x + e->move_x) / e->zoom + x1;
+		c_i = (y + e->ajj_y + e->move_y) / e->zoom + y1;
+		z_i = 0;
+		z_r = 0;
 		while (k < i)
 		{
-			if (tab_y[k] > 0 && tab_y[k] < HEIGHT &&
-					tab_x[k] > 0 && tab_x[k] < WIDTH &&
-					i > e->seuil)
+			tmp = z_r;
+			z_r = z_r * z_r - z_i * z_i + c_r;
+			z_i = (z_i + z_i) * tmp + c_i;
+			ky = (int)((z_i - y1) * (V_PRECI)e->zoom - (V_PRECI)e->ajj_y - e->move_y);
+			kx = (int)((z_r - x1) * (V_PRECI)e->zoom - (V_PRECI)e->ajj_x - e->move_x);
+			k++;
+			if (ky > 0 && ky < HEIGHT &&
+					kx > 0 && kx < WIDTH &&
+					k > e->seuil)
 			{
-				if ((unsigned char)e->img->data[(tab_x[k] * 4) +
-											(tab_y[k] * WIDTH * 4)] < 254)
+				if ((unsigned char)e->img->data[(kx * 4) +
+											(ky * WIDTH * 4)] < 254)
 				{
-					e->img->data[(tab_x[k] * 4) + (tab_y[k] * WIDTH * 4)]++;
-					e->img->data[(tab_x[k] * 4) + (tab_y[k] * WIDTH * 4) + 1]++;
-					e->img->data[(tab_x[k] * 4) + (tab_y[k] * WIDTH * 4) + 2]++;
+					e->img->data[(kx * 4) + (ky * WIDTH * 4)]++;
+					e->img->data[(kx * 4) + (ky * WIDTH * 4) + 1]++;
+					e->img->data[(kx * 4) + (ky * WIDTH * 4) + 2]++;
 				}
 			}
 			k++;
@@ -154,7 +158,7 @@ int			draw(t_env *e)
 		}
 		y++;
 	}
-	if (!e->num)
-		buddhabrot_color(e, NULL);
+//	if (!e->num)
+//		buddhabrot_color(e, e->img->data);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/14 05:39:26 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/15 00:29:02 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	init_env(t_env *e)
 {
 	e->iter = 50;
-	if (e->num)
+	if (e->num || !GPU)
 	{
 		e->zoom = 300;
 		e->move_x = (WIDTH / 2 * -1) + ((2.1) * e->zoom);
@@ -60,7 +60,8 @@ int			main(int argc, char **argv)
 		return (0);
 	init_env(&e);
 	init_mlx(&e);
-	cl_init_opencl(&e);
+	if (GPU)
+		cl_init_opencl(&e);
 	mlx_hook(e.win, 2, 0, &event_key_on, &e);
 	mlx_key_hook(e.win, &event_key_off, &e);
 	mlx_mouse_hook(e.win, &event_mouse, &e);

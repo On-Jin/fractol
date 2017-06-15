@@ -74,6 +74,12 @@ float jul_x)
 		out[x * OPP + y * (WIDTH * 4) + 1] = px.g;
 		out[x * OPP + y * (WIDTH * 4) + 2] = px.r;
 	}
+	else
+	{
+		out[x * OPP + y * (WIDTH * 4)] = 0;
+		out[x * OPP + y * (WIDTH * 4) + 1] = 0;
+		out[x * OPP + y * (WIDTH * 4) + 2] = 0;
+	}
 }
 //		px.r = (255 / iter) * i;
 //		px.r = 0;

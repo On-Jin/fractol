@@ -6,6 +6,10 @@
 #pragma OPENCL EXTENSION cl_khr_global_int64_base_atomics : enable
 #pragma OPENCL EXTENSION cl_khr_printf : enable
 
+//# define width_bud (1920 * 8)
+//# define height_bud (1080 * 8)
+
+
 __kernel void	buddhabrot(
 		__global char *out,
 		long int zoom,
@@ -66,13 +70,28 @@ volatile __global int *ptr;
 			if (ky > 0 && ky < height_bud &&
 					kx > 0 && kx < width_bud)
 			{
-				if (out[(kx * OPP) + (ky * width_bud * 4) + 1] < 254)
+				/*
+				if (k > seuil && k < 200 && out[(kx * OPP) + (ky * width_bud * 4)] < 254)
+				{
+//					out[(kx * OPP) + (ky * width_bud * 4)]++;
+					atom_inc((volatile global unsigned int *)&out[(kx * OPP) + (ky * width_bud * 4)]);
+
+//					out[(kx * OPP) + (ky * width_bud * 4) + 1]++;
+//					out[(kx * OPP) + (ky * width_bud * 4) + 2]++;
+				}*/
+				if (k > seuil && k < 2000 && out[(kx * OPP) + (ky * width_bud * 4) + 1] < 254)
 				{
 					ptr = (&(out[((kx * OPP) + (ky * width_bud * 4) + 1)]));
-//					ptr = out + ((kx * OPP) + (ky * width_bud * 4) + 1);
-//					atom_inc(ptr);
-					atomic_add(ptr, 1);
+					atom_inc(ptr);
+//					atom_inc((volatile global unsigned int *)&out[(kx * OPP) + (ky * width_bud * 4) + 1]);
+//					out[(kx * OPP) + (ky * width_bud * 4) + 1]++;
 				}
+				if (k > seuil && out[(kx * OPP) + (ky * width_bud * 4) + 2] < 254)
+				{
+	//				atom_inc((volatile __global int *)(&(out[((kx * OPP) + (ky * width_bud * 4) + 2)])));
+// 						   					out[(kx * OPP) + (ky * width_bud * 4) + 2]++;
+				}
+
 			}
 			k++;
 		}

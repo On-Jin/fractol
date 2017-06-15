@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/14 05:38:52 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/14 19:39:12 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct	s_env
 	float		gain;
 	int			seuil;
 	int			over;
+	int			turn;
 
 	int			varover[5];
 	int			width_bud;

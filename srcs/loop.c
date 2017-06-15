@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:21:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/14 05:07:39 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/15 01:04:20 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ int			loop(t_env *e)
 	if (e->clock > 360)
 		e->clock = 0;
 	e->fps++;
-	if (!e->num /*GO CHECK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/)
+	if (!e->num && !e->turn)
 		return (1);
+	e->turn = 0;
 //	mlxji_clear_img(e->img);
-	ft_bzero(e->img->data, MEM_OPENCL);
+//	ft_bzero(e->img->data, MEM_OPENCL);
 #if (GPU == 1)
 	cl_draw(e);
 #else

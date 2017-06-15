@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/14 06:12:42 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/15 03:41:26 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ static void	cl_set_arg(t_env *e, t_cl *cl)
 		cl->err = clEnqueueWriteBuffer(cl->cq, cl->mem, CL_TRUE, 0, sizeof(char) * MEM_OPENCL, e->img->data, 0, NULL, NULL);
 	else
 	{
-	//	clEnqueueFillBuffer(cl->cq, cl->mem, );
-	char *buf;
-	buf = ft_memalloc(e->mem_opencl_bud);
+		ft_printf("Lol\n");
+		//	clEnqueueFillBuffer(cl->cq, cl->mem, );
+		char *buf;
+		buf = ft_memalloc(e->mem_opencl_bud);
 		cl->err = clEnqueueWriteBuffer(cl->cq, cl->mem, CL_TRUE, 0, sizeof(char) * e->mem_opencl_bud, buf, 0, NULL, NULL);
 		free(buf);
 		ft_printf("Lol\n");
@@ -63,15 +64,34 @@ static void	cl_set_arg(t_env *e, t_cl *cl)
 static void	cl_run_kernel(t_env *e, t_cl *cl)
 {
 	(void)e;
+	cl_event event;
+	if (e->num)
+		e->cl.global_item_size = WIDTH * HEIGHT;
+	else
+		e->cl.global_item_size = e->width_bud * e->height_bud;
+	cl->err = clGetKernelWorkGroupInfo(cl->kernel, cl->device_id,
+			CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &e->cl.local_item_size, NULL);
+	cl_check_err(cl->err, "clGetKernelWorkGroupInfo");
+	if (e->cl.global_item_size % cl->local_item_size)
+	{
+		ft_printf("Aie\n");
+		exit(0);
+	}
+	//cl->local_item_size = 1;
+	cl_check_err(e->cl.err, "clGetKernelWorkGroup");
 	cl->err = clEnqueueNDRangeKernel(cl->cq, cl->kernel, 1, NULL,
-			&cl->global_item_size, &cl->local_item_size, 0, NULL, NULL);
+			&cl->global_item_size, &cl->local_item_size, 0, NULL, &event);
 	cl_check_err(cl->err, "clEnqueueNDRangeKernel");
+	clWaitForEvents(1, &event);
+	cl->err = clFlush(cl->cq);
+	cl_check_err(cl->err, "clFlush");
 }
 
 int			cl_draw(t_env *e)
 {
 	t_cl	*cl;
 	char *tab;
+	cl_event event;
 
 	cl = &(e->cl);
 	cl_set_arg(e, &(e->cl));
@@ -79,19 +99,25 @@ int			cl_draw(t_env *e)
 	if (e->num)
 	{
 		cl->err = clEnqueueReadBuffer(cl->cq, cl->mem, CL_TRUE, 0,
-				MEM_OPENCL * sizeof(char), e->img->data, 0, NULL, NULL);
+				MEM_OPENCL * sizeof(char), e->img->data, 0, NULL, &event);
+		clWaitForEvents(1, &event);
 		cl_check_err(cl->err, "clEnqueueReadBuffer");
 	}
 	else
 	{
-		
-		tab = ft_memalloc(e->mem_opencl_bud);
+		tab = ft_memalloc(e->mem_opencl_bud * sizeof(char));
 		cl->err = clEnqueueReadBuffer(cl->cq, cl->mem, CL_TRUE, 0,
-				e->mem_opencl_bud * sizeof(char), tab, 0, NULL, NULL);
+				e->mem_opencl_bud * sizeof(char), tab, 0, NULL, &event);
+		clWaitForEvents(1, &event);
 		cl_check_err(cl->err, "clEnqueueReadBuffer");
 		clFinish(cl->cq);
-		clFlush(cl->cq);
-		ft_printf("End\n");
+		ft_printf("Ptr Bleu %p\nPtr Vert %p\nPtr Roug %p\n%p\n%p\n%p\n",
+		(&(tab[(0)])),
+		(&(tab[(1)])),
+		(&(tab[(2)])),
+		tab + 0,
+		tab + 1,
+		tab + 2);
 		if (!e->num)
 			buddhabrot_color(e, tab);
 		if (!e->num)
