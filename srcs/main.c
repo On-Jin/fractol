@@ -6,41 +6,49 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/16 00:49:52 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/16 08:16:12 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
+static void init_basic(t_env *e, t_tool *tool)
+{
+	(void)e;
+	tool->zoom = 300;
+	tool->move_x = (WIDTH / 2 * -1) + ((2.1) * tool->zoom);
+	tool->move_y = (HEIGHT / 2 * -1) + ((1.2) * tool->zoom);
+}
+
+static void init_bud(t_env *e, t_tool *tool, t_bud *bud)
+{
+	e->varover[0] = 0;
+	e->varover[1] = 1;
+	e->varover[2] = 2;
+	e->varover[3] = 4;
+	e->varover[4] = 8;
+	e->varover[5] = 16;
+	bud->over = 4;
+	e->width_bud = WIDTH * e->varover[bud->over];
+	e->height_bud = HEIGHT * e->varover[bud->over];
+	e->mem_opencl_bud = e->width_bud * e->height_bud;
+	if (e->bud.over == 1)
+		tool->zoom = 300;
+	else
+		tool->zoom = 700 * bud->over;
+	tool->move_x = (e->width_bud / 2 * -1) + ((2.1) * tool->zoom);
+	tool->move_y = (e->height_bud / 2 * -1) + ((1.2) * tool->zoom);
+	bud->gain = 1;
+	e->buff_patern = ft_memalloc(e->mem_opencl_bud * sizeof(int));
+	e->ftab = ft_memalloc(e->mem_opencl_bud * 4);		
+}
 static void	init_env(t_env *e)
 {
-	e->iter = 50;
+	e->tool.iter = 50;
 	if (e->num || !GPU)
-	{
-		e->zoom = 300;
-		e->move_x = (WIDTH / 2 * -1) + ((2.1) * e->zoom);
-		e->move_y = (HEIGHT / 2 * -1) + ((1.2) * e->zoom);
-	}
+		init_basic(e, &e->tool);
 	else
-	{
-		e->over = 4;
-		e->varover[0] = 0;
-		e->varover[1] = 1;
-		e->varover[2] = 2;
-		e->varover[3] = 4;
-		e->varover[4] = 8;
-		e->width_bud = WIDTH * e->varover[e->over];
-		e->height_bud = HEIGHT * e->varover[e->over];
-		e->mem_opencl_bud = e->width_bud * e->height_bud;
-		e->iter = 50;
-		if (e->over == 1)
-			e->zoom = 300 * e->over; // 600 over = 2
-		else
-			e->zoom = 700 * e->over;
-		e->move_x = (e->width_bud / 2 * -1) + ((2.1) * e->zoom);
-		e->move_y = (e->height_bud / 2 * -1) + ((1.2) * e->zoom);
-	}
-	e->gain = 1;
+		init_bud(e, &e->tool, &e->bud);
 }
 
 static int get_arg(t_env *e, int argc, char **argv)

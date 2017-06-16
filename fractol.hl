@@ -10,9 +10,9 @@
 #define OPP 4
 
 #if defined(MODE_PRECI)
-	#define V_PRECI double
+#define V_PRECI double
 #else
-	#define V_PRECI float
+#define V_PRECI float
 #endif
 
 typedef struct		s_px
@@ -33,6 +33,25 @@ typedef struct		s_hsv
 	float		down;
 	float		up;
 }					t_hsv;
+
+typedef struct	s_bud
+{
+	int			over;
+	int			anti;
+	float		gain;
+	int			min[3];
+	int			max[3];
+}				t_bud;
+
+typedef struct	s_tool
+{
+	long int	zoom;
+	long int	iter;
+	V_PRECI		ajj_x;
+	V_PRECI		ajj_y;
+	int			move_x;
+	int			move_y;
+}				t_tool;
 
 int         mlxji_hsv_to_rgb(t_px *px, float h, float s, float v);
 

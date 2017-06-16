@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/15 04:31:33 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/16 07:41:11 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@
 # define MAX_SOURCE_SIZE (11000)
 # define OPP 4
 
+# define X1_MAN -2.1
+# define Y1_MAN -1.2
+
 typedef struct	s_cl
 {
 	cl_device_id		device_id;
@@ -67,6 +70,35 @@ typedef struct	s_cl
 	size_t				local_item_size;
 }				t_cl;
 
+typedef struct	s_bud
+{
+	int			over;
+	int			anti;
+	float		gain;
+	int			min[3];
+	int			max[3];
+}				t_bud;
+
+typedef struct	s_tool
+{
+	long int	zoom;
+	long int	iter;
+	V_PRECI		ajj_x;
+	V_PRECI		ajj_y;
+	int			move_x;
+	int			move_y;
+}				t_tool;
+
+typedef struct	s_kit
+{
+	V_PRECI c_r;
+	V_PRECI c_i;
+	V_PRECI z_r;
+	V_PRECI z_i;
+	V_PRECI tmp;
+	int		i;
+}				t_kit;
+
 typedef struct	s_env
 {
 	t_cl		cl;
@@ -74,21 +106,24 @@ typedef struct	s_env
 	void		*win;
 	t_img		*img;
 
+	t_tool		tool;
+	t_bud		bud;
+
 	struct		timeval step;
 	struct		timeval cur;
 	int			fps;
 
-	float		gain;
-	int			seuil;
-	int			over;
+	char		*ftab;
+	int	*buff_patern;
+
 	int			turn;
 
-	int			varover[5];
+	int			varover[6];
 	int			width_bud;
 	int			height_bud;
 	int			mem_opencl_bud;
+
 	int			num;
-	int			pal_color;
 	char		open_var_jul;
 	float		jul_y;
 	float		jul_x;
@@ -99,12 +134,6 @@ typedef struct	s_env
 
 	int			mouse_x;
 	int			mouse_y;
-	int			move_x;
-	int			move_y;
-	long int	iter;
-	long int	zoom;
-	V_PRECI		ajj_x;
-	V_PRECI		ajj_y;
 }				t_env;
 
 void			init_mlx(t_env *e);
@@ -113,6 +142,8 @@ int				event_move_mouse(int x, int y, t_env *e);
 int				event_mouse(int button, int x, int y, t_env *e);
 int				event_key_on(int keycode, t_env *e);
 int				event_key_off(int keycode, t_env *e);
+
+int				menu(t_env *e);
 
 void			over_sampling_resize(t_env *e, char *tab);
 

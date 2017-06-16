@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 22:46:52 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/15 20:32:43 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/16 06:45:22 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,26 @@
 
 static void		mandelbrot(t_env *e, t_px *px,  int y, int x)
 {
-	V_PRECI	c_r = 0;
-	V_PRECI	c_i = 0;
-	V_PRECI	z_r = 0;
-	V_PRECI	z_i = 0;
-	V_PRECI x1 = -2.1;
-	V_PRECI y1 = -1.2;
-	V_PRECI tmp;
-	int		i = 0;
-	c_r = (x + e->ajj_x + e->move_x) / e->zoom + x1;
-	c_i = (y + e->ajj_y + e->move_y) / e->zoom + y1;
-	while (z_r * z_r + z_i * z_i < 4 && i < e->iter)
+	t_kit	kit;
+
+	ft_bzero(&kit, sizeof(t_kit));
+	kit.c_r = (x + e->tool.ajj_x + e->tool.move_x) / e->tool.zoom + X1_MAN;
+	kit.c_i = (y + e->tool.ajj_y + e->tool.move_y) / e->tool.zoom + Y1_MAN;
+	while (kit.z_r * kit.z_r + kit.z_i * kit.z_i < 4 && kit.i < e->tool.iter)
 	{
-		tmp = z_r;
-		z_r = z_r * z_r - z_i * z_i + c_r;
-		z_i = 2 * z_i * tmp + c_i;
-		i++;
+		kit.tmp = kit.z_r;
+		kit.z_r = kit.z_r * kit.z_r - kit.z_i * kit.z_i + kit.c_r;
+		kit.z_i = 2 * kit.z_i * kit.tmp + kit.c_i;
+		kit.i++;
 	}
 	if (x > 0 && x < WIDTH &&
 			y > 0 && y < HEIGHT)
 	{
-		if (i == e->iter)
+		if (kit.i == e->tool.iter)
 			mlxji_put_pixel(e->img, x, y, px);
 		else
 		{
-			px->b = i * 255 / e->iter;
+			px->b = kit.i * 255 / e->tool.iter;
 			mlxji_put_pixel(e->img, x, y, px);
 		}
 	}
@@ -46,34 +41,28 @@ static void		mandelbrot(t_env *e, t_px *px,  int y, int x)
 
 static void		julia(t_env *e, t_px *px,  int y, int x)
 {
-	V_PRECI	c_r = 0;
-	V_PRECI	c_i = 0;
-	V_PRECI	z_r = 0;
-	V_PRECI	z_i = 0;
-	V_PRECI x1 = -2.1;
-	V_PRECI y1 = -1.2;
-	V_PRECI tmp;
-	int		i = 0;
+	t_kit	kit;
 
-	z_r = (x + e->ajj_x + e->move_x) / e->zoom + x1;
-	z_i = (y + e->ajj_y + e->move_y) / e->zoom + y1;
-	c_r = e->jul_x;
-	c_i = e->jul_y;
-	while (z_r * z_r + z_i * z_i < 4 && i < e->iter)
+	ft_bzero(&kit, sizeof(t_kit));
+	kit.z_r = (x + e->tool.ajj_x + e->tool.move_x) / e->tool.zoom + X1_MAN;
+	kit.z_i = (y + e->tool.ajj_y + e->tool.move_y) / e->tool.zoom + Y1_MAN;
+	kit.c_r = e->jul_x;
+	kit.c_i = e->jul_y;
+	while (kit.z_r * kit.z_r + kit.z_i * kit.z_i < 4 && kit.i < e->tool.iter)
 	{
-		tmp = z_r;
-		z_r = z_r * z_r - z_i * z_i + c_r;
-		z_i = 2 * z_i * tmp + c_i;
-		i++;
+		kit.tmp = kit.z_r;
+		kit.z_r = kit.z_r * kit.z_r - kit.z_i * kit.z_i + kit.c_r;
+		kit.z_i = 2 * kit.z_i * kit.tmp + kit.c_i;
+		kit.i++;
 	}
 	if (x > 0 && x < WIDTH &&
 			y > 0 && y < HEIGHT)
 	{
-		if (i == e->iter)
+		if (kit.i == e->tool.iter)
 			mlxji_put_pixel(e->img, x, y, px);
 		else
 		{
-			px->b = i * 255 / e->iter;
+			px->b = kit.i * 255 / e->tool.iter;
 			mlxji_put_pixel(e->img, x, y, px);
 		}
 	}
@@ -81,43 +70,40 @@ static void		julia(t_env *e, t_px *px,  int y, int x)
 
 static void		buddhabrot(t_env *e, int y, int x)
 {
-	V_PRECI	c_r = 0;
-	V_PRECI	c_i = 0;
-	V_PRECI	z_r = 0;
-	V_PRECI	z_i = 0;
-	V_PRECI x1 = -2.1;
-	V_PRECI y1 = -1.2;
-	V_PRECI tmp;
+	t_kit	kit;
 	int         k;
 	int     kx, ky;
-	int		i = 0;
-	c_r = (x + e->ajj_x + e->move_x) / e->zoom + x1;
-	c_i = (y + e->ajj_y + e->move_y) / e->zoom + y1;
-	while (z_r * z_r + z_i * z_i < 4 && i < e->iter)
+
+	ft_bzero(&kit, sizeof(t_kit));
+	kit.c_r = (x + e->tool.ajj_x + e->tool.move_x) / e->tool.zoom + X1_MAN;
+	kit.c_i = (y + e->tool.ajj_y + e->tool.move_y) / e->tool.zoom + Y1_MAN;
+	while (kit.z_r * kit.z_r + kit.z_i * kit.z_i < 4 && kit.i < e->tool.iter)
 	{
-		tmp = z_r;
-		z_r = z_r * z_r - z_i * z_i + c_r;
-		z_i = (z_i + z_i) * tmp + c_i;
-		i++;
+		kit.tmp = kit.z_r;
+		kit.z_r = kit.z_r * kit.z_r - kit.z_i * kit.z_i + kit.c_r;
+		kit.z_i = (kit.z_i + kit.z_i) * kit.tmp + kit.c_i;
+		kit.i++;
 	}
 	k = 0;
-	if (i != e->iter)
+	if (kit.i != e->tool.iter)
 	{
-		c_r = (x + e->ajj_x + e->move_x) / e->zoom + x1;
-		c_i = (y + e->ajj_y + e->move_y) / e->zoom + y1;
-		z_i = 0;
-		z_r = 0;
-		while (k < i)
+		kit.c_r = (x + e->tool.ajj_x + e->tool.move_x) / e->tool.zoom + X1_MAN;
+		kit.c_i = (y + e->tool.ajj_y + e->tool.move_y) / e->tool.zoom + Y1_MAN;
+		kit.z_i = 0;
+		kit.z_r = 0;
+		while (k < kit.i)
 		{
-			tmp = z_r;
-			z_r = z_r * z_r - z_i * z_i + c_r;
-			z_i = (z_i + z_i) * tmp + c_i;
-			ky = (int)((z_i - y1) * (V_PRECI)e->zoom - (V_PRECI)e->ajj_y - e->move_y);
-			kx = (int)((z_r - x1) * (V_PRECI)e->zoom - (V_PRECI)e->ajj_x - e->move_x);
+			kit.tmp = kit.z_r;
+			kit.z_r = kit.z_r * kit.z_r - kit.z_i * kit.z_i + kit.c_r;
+			kit.z_i = (kit.z_i + kit.z_i) * kit.tmp + kit.c_i;
+			ky = (int)((kit.z_i - Y1_MAN) *
+					(V_PRECI)e->tool.zoom - (V_PRECI)e->tool.ajj_y - e->tool.move_y);
+			kx = (int)((kit.z_r - X1_MAN) *
+					(V_PRECI)e->tool.zoom - (V_PRECI)e->tool.ajj_x - e->tool.move_x);
 			k++;
 			if (ky > 0 && ky < HEIGHT &&
 					kx > 0 && kx < WIDTH &&
-					k > e->seuil)
+					k > e->bud.min[0])
 			{
 				if ((unsigned char)e->img->data[(kx * 4) +
 											(ky * WIDTH * 4)] < 254)

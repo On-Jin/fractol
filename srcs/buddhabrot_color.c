@@ -6,67 +6,65 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 05:13:30 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/15 20:54:58 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/16 08:12:09 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	buddhabrot_color(t_env *e, char *tab)
+static void find_max_rgb(t_env *e, char *img, int *px, int *max)
 {
-	int i, j;
-	int	max_r = 0;
-	int	max_g = 0;
-	int	max_b = 0;
-	char *img;
-	int	px_r;
-	int	px_g;
-	int	px_b;
-	int ret;
+	int i;
+	int j;
 
-//	img = e->img->data;
-	img = tab;
 	i = 0;
 	while (i < e->height_bud)
 	{
 		j = 0;
 		while (j < e->width_bud)
 		{
-			px_b = img[(j * 4) + (i * e->width_bud * 4)];
-			px_g = img[(j * 4) + (i * e->width_bud * 4) + 1];
-			px_r = img[(j * 4) + (i * e->width_bud * 4) + 2];
-			if (px_r > max_r)
-				max_r = px_r;
-			if (px_g > max_g)
-				max_g = px_g;
-			if (px_b > max_b)
-				max_b = px_b;
+			px[0] = img[(j * 4) + (i * e->width_bud * 4)];
+			px[1] = img[(j * 4) + (i * e->width_bud * 4) + 1];
+			px[2] = img[(j * 4) + (i * e->width_bud * 4) + 2];
+			if (px[0] > max[0])
+				max[0] = px[0];
+			if (px[1] > max[1])
+				max[1] = px[1];
+			if (px[2] > max[2])
+				max[2] = px[2];
 			j++;
 		}
 		i++;
 	}
+}
+
+//			ret = trunc(255*sqrt(px_b)/sqrt(max_b));
+static void	set_color(t_env *e, char *img, int *px, int *max)
+{
+	int i;
+	int j;
+	int	ret;
+
 	i = 0;
-	///////////////////////// Les couleurs sont géré indépendament... Ensemble ? :)
-	e->gain = 1;
 	while (i < e->height_bud)
 	{
 		j = 0;
 		while (j < e->width_bud)
 		{
-			px_b = img[(j * 4) + (i * e->width_bud * 4)];
-			ret = 255 / (max_b / e->gain) * px_b;
+			px[0] = img[(j * 4) + (i * e->width_bud * 4)];
+			ret = 255 / (max[0] / e->bud.gain) * px[0];
 			if (ret > 250)
 				ret = 250;
 			img[(j * 4) + (i * e->width_bud * 4)] = ret;
 
-			px_g = img[(j * 4) + (i * e->width_bud * 4) + 1];
-			ret = 255 / (max_g / e->gain) * px_g;
+			px[1] = img[(j * 4) + (i * e->width_bud * 4) + 1];
+			ret = 255 / (max[1] / e->bud.gain) * px[1];
 			if (ret > 250)
 				ret = 250;
 			img[(j * 4) + (i * e->width_bud * 4) + 1] = ret;
 
-			px_r = img[(j * 4) + (i * e->width_bud * 4) + 2];
-			ret = 255 / (max_r / e->gain)* px_r;
+			px[2] = img[(j * 4) + (i * e->width_bud * 4) + 2];
+			ret = 255 / (max[2] / e->bud.gain)* px[2];
 			if (ret > 250)
 				ret = 250;
 			img[(j * 4) + (i * e->width_bud * 4) + 2] = ret;
@@ -74,4 +72,14 @@ void	buddhabrot_color(t_env *e, char *tab)
 		}
 		i++;
 	}
+}
+
+void	buddhabrot_color(t_env *e, char *img)
+{
+	int max[3] = {0, 0, 0};
+	int px[3] = {0, 0, 0};
+	e->bud.gain = 1;
+
+	find_max_rgb(e, img, px, max);
+	set_color(e, img, px, max);
 }

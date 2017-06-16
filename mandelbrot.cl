@@ -6,12 +6,7 @@
 
 __kernel void	mandelbrot(
 __global char *out,
-long int zoom,
-long int  iter,
-V_PRECI ajj_y,
-V_PRECI ajj_x,
-int move_y,
-int move_x,
+t_tool tool,
 int clock,
 int	num,
 float jul_y,
@@ -22,8 +17,8 @@ float jul_x)
 		return ;
 	int		x = recup % WIDTH;
 	int		y = recup / WIDTH;
-	long int		d_x = x + (V_PRECI)ajj_x + move_x;
-	long int		d_y = y + (V_PRECI)ajj_y + move_y;
+	long int		d_x = x + (V_PRECI)tool.ajj_x + tool.move_x;
+	long int		d_y = y + (V_PRECI)tool.ajj_y + tool.move_y;
 	V_PRECI	c_r = 0;
 	V_PRECI	c_i = 0;
 	V_PRECI	z_r = 0;
@@ -38,9 +33,9 @@ float jul_x)
 	i = 0;
 	if (num == 1)
 	{
-		c_r = (d_x) / (V_PRECI)zoom + X1;
-		c_i = (d_y) / (V_PRECI)zoom + Y1;
-		while (z_r * z_r + z_i * z_i < 4 && i < iter)
+		c_r = (d_x) / (V_PRECI)tool.zoom + X1;
+		c_i = (d_y) / (V_PRECI)tool.zoom + Y1;
+		while (z_r * z_r + z_i * z_i < 4 && i < tool.iter)
 		{
 			tmp = z_r;
 			z_r = z_r * z_r - z_i * z_i + c_r;
@@ -50,11 +45,11 @@ float jul_x)
 	}
 	else
 	{
-		z_r = (d_x) / (V_PRECI)zoom + X1;
-		z_i = (d_y) / (V_PRECI)zoom + Y1;
+		z_r = (d_x) / (V_PRECI)tool.zoom + X1;
+		z_i = (d_y) / (V_PRECI)tool.zoom + Y1;
 		c_r = jul_x;
 		c_i = jul_y;
-		while (z_r * z_r + z_i * z_i < 4 && i < iter)
+		while (z_r * z_r + z_i * z_i < 4 && i < tool.iter)
 		{
 			tmp = z_r;
 			z_r = z_r * z_r - z_i * z_i + c_r;
@@ -62,9 +57,9 @@ float jul_x)
 			i++;
 		}
 	}
-	if (i != iter)// && (i > 1)
+	if (i != tool.iter)// && (i > 1)
 	{
-		h += (360 / (float)iter) * i;
+		h += (360 / (float)tool.iter) * i;
 		if (h > 360)
 		{
 			h -= 360;
@@ -81,12 +76,12 @@ float jul_x)
 		out[x * OPP + y * (WIDTH * 4) + 2] = 0;
 	}
 }
-//		px.r = (255 / iter) * i;
+//		px.r = (255 / tool.iter) * i;
 //		px.r = 0;
 //		px.g = 0;
 //		px.b = 0;
-//		s = s + (0.30 / iter) * i;
-//		v = v + (0.10 / iter) * i;
+//		s = s + (0.30 / tool.iter) * i;
+//		v = v + (0.10 / tool.iter) * i;
 /*
 HSV baic
 g = 0;
