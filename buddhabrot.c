@@ -50,9 +50,9 @@ __kernel void	buddhabrot(
 		z_r = z_r * z_r - z_i * z_i + c_r;
 		z_i = 2 * z_i * tmp + c_i;
 		i++;
-		barrier(CLK_GLOBAL_MEM_FENCE);
 	}
-	barrier(CLK_GLOBAL_MEM_FENCE);
+	
+	barrier(CLK_GLOBAL_MEM_FENCE);	
 	if (i != iter)
 	{
 		k = 0;

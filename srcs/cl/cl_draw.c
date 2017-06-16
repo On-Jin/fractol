@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/16 00:42:16 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/16 03:27:57 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ static void	cl_run_kernel(t_env *e, t_cl *cl)
 	clWaitForEvents(1, &event);
 	cl->err = clFlush(cl->cq);
 	cl_check_err(cl->err, "clFlush");
+	ft_printf("End Kernel execution\n");
 }
 
 int			cl_draw(t_env *e)
@@ -113,6 +114,7 @@ int			cl_draw(t_env *e)
 	}
 	else
 	{
+		(void)tab;(void)tab2;(void)tab3;
 		tab = ft_memalloc(e->mem_opencl_bud * sizeof(int));
 		tab2 = ft_memalloc(e->mem_opencl_bud * sizeof(int));
 		tab3 = ft_memalloc(e->mem_opencl_bud * sizeof(int));
@@ -144,9 +146,9 @@ int			cl_draw(t_env *e)
 		}
 		if (!e->num)
 			buddhabrot_color(e, ftab);
-	//	if (!e->num)
-	//		over_sampling_resize(e, ftab);
-		ft_memcpy(e->img->data, ftab, e->mem_opencl_bud * 4);
+		if (!e->num)
+			over_sampling_resize(e, ftab);
+//		ft_memcpy(e->img->data, ftab, e->mem_opencl_bud * 4);
 		free(tab);
 		free(tab2);
 		free(tab3);

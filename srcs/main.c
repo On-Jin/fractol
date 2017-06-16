@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/16 00:44:03 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/16 00:49:52 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	init_env(t_env *e)
 	}
 	else
 	{
-		e->over = 1;
+		e->over = 4;
 		e->varover[0] = 0;
 		e->varover[1] = 1;
 		e->varover[2] = 2;
