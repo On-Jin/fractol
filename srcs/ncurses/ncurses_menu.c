@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 06:36:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 08:33:01 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 09:31:35 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ void		ncurses_menu(t_env *e, t_nc *nc)
 	ncurses_menu_print_base(e, nc);
 	if (nc->menu_bud)
 		ncurses_menu_bud(e, nc);
-	wrefresh(nc->win);
 	ncurses_key(e, &e->nc);
+	wrefresh(nc->win);
 }

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 18:00:11 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 08:40:29 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 09:38:34 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ static void	free_mlx(t_env *e, t_img *img)
 
 void		end_of_program(t_env *e, char *str)
 {
-	free_mlx(e, e->img);
-	cl_end_opencl(e, &(e->cl));
+	if (e->nc.menu)
+		free_mlx(e, e->img);
+	if (e->nc.menu)
+		cl_end_opencl(e, &(e->cl));
 	if (e->buff_patern)
 		free(e->buff_patern);
 	if (e->ftab)

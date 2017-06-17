@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 08:40:03 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 10:57:23 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,5 +191,7 @@ void			ncurses_menu(t_env *e, t_nc *nc);
 void			ncurses_menu_bud(t_env *e, t_nc *nc);
 void			ncurses_key(t_env *e, t_nc *nc);
 void			ncurses_parsing(t_env *e, t_nc *nc);
+void			ncurses_print_stat(t_env *e, t_nc *nc);
+void			ncurses_print_parsing_buddhabrot(t_env *e, t_nc *nc);
 
 #endif

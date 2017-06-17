@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:17:35 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 06:27:04 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 13:11:07 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int				event_mouse(int button, int x, int y, t_env *e)
 	{
 		//image poussé par le zoom
 		//donc je la rattrape :risitas:
-		e->tool.ajj_x += ((x * e->bud.over + e->tool.move_x) / 6);//3.6 4
-		e->tool.ajj_y += ((y * e->bud.over + e->tool.move_y) / 6);
+		e->tool.ajj_x += ((x * e->varover[e->bud.over] + e->tool.move_x) / 6);//3.6 4
+		e->tool.ajj_y += ((y * e->varover[e->bud.over] + e->tool.move_y) / 6);
 /*
 		e->tool.ajj_x += (-1 * ((((float)x) / WIDTH) *
 					(0.6 + 2.1)));
@@ -40,8 +40,8 @@ int				event_mouse(int button, int x, int y, t_env *e)
 	}
 	else if (button == 5) //AV
 	{
-		e->tool.ajj_x += ((x * e->bud.over + e->tool.move_x) / 6);//3.6 4
-		e->tool.ajj_y += ((y * e->bud.over + e->tool.move_y) / 6);
+		e->tool.ajj_x += ((x * e->varover[e->bud.over] + e->tool.move_x) / 6);//3.6 4
+		e->tool.ajj_y += ((y * e->varover[e->bud.over] + e->tool.move_y) / 6);
 		e->tool.zoom *=  1.2;
 		e->tool.ajj_y *= 1.2;
 		e->tool.ajj_x *= 1.2;
@@ -51,8 +51,8 @@ int				event_mouse(int button, int x, int y, t_env *e)
 		e->tool.zoom /=  1.2;
 		e->tool.ajj_y /= 1.2;
 		e->tool.ajj_x /= 1.2;
-		e->tool.ajj_x -= ((x * e->bud.over + e->tool.move_x) / 6);//3.6 4
-		e->tool.ajj_y -= ((y * e->bud.over + e->tool.move_y) / 6);
+		e->tool.ajj_x -= ((x * e->varover[e->bud.over] + e->tool.move_x) / 6);//3.6 4
+		e->tool.ajj_y -= ((y * e->varover[e->bud.over] + e->tool.move_y) / 6);
 	}
 	return (1);
 }

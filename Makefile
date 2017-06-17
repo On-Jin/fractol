@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/06/17 08:33:58 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/06/17 10:57:37 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ SRC = main.c \
 		 ncurses/ncurses_menu.c \
 		 ncurses/ncurses_menu_bud.c \
 		 ncurses/ncurses_parsing.c \
+		 ncurses/ncurses_print_parsing_buddhabrot.c \
+		 ncurses/ncurses_print_stat.c \
 		 ncurses/ncurses_key.c \
 		 buddhabrot/buddhabrot_color.c \
 		 cl/cl_draw.c \

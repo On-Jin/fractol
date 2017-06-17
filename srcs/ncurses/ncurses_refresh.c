@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 06:23:54 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 06:35:47 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 10:57:09 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void		ncurses_refresh(t_env *e, t_nc *nc)
 	(void)e;
 	werase(nc->win);
 	box(nc->win, 0, 0);
-	mvwprintw(nc->win, 1, 1, "slt");
+	ncurses_print_stat(e, nc);
+	if (!e->num)
+		ncurses_print_parsing_buddhabrot(e, nc);
 	wrefresh(nc->win);
 }

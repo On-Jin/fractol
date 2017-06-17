@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 06:28:27 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 11:51:28 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,6 @@ int			cl_draw(t_env *e)
 	sec = (t2 - t1) % 60;
 	int min;
 	min = (t2 - t1) / 60;
-//	ft_printf("\033[32mTemps : %i:%i\n\033[0m", min, sec);
+	ft_printf("\033[32mTemps : %i:%i\n\033[0m", min, sec);
 	return (1);
 }

@@ -6,12 +6,12 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 05:13:30 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/16 08:12:09 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 13:18:46 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
+/*
 static void find_max_rgb(t_env *e, char *img, int *px, int *max)
 {
 	int i;
@@ -53,33 +53,36 @@ static void	set_color(t_env *e, char *img, int *px, int *max)
 		{
 			px[0] = img[(j * 4) + (i * e->width_bud * 4)];
 			ret = 255 / (max[0] / e->bud.gain) * px[0];
-			if (ret > 250)
-				ret = 250;
+			if (ret > 255)
+				ret = 255;
 			img[(j * 4) + (i * e->width_bud * 4)] = ret;
 
 			px[1] = img[(j * 4) + (i * e->width_bud * 4) + 1];
 			ret = 255 / (max[1] / e->bud.gain) * px[1];
-			if (ret > 250)
-				ret = 250;
+			if (ret > 255)
+				ret = 255;
 			img[(j * 4) + (i * e->width_bud * 4) + 1] = ret;
 
 			px[2] = img[(j * 4) + (i * e->width_bud * 4) + 2];
 			ret = 255 / (max[2] / e->bud.gain)* px[2];
-			if (ret > 250)
-				ret = 250;
+			if (ret > 255)
+				ret = 255;
 			img[(j * 4) + (i * e->width_bud * 4) + 2] = ret;
 			j++;
 		}
 		i++;
 	}
 }
-
+*/
 void	buddhabrot_color(t_env *e, char *img)
 {
 	int max[3] = {0, 0, 0};
 	int px[3] = {0, 0, 0};
-	e->bud.gain = 1;
 
-	find_max_rgb(e, img, px, max);
-	set_color(e, img, px, max);
+	(void)max;
+	(void)px;
+	(void)img;
+	(void)e;
+//	find_max_rgb(e, img, px, max);
+//	set_color(e, img, px, max);
 }

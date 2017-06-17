@@ -83,17 +83,17 @@ __kernel void	buddhabrot(
 			if (ky > 0 && ky < height_bud &&
 					kx > 0 && kx < width_bud)
 			{
-				if (out[(kx * OPP) + (ky * width_bud) + 0] < 254)
+				if (k < 2000 &&out[(kx * OPP) + (ky * width_bud) + 0] < 254)
 				{
 					ptr = (&(out[((kx) + (ky * width_bud) + 0)]));
 					atomic_inc(ptr);
 				}
-				if (out2[(kx * OPP) + (ky * width_bud) + 1] < 254)
+				if (k < 20000 && out2[(kx * OPP) + (ky * width_bud) + 1] < 254)
 				{
 					ptr = (&(out2[((kx) + (ky * width_bud) + 1)]));
 					atomic_inc(ptr);
 				}
-				if (out3[(kx * OPP) + (ky * width_bud) + 2] < 254)
+				if (k < 200000 && out3[(kx * OPP) + (ky * width_bud) + 2] < 254)
 				{
 					ptr = (&(out3[((kx) + (ky * width_bud) + 2)]));
 					atomic_inc(ptr);

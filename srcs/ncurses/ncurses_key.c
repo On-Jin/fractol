@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 07:12:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 09:03:23 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 10:31:54 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ void		ncurses_key(t_env *e, t_nc *nc)
 	if (ret == KEY_RIGHT)
 	{
 		if (nc->menu_bud)
+		{
 			ncurses_parsing(e, nc);
+			nc->menu = 1;
+			return ;
+		}
 		if (!nc->menu_bud)
 			e->num = nc->cursor;
 		if (e->num)
