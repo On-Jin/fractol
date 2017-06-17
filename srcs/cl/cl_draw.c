@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/16 07:44:13 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 06:28:27 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,18 @@ static void	cl_run_kernel(t_env *e, t_cl *cl)
 	cl_check_err(cl->err, "clGetKernelWorkGroupInfo");
 	if (e->cl.global_item_size % cl->local_item_size)
 	{
-		ft_printf("Aie\n");
+//		ft_printf("Aie\n");
 		exit(0);
 	}
 	cl_check_err(e->cl.err, "clGetKernelWorkGroup");
-	ft_printf("Start Kernel execution\n");
+//	ft_printf("Start Kernel execution\n");
 	cl->err = clEnqueueNDRangeKernel(cl->cq, cl->kernel, 1, NULL,
 			&cl->global_item_size, &cl->local_item_size, 0, NULL, &event);
 	cl_check_err(cl->err, "clEnqueueNDRangeKernel");
 	clWaitForEvents(1, &event);
 	cl->err = clFlush(cl->cq);
 	cl_check_err(cl->err, "clFlush");
-	ft_printf("End Kernel execution\n");
+//	ft_printf("End Kernel execution\n");
 }
 
 static void	cl_stock_in_buff(t_env *e, char *dest, int *src, int add)
@@ -90,10 +90,13 @@ static void	cl_stock_in_buff(t_env *e, char *dest, int *src, int add)
 
 int			cl_draw(t_env *e)
 {
+	time_t t1, t2;
 	t_cl	*cl;
 	cl_event event;
 
+	t1 = time(NULL);
 	cl = &(e->cl);
+
 	cl_set_arg(e, &(e->cl));
 	cl_run_kernel(e, &(e->cl));
 	if (e->num)
@@ -122,5 +125,11 @@ int			cl_draw(t_env *e)
 		if (!e->num)
 			over_sampling_resize(e, e->ftab);
 	}
+	t2 = time(NULL);
+	int sec;
+	sec = (t2 - t1) % 60;
+	int min;
+	min = (t2 - t1) / 60;
+//	ft_printf("\033[32mTemps : %i:%i\n\033[0m", min, sec);
 	return (1);
 }

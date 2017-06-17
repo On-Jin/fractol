@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/16 07:41:11 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 08:40:03 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,18 @@
 # include "mlx.h"
 # include <OpenCL/opencl.h>
 # include <sys/time.h>
+# include <ncurses.h>
+
+# define NB_FRACTAL 3
+# define NB_PRESET_BUD 5
+
+# define NC_WIDTH  50
+# define NC_HEIGHT 100
+# define NC_RED 1
+# define NC_BLUE 2
+# define NC_GREEN 3
+# define NC_MAGENTA 4
+# define NC_CYAN 5
 
 #if defined(MODE_GPU)
 	# define HEIGHT 1080
@@ -99,6 +111,15 @@ typedef struct	s_kit
 	int		i;
 }				t_kit;
 
+typedef struct	s_nc
+{
+	WINDOW		*win;
+	int			key;
+	int			cursor;
+	char		menu;
+	char		menu_bud;
+}				t_nc;
+
 typedef struct	s_env
 {
 	t_cl		cl;
@@ -106,15 +127,19 @@ typedef struct	s_env
 	void		*win;
 	t_img		*img;
 
+	char		name_fractal[NB_FRACTAL][15];
+	char		name_preset[NB_PRESET_BUD][30];
+
 	t_tool		tool;
 	t_bud		bud;
+	t_nc		nc;
 
 	struct		timeval step;
 	struct		timeval cur;
 	int			fps;
 
 	char		*ftab;
-	int	*buff_patern;
+	int			*buff_patern;
 
 	int			turn;
 
@@ -158,6 +183,13 @@ int				cl_draw(t_env *e);
 int				draw(t_env *e);
 int				loop(t_env *e);
 
-void			end_of_program(t_env *e);
+void			end_of_program(t_env *e, char *str);
+
+void			ncurses_init(t_env *e, t_nc *nc, int height, int width);
+void			ncurses_refresh(t_env *e, t_nc *nc);
+void			ncurses_menu(t_env *e, t_nc *nc);
+void			ncurses_menu_bud(t_env *e, t_nc *nc);
+void			ncurses_key(t_env *e, t_nc *nc);
+void			ncurses_parsing(t_env *e, t_nc *nc);
 
 #endif

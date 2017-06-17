@@ -2,10 +2,10 @@
 #include "fractol.hl"
 
 #pragma OPENCL EXTENSION cl_khr_double : enable
-#pragma OPENCL EXTENSION cl_khr_int64_base_atomics : enable
 #pragma OPENCL EXTENSION cl_khr_global_int64_base_atomics : enable
 #pragma OPENCL EXTENSION cl_khr_printf : enable
 #pragma OPENCL EXTENSION cl_intel_printf : enable
+#pragma OPENCL EXTENSION cl_khr_int64_base_atomics : enable
 
 int				cl_is_ok(V_PRECI c_r, V_PRECI c_i, long int zoom, long int iter)
 {
@@ -15,13 +15,16 @@ int				cl_is_ok(V_PRECI c_r, V_PRECI c_i, long int zoom, long int iter)
 	int i;
 
 	i = 0;
+//	barrier(CLK_GLOBAL_MEM_FENCE);	
 	while (z_r * z_r + z_i * z_i < 4 && i < iter)
 	{
 		tmp = z_r;
 		z_r = z_r * z_r - z_i * z_i + c_r;
 		z_i = 2 * z_i * tmp + c_i;
 		i++;
+//		barrier(CLK_GLOBAL_MEM_FENCE);	
 	}
+//	barrier(CLK_GLOBAL_MEM_FENCE);	
 	return (i);
 }
 
@@ -61,7 +64,8 @@ __kernel void	buddhabrot(
 				(d_y) / (V_PRECI)tool.zoom + Y1,
 				tool.zoom, tool.iter);
 
-	barrier(CLK_GLOBAL_MEM_FENCE);	
+	//barrier(CLK_GLOBAL_MEM_FENCE);
+	
 	if (i != tool.iter)
 	{
 		k = 0;
@@ -82,22 +86,22 @@ __kernel void	buddhabrot(
 				if (out[(kx * OPP) + (ky * width_bud) + 0] < 254)
 				{
 					ptr = (&(out[((kx) + (ky * width_bud) + 0)]));
-					atom_inc(ptr);
+					atomic_inc(ptr);
 				}
-				if (k < 500 && out2[(kx * OPP) + (ky * width_bud) + 1] < 254)
+				if (out2[(kx * OPP) + (ky * width_bud) + 1] < 254)
 				{
 					ptr = (&(out2[((kx) + (ky * width_bud) + 1)]));
-					atom_inc(ptr);
+					atomic_inc(ptr);
 				}
 				if (out3[(kx * OPP) + (ky * width_bud) + 2] < 254)
 				{
 					ptr = (&(out3[((kx) + (ky * width_bud) + 2)]));
-					atom_inc(ptr);
+					atomic_inc(ptr);
 				}
 			}
-			barrier(CLK_GLOBAL_MEM_FENCE);
+	//		barrier(CLK_GLOBAL_MEM_FENCE);
 			k++;
 		}
 	}
-	barrier(CLK_GLOBAL_MEM_FENCE);
+	//barrier(CLK_GLOBAL_MEM_FENCE);
 }

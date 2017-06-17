@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/06/16 05:13:52 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/06/17 08:33:58 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ DIR_LIB = all_lib/
 
 FLAGS = -Wall -Werror -Wextra -g -I ./include/
 
-FRAMEWORK = -framework OpenGL -framework AppKit -framework Opencl
+FRAMEWORK = -lncurses -framework OpenGL -framework AppKit -framework Opencl
 
 SRC = main.c \
 		 init_mlx.c \
@@ -28,12 +28,18 @@ SRC = main.c \
 		 loop.c \
 		 menu.c \
 		 over_sampling_resize.c \
-		 buddhabrot_color.c \
 		 end_of_program.c \
 		 event/event_key_off.c \
 		 event/event_key_on.c \
 		 event/event_mouse.c \
 		 event/event_move_mouse.c \
+		 ncurses/ncurses_init.c \
+		 ncurses/ncurses_refresh.c \
+		 ncurses/ncurses_menu.c \
+		 ncurses/ncurses_menu_bud.c \
+		 ncurses/ncurses_parsing.c \
+		 ncurses/ncurses_key.c \
+		 buddhabrot/buddhabrot_color.c \
 		 cl/cl_draw.c \
 		 cl/cl_check_err.c \
 		 cl/cl_end_opencl.c \
@@ -87,6 +93,8 @@ $(OBJ_DIR) :
 	@mkdir $(OBJ_DIR)
 	@mkdir $(OBJ_DIR)/cl
 	@mkdir $(OBJ_DIR)/event
+	@mkdir $(OBJ_DIR)/buddhabrot
+	@mkdir $(OBJ_DIR)/ncurses
 
 start:
 	@echo "\033[4m\033[33mCreation de $(NAME)   ...\033[0m"

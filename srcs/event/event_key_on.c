@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/16 07:35:57 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 08:40:55 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,12 @@
 int			event_key_on(int keycode, t_env *e)
 {
 	if (keycode == 53)
-	{
-		end_of_program(e);
-		exit(0);
-	}
+		end_of_program(e, NULL);
 	if (keycode == 69)
 	{
 		if (e->tool.iter < 2000)
 			e->tool.iter += 10;
-		ft_printf("Iter [%i]\n", e->tool.iter);
+//		ft_printf("Iter [%i]\n", e->tool.iter);
 	}
 	else if (keycode == 78)
 	{
