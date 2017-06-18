@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 08:40:55 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/18 10:10:16 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int			event_key_on(int keycode, t_env *e)
 	}
 	else if (keycode == 78)
 	{
-		if (e->tool.iter > 20)
+		if (e->num != 3 && e->tool.iter > 10)
 			e->tool.iter -= 10;
 	}
 	else if (keycode == 92)
@@ -34,11 +34,12 @@ int			event_key_on(int keycode, t_env *e)
 	}
 	else if (keycode == 82)
 	{
+		if (!e->num)
 			e->tool.iter+=100000;
 	}
-	else if (keycode == 88)
+	else if (keycode == 88 && e->num == 3)
 	{
-		if (e->tool.iter < 2000)
+		if (e->tool.iter < 20)
 			e->tool.iter++;
 	}
 	else if (keycode == 123) //G

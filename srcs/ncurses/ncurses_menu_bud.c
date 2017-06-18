@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 08:03:27 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 08:16:05 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/18 08:54:06 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void ncurses_print_set(t_env *e, t_nc *nc)
 	{
 		if (nc->cursor == i)
 			wattron(nc->win, WA_REVERSE);
-		mvwprintw(nc->win, 9 + i, 16, "%s", "Lolilol");
+		mvwprintw(nc->win, 9 + i, 16 + 9, "%s", "Lolilol");
 		if (nc->cursor == i)
 			wattroff(nc->win, WA_REVERSE);
 		i++;
@@ -32,7 +32,7 @@ static void ncurses_print_set(t_env *e, t_nc *nc)
 void		ncurses_menu_bud(t_env *e, t_nc *nc)
 {
 	wattron(nc->win, COLOR_PAIR(e->num));
-	mvwprintw(nc->win, 9 , 13, "->");
+	mvwprintw(nc->win, 9 , 13, "---------->");
 	wattroff(nc->win, COLOR_PAIR(e->num));
 	ncurses_print_set(e, nc);
 }

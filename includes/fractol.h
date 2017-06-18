@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/18 05:57:16 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/18 11:02:04 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <sys/time.h>
 # include <ncurses.h>
 
-# define NB_FRACTAL 3
+# define NB_FRACTAL 4
 # define NB_PRESET_BUD 5
 
 # define NC_WIDTH  50
@@ -36,8 +36,8 @@
 	# define WIDTH 1920
 	# define GPU 1
 #else
-	# define HEIGHT 600
-	# define WIDTH 1000
+	# define HEIGHT 820
+	# define WIDTH 1300
 	# define GPU 0
 #endif
 
@@ -84,12 +84,8 @@ typedef struct	s_cl
 
 typedef struct	s_tr
 {
-	int			tx1;
-	int			ty1;
-	int			tx2;
-	int			ty2;
-	int			tx3;
-	int			ty3;
+	int			tx[3];
+	int			ty[3];
 }				t_tr;
 
 typedef struct	s_bud
@@ -137,12 +133,13 @@ typedef struct	s_env
 	void		*win;
 	t_img		*img;
 
-	char		name_fractal[NB_FRACTAL][15];
+	char		name_fractal[NB_FRACTAL][30];
 	char		name_preset[NB_PRESET_BUD][30];
 
 	t_tool		tool;
 	t_bud		bud;
 	t_nc		nc;
+	t_tr		tr;
 
 	struct		timeval step;
 	struct		timeval cur;
@@ -182,7 +179,7 @@ int				event_key_off(int keycode, t_env *e);
 
 int				menu(t_env *e);
 
-void			draw_tri(t_env *e);
+int				draw_tri(t_env *e);
 
 void			over_sampling_resize(t_env *e, char *tab);
 
