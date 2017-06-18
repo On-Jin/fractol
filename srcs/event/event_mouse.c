@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:17:35 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 23:28:09 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/18 05:08:56 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,16 @@ int				event_mouse(int button, int x, int y, t_env *e)
 	{
 		//image poussé par le zoom
 		//donc je la rattrape :risitas:
-		e->tool.ajj_x += ((x * e->varover[e->bud.over] + e->tool.move_x) / 6);//3.6 4
-		e->tool.ajj_y += ((y * e->varover[e->bud.over] + e->tool.move_y) / 6);
+		if (!e->num)
+		{
+			e->tool.ajj_y += ((x * e->varover[e->bud.over] + e->tool.move_y) / 6);//3.6 4
+			e->tool.ajj_x += ((y * e->varover[e->bud.over] + e->tool.move_x) / 6);
+		}
+		else
+		{
+			e->tool.ajj_x += ((x * e->varover[e->bud.over] + e->tool.move_x) / 6);//3.6 4
+			e->tool.ajj_y += ((y * e->varover[e->bud.over] + e->tool.move_y) / 6);
+		}
 /*
 		e->tool.ajj_x += (-1 * ((((float)x) / WIDTH) *
 					(0.6 + 2.1)));

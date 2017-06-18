@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 16:26:01 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/16 07:04:22 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/18 05:03:24 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void		over_sampling_resize(t_env *e, char *tab)
 		{
 			val = 0;
 			val = add_val(e, y, x, tab, 0);
-			new_data[(x / div) * OPP + (y / div) * (WIDTH * 4)] = val;
+			new_data[((e->height_bud - y - 1) / div) * OPP + (x / div) * (WIDTH * 4)] = val;
 			val = add_val(e, y, x, tab, 1);
-			new_data[(x / div) * OPP + (y / div) * (WIDTH * 4) + 1] = val;
+			new_data[((e->height_bud - y - 1) / div) * OPP + (x / div) * (WIDTH * 4) + 1] = val;
 			val = add_val(e, y, x, tab, 2);
-			new_data[(x / div) * OPP + (y / div) * (WIDTH * 4) + 2] = val;
+			new_data[((e->height_bud - y - 1) / div) * OPP + (x / div) * (WIDTH * 4) + 2] = val;
 			x += e->bud.over;
 		}
 		y += e->bud.over;

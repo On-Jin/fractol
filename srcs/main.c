@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/18 04:48:42 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/18 05:55:51 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void init_basic(t_env *e, t_tool *tool)
 	tool->move_y = (HEIGHT / 2 * -1) + ((1.2) * tool->zoom);
 	e->bud.over = 1;
 }
-
+/*
 static void init_bud(t_env *e, t_tool *tool, t_bud *bud)
 {
 	int		set_zoom[5];
@@ -33,11 +33,11 @@ static void init_bud(t_env *e, t_tool *tool, t_bud *bud)
 	e->height_bud = WIDTH * e->varover[bud->over];
 	e->mem_opencl_bud = e->width_bud * e->height_bud;
 	(void)tool;
-	tool->move_x = (e->width_bud / 2 * -1) + ((2.1) * set_zoom[bud->over]);
 	tool->move_y = (e->height_bud / 2 * -1) + ((1.2) * set_zoom[bud->over]);
 	e->buff_patern = ft_memalloc(e->mem_opencl_bud * sizeof(int));
 	e->ftab = ft_memalloc(e->mem_opencl_bud * 4);		
-}
+}*/
+
 static void	init_env(t_env *e)
 {
 	e->varover[0] = 0;
@@ -74,16 +74,17 @@ int			main(int argc, char **argv)
 	if (!(get_arg(&e, argc, argv)))
 		return (0);
 	init_env(&e);
-	ncurses_init(&e, &e.nc, NC_HEIGHT, NC_WIDTH);
-	while (!e.nc.menu)
-		ncurses_menu(&e, &e.nc);
-	if (e.num || !GPU)
+//	ncurses_init(&e, &e.nc, NC_HEIGHT, NC_WIDTH);
+//	while (!e.nc.menu)
+//		ncurses_menu(&e, &e.nc);
+//	if (e.num || !GPU)
 		init_basic(&e, &e.tool);
-	else
-		init_bud(&e, &e.tool, &e.bud);
+//	else
+//		init_bud(&e, &e.tool, &e.bud);
 	init_mlx(&e);
-	if (GPU)
-		cl_init_opencl(&e);
+//	if (GPU)
+//		cl_init_opencl(&e);
+	draw_tri(&e);
 	mlx_hook(e.win, 2, 0, &event_key_on, &e);
 	mlx_key_hook(e.win, &event_key_off, &e);
 	mlx_mouse_hook(e.win, &event_mouse, &e);

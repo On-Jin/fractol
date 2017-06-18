@@ -37,8 +37,8 @@ __kernel void	buddhabrot(
 		__global volatile int *out3)
 {
 	int tab[6] = {0, 1, 2, 4, 8, 16};
-	int			width_bud = WIDTH * tab[bud.over];
-	int			height_bud = HEIGHT * tab[bud.over];
+	int			height_bud = WIDTH * tab[bud.over];
+	int			width_bud = HEIGHT * tab[bud.over];
 	int		recup = get_global_id(0);
 	if (recup < 0 || recup >= width_bud * height_bud)
 		return ;
@@ -87,17 +87,17 @@ __kernel void	buddhabrot(
 			if (ky > 0 && ky < height_bud &&
 					kx > 0 && kx < width_bud)
 			{
-				if (k < 2000 &&out[(kx * OPP) + (ky * width_bud) + 0] < 254)
+				if (k < 20 &&out[(kx * OPP) + (ky * width_bud) + 0] < 254)
 				{
 					ptr = (&(out[((kx) + (ky * width_bud) + 0)]));
 					atomic_inc(ptr);
 				}
-				if (k < 20000 && out2[(kx * OPP) + (ky * width_bud) + 1] < 254)
+				if (k < 200 && out2[(kx * OPP) + (ky * width_bud) + 1] < 254)
 				{
 					ptr = (&(out2[((kx) + (ky * width_bud) + 1)]));
 					atomic_inc(ptr);
 				}
-				if (k < 200000 && out3[(kx * OPP) + (ky * width_bud) + 2] < 254)
+				if (k < 2000 && out3[(kx * OPP) + (ky * width_bud) + 2] < 254)
 				{
 					ptr = (&(out3[((kx) + (ky * width_bud) + 2)]));
 					atomic_inc(ptr);

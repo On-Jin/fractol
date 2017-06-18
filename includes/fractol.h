@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 23:04:23 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/18 05:57:16 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,16 @@ typedef struct	s_cl
 	size_t				global_item_size;
 	size_t				local_item_size;
 }				t_cl;
+
+typedef struct	s_tr
+{
+	int			tx1;
+	int			ty1;
+	int			tx2;
+	int			ty2;
+	int			tx3;
+	int			ty3;
+}				t_tr;
 
 typedef struct	s_bud
 {
@@ -171,6 +181,8 @@ int				event_key_on(int keycode, t_env *e);
 int				event_key_off(int keycode, t_env *e);
 
 int				menu(t_env *e);
+
+void			draw_tri(t_env *e);
 
 void			over_sampling_resize(t_env *e, char *tab);
 
