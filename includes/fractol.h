@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 10:57:23 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 23:04:23 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ typedef struct	s_env
 	struct		timeval step;
 	struct		timeval cur;
 	int			fps;
+	int			min;
+	int			sec;
 
 	char		*ftab;
 	int			*buff_patern;

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 10:56:37 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 11:05:28 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 22:59:49 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ void		ncurses_print_stat(t_env *e, t_nc *nc)
 	mvwprintw(nc->win, 8, 4, "Mov_x : [%i]", e->tool.move_x);
 	mvwprintw(nc->win, 9, 4, "Mov_y : [%i]", e->tool.move_y);
 
-	mvwprintw(nc->win, 8, 4, "____x : [%f]", e->tool.ajj_x / e->tool.zoom);
-	mvwprintw(nc->win, 9, 4, "____y : [%f]", e->tool.ajj_y / e->tool.zoom);
+	mvwprintw(nc->win, 11, 4, "____x : [%f]", e->tool.ajj_x / e->tool.zoom);
+	mvwprintw(nc->win, 12, 4, "____y : [%f]", e->tool.ajj_y / e->tool.zoom);
 }

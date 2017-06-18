@@ -6,12 +6,12 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 05:13:30 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 13:18:46 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 22:29:03 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-/*
+
 static void find_max_rgb(t_env *e, char *img, int *px, int *max)
 {
 	int i;
@@ -73,16 +73,12 @@ static void	set_color(t_env *e, char *img, int *px, int *max)
 		i++;
 	}
 }
-*/
+
 void	buddhabrot_color(t_env *e, char *img)
 {
 	int max[3] = {0, 0, 0};
 	int px[3] = {0, 0, 0};
 
-	(void)max;
-	(void)px;
-	(void)img;
-	(void)e;
-//	find_max_rgb(e, img, px, max);
-//	set_color(e, img, px, max);
+	find_max_rgb(e, img, px, max);
+	set_color(e, img, px, max);
 }

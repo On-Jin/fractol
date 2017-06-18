@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 11:51:28 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/18 00:00:42 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,15 @@ int			cl_draw(t_env *e)
 			over_sampling_resize(e, e->ftab);
 	}
 	t2 = time(NULL);
-	int sec;
-	sec = (t2 - t1) % 60;
-	int min;
-	min = (t2 - t1) / 60;
-	ft_printf("\033[32mTemps : %i:%i\n\033[0m", min, sec);
+	e->sec = (t2 - t1) % 60;
+	e->min = (t2 - t1) / 60;
+	t_px px;
+	px.r = 255;
+	px.g = 0;
+	px.b = 0;
+	mlxji_put_pixel(e->img, e->width_bud/2, e->height_bud/2, &px);
+	mlxji_put_pixel(e->img, e->width_bud/2+1, e->height_bud/2, &px);
+	mlxji_put_pixel(e->img, e->width_bud/2+1, e->height_bud/2+1, &px);
+	mlxji_put_pixel(e->img, e->width_bud/2, e->height_bud/2+1, &px);
 	return (1);
 }

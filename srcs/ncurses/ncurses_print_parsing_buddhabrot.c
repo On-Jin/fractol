@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 10:29:37 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 10:30:17 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/17 23:04:07 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,7 @@ void ncurses_print_parsing_buddhabrot(t_env *e, t_nc *nc)
 	wattron(nc->win, COLOR_PAIR(NC_CYAN));
 	mvwprintw(nc->win, 25, 4, "Blue [%i][%i]", e->bud.min[0], e->bud.max[0]);
 	wattroff(nc->win, COLOR_PAIR(NC_CYAN));
+	wattron(nc->win, COLOR_PAIR(NC_GREEN));
+	mvwprintw(e->nc.win, 28, 2, "Temps : %i:%i\n", e->min, e->sec);
+	wattroff(nc->win, COLOR_PAIR(NC_GREEN));
 }
