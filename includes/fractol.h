@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/18 11:02:04 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/19 05:38:45 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # define NUM_BUDD 0
 # define NUM_MANDEL 1
 # define NUM_JULIA 2
+# define NUM_TRI 3
 
 # define MEM_OPENCL (HEIGHT * WIDTH * 4)
 # define MAX_SOURCE_SIZE (11000)
@@ -168,6 +169,7 @@ typedef struct	s_env
 
 	int			mouse_x;
 	int			mouse_y;
+
 }				t_env;
 
 void			init_mlx(t_env *e);

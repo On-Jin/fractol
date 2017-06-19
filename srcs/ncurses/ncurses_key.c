@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 07:12:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 10:31:54 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/19 05:41:57 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void		ncurses_key(t_env *e, t_nc *nc)
 			nc->menu = 1;
 		else
 			nc->menu_bud = 1;
+		if (e->num == NUM_TRI && GPU)
+			end_of_program(e, "[Make re] pour désactiver le mode GPU pour afficher Sierpinski\n");
 	}
 	else if (ret == KEY_LEFT)
 	{
