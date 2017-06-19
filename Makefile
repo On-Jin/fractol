@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/06/18 05:55:05 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/06/19 06:48:50 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = main.c \
 		 draw.c \
 		 loop.c \
 		 draw_tri.c \
+		 draw_tree.c \
 		 menu.c \
 		 over_sampling_resize.c \
 		 end_of_program.c \

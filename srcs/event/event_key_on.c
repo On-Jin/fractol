@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/18 10:10:16 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/19 06:41:10 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int			event_key_on(int keycode, t_env *e)
 {
 	if (keycode == 53)
 		end_of_program(e, NULL);
-	if (keycode == 69)
+	if (keycode == 69 && e->num != NUM_TRI)
 	{
 		if (e->tool.iter < 2000)
 			e->tool.iter += 10;
 //		ft_printf("Iter [%i]\n", e->tool.iter);
 	}
-	else if (keycode == 78)
+	else if (keycode == 78 && e->num != NUM_TRI)
 	{
 		if (e->num != 3 && e->tool.iter > 10)
 			e->tool.iter -= 10;
@@ -32,14 +32,14 @@ int			event_key_on(int keycode, t_env *e)
 		if (e->tool.iter > 2)
 			e->tool.iter--;
 	}
-	else if (keycode == 82)
+	else if (keycode == 82 && e->num != NUM_TRI)
 	{
 		if (!e->num)
 			e->tool.iter+=100000;
 	}
-	else if (keycode == 88 && e->num == 3)
+	else if (keycode == 88)
 	{
-		if (e->tool.iter < 20)
+		if (e->tool.iter < 14)
 			e->tool.iter++;
 	}
 	else if (keycode == 123) //G

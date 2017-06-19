@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:21:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/18 09:11:51 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/19 07:13:09 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int			loop(t_env *e)
 	if (e->clock > 360)
 		e->clock = 0;
 	e->fps++;
+//	draw_tree(e);
+//	return (2);
 	if (!e->num && !e->turn)
 		return (1);
 	e->turn = 0;

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/18 05:55:11 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/19 05:29:58 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/19 07:28:24 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ int		recur_a(t_env *e, int iter, t_tr tr)
 	return (1);
 }
 
+double	conversion_radians(double degre)
+{
+	    return (degre/180*3.14159265);
+}
+#include <math.h>
 int		draw_tri(t_env *e)
 {
 	t_tr		*tr;
@@ -86,6 +91,16 @@ int		draw_tri(t_env *e)
 	px.r = 255;
 	px.g = 255;
 	px.b = 255;
+	/*double angle = 10;
+	double ca = cos(conversion_radians(angle));
+	double sa = sin(conversion_radians(angle));
+	new.tx[0] = tool->zoom * ((tr->tx[0] * ca - tr->ty[0] * sa) - tool->ajj_x) + tool->ajj_x;
+	new.ty[0] = tool->zoom * ((tr->ty[0] * ca - tr->tx[0] * sa) - tool->ajj_y) + tool->ajj_y;
+	new.tx[1] = tool->zoom * ((tr->tx[1] * ca - tr->ty[1] * sa) - tool->ajj_x) + tool->ajj_x;
+	new.ty[1] = tool->zoom * ((tr->ty[1] * ca - tr->tx[1] * sa) - tool->ajj_y) + tool->ajj_y;
+	new.tx[1] = tool->zoom * ((tr->tx[2] * ca - tr->ty[2] * sa) - tool->ajj_x) + tool->ajj_x;
+	new.ty[1] = tool->zoom * ((tr->ty[2] * ca - tr->tx[2] * sa) - tool->ajj_y) + tool->ajj_y;
+	*/
 	new.tx[0] = tool->zoom * (tr->tx[0] - tool->ajj_x) + tool->ajj_x;
 	new.ty[0] = tool->zoom * (tr->ty[0] - tool->ajj_y) + tool->ajj_y;
 	new.tx[1] = tool->zoom * (tr->tx[1] - tool->ajj_x) + tool->ajj_x;
@@ -109,6 +124,5 @@ int		draw_tri(t_env *e)
 		k++;
 	}
 	recur_a(e, 0, new);
-	mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
 	return (1);
 }

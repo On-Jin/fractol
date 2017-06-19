@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/19 05:38:45 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/19 06:48:42 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ int				event_key_off(int keycode, t_env *e);
 int				menu(t_env *e);
 
 int				draw_tri(t_env *e);
+int				draw_tree(t_env *e);
 
 void			over_sampling_resize(t_env *e, char *tab);
 
