@@ -43,8 +43,8 @@ float jul_x)
 		return ;
 	int		x = recup % WIDTH;
 	int		y = recup / WIDTH;
-	long int	d_x = x + (V_PRECI)tool.ajj_x + tool.move_x;
-	long int	d_y = y + (V_PRECI)tool.ajj_y + tool.move_y;
+	long int	d_x = x + (V_PRECI)tool.ajj_x;
+	long int	d_y = y + (V_PRECI)tool.ajj_y;
 	V_PRECI	c_r = 0;
 	V_PRECI	c_i = 0;
 	V_PRECI	z_r = 0;

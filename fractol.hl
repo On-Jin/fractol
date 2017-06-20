@@ -51,6 +51,10 @@ typedef struct	s_tool
 	V_PRECI		ajj_y;
 	int			move_x;
 	int			move_y;
+	V_PRECI		xmax;
+	V_PRECI		xmin;
+	V_PRECI		ymax;
+	V_PRECI		ymin;
 }				t_tool;
 
 int         mlxji_hsv_to_rgb(t_px *px, float h, float s, float v);

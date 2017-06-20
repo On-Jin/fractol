@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/20 01:52:32 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/20 18:21:25 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,13 @@ static void init_sierpinski(t_env *e, t_tool *tool)
 
 static void	init_dir(t_env *e)
 {
+	t_tool * tool;
+
+	tool = &e->tool;
+	tool->xmin = -2.1;
+	tool->xmax = 0.6;
+	tool->ymin = -1.2;
+	tool->ymax = 1.2;
 	if (e->num == 3)
 		init_sierpinski(e, &e->tool);
 	else if (e->num || !GPU)

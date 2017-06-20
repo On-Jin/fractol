@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/20 07:08:11 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/20 18:13:58 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,10 @@ typedef struct	s_tool
 	V_PRECI		ajj_y;
 	int			move_x;
 	int			move_y;
+	V_PRECI		xmax;
+	V_PRECI		xmin;
+	V_PRECI		ymax;
+	V_PRECI		ymin;
 }				t_tool;
 
 typedef struct	s_kit
