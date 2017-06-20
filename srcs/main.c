@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/19 06:54:04 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/20 01:52:32 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ static void init_sierpinski(t_env *e, t_tool *tool)
 	tool->zoom = 1;
 	tool->iter = 1;
 	e->bud.over = 1;
-	tool->move_x = WIDTH / 2 - 100;
-	tool->move_y = HEIGHT / 2 - 100;
+	tool->move_x = 0;
+	tool->move_y = 0;
 	e->tr.tx[0] = WIDTH / 2;
 	e->tr.ty[0] = 300;
 	e->tr.tx[1] = WIDTH / 2 + 100;

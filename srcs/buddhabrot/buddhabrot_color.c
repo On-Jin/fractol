@@ -6,13 +6,13 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 05:13:30 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 22:29:03 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/20 06:39:39 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void find_max_rgb(t_env *e, char *img, int *px, int *max)
+static void	find_max_rgb(t_env *e, char *img, int *px, int *max)
 {
 	int i;
 	int j;
@@ -38,12 +38,20 @@ static void find_max_rgb(t_env *e, char *img, int *px, int *max)
 	}
 }
 
-//			ret = trunc(255*sqrt(px_b)/sqrt(max_b));
+static int	set_ret(t_env *e, int *px, int *max, int pixel)
+{
+	int ret;
+
+	ret = 255 / (max[pixel] / e->bud.gain) * px[pixel];
+	if (ret > 255)
+		ret = 255;
+	return (ret);
+}
+
 static void	set_color(t_env *e, char *img, int *px, int *max)
 {
 	int i;
 	int j;
-	int	ret;
 
 	i = 0;
 	while (i < e->height_bud)
@@ -52,33 +60,24 @@ static void	set_color(t_env *e, char *img, int *px, int *max)
 		while (j < e->width_bud)
 		{
 			px[0] = img[(j * 4) + (i * e->width_bud * 4)];
-			ret = 255 / (max[0] / e->bud.gain) * px[0];
-			if (ret > 255)
-				ret = 255;
-			img[(j * 4) + (i * e->width_bud * 4)] = ret;
-
+			img[(j * 4) + (i * e->width_bud * 4)] = set_ret(e, px, max, 0);
 			px[1] = img[(j * 4) + (i * e->width_bud * 4) + 1];
-			ret = 255 / (max[1] / e->bud.gain) * px[1];
-			if (ret > 255)
-				ret = 255;
-			img[(j * 4) + (i * e->width_bud * 4) + 1] = ret;
-
+			img[(j * 4) + (i * e->width_bud * 4) + 1] = set_ret(e, px, max, 1);
 			px[2] = img[(j * 4) + (i * e->width_bud * 4) + 2];
-			ret = 255 / (max[2] / e->bud.gain)* px[2];
-			if (ret > 255)
-				ret = 255;
-			img[(j * 4) + (i * e->width_bud * 4) + 2] = ret;
+			img[(j * 4) + (i * e->width_bud * 4) + 2] = set_ret(e, px, max, 2);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	buddhabrot_color(t_env *e, char *img)
+void		buddhabrot_color(t_env *e, char *img)
 {
-	int max[3] = {0, 0, 0};
-	int px[3] = {0, 0, 0};
+	int max[3];
+	int px[3];
 
+	ft_bzero(&max, sizeof(int) * 3);
+	ft_bzero(&px, sizeof(int) * 3);
 	find_max_rgb(e, img, px, max);
 	set_color(e, img, px, max);
 }

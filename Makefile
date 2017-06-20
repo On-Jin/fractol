@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/06/19 06:48:50 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/06/20 07:08:57 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ SRC = main.c \
 		 draw_tri.c \
 		 draw_tree.c \
 		 menu.c \
-		 over_sampling_resize.c \
 		 end_of_program.c \
 		 event/event_key_off.c \
 		 event/event_key_on.c \
@@ -44,7 +43,9 @@ SRC = main.c \
 		 ncurses/ncurses_print_stat.c \
 		 ncurses/ncurses_key.c \
 		 buddhabrot/buddhabrot_color.c \
+		 buddhabrot/over_sampling_resize_buddha.c \
 		 cl/cl_draw.c \
+		 cl/cl_set_env.c \
 		 cl/cl_check_err.c \
 		 cl/cl_end_opencl.c \
 		 cl/cl_init_opencl.c

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/19 06:48:42 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/20 07:08:11 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <OpenCL/opencl.h>
 # include <sys/time.h>
 # include <ncurses.h>
+# include <math.h>
 
 # define NB_FRACTAL 4
 # define NB_PRESET_BUD 5
@@ -65,6 +66,11 @@
 # define X1_MAN -2.1
 # define Y1_MAN -1.2
 
+# define MAN_X1 -2.1
+# define MAN_Y1 -1.2
+# define MAN_X2 0.6
+# define MAN_Y2 1.2
+
 typedef struct	s_cl
 {
 	cl_device_id		device_id;
@@ -82,6 +88,12 @@ typedef struct	s_cl
 	size_t				global_item_size;
 	size_t				local_item_size;
 }				t_cl;
+
+typedef struct 	s_coord
+{
+	int x;
+	int y;
+}				t_coord;
 
 typedef struct	s_tr
 {
@@ -184,13 +196,14 @@ int				menu(t_env *e);
 int				draw_tri(t_env *e);
 int				draw_tree(t_env *e);
 
-void			over_sampling_resize(t_env *e, char *tab);
 
 void			cl_check_err(cl_int err, const char *name);
 void			cl_end_opencl(t_env *e, t_cl *cl);
 int				cl_init_opencl(t_env *e);
+void			cl_set_buffer_and_arg(t_env *e, t_cl *cl);
 
 void			buddhabrot_color(t_env *e, char *tab);
+void			over_sampling_resize_buddha(t_env *e, char *tab);
 
 int				cl_draw(t_env *e);
 

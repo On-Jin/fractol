@@ -43,8 +43,8 @@ float jul_x)
 		return ;
 	int		x = recup % WIDTH;
 	int		y = recup / WIDTH;
-	long int		d_x = x + (V_PRECI)tool.ajj_x + tool.move_x;
-	long int		d_y = y + (V_PRECI)tool.ajj_y + tool.move_y;
+	long int	d_x = x + (V_PRECI)tool.ajj_x + tool.move_x;
+	long int	d_y = y + (V_PRECI)tool.ajj_y + tool.move_y;
 	V_PRECI	c_r = 0;
 	V_PRECI	c_i = 0;
 	V_PRECI	z_r = 0;
@@ -55,7 +55,7 @@ float jul_x)
 	float	h = clock;
 	float	s = 0.7;
 	float	v = 0.7;
-	V_PRECI	np = 8;
+	V_PRECI	np = 2;
 
 	i = 0;
 	if (num == 1)
@@ -65,12 +65,14 @@ float jul_x)
 		while (z_r * z_r + z_i * z_i < 4 && i < tool.iter)
 		{
 			tmp = z_r;
-			z_r = ft_abs(ft_pow(z_r, 2)) - ft_pow(z_i, 2) + c_r;
-			z_i = 2 * ft_abs(z_i * tmp) + c_i;
-//			z_r = ft_pow(z_r * z_r + z_i * z_i, np / 2) *
-//						cos(np * atan2(z_i, z_r)) + c_r;
-//			z_i = ft_pow(tmp * tmp + z_i * z_i, np / 2) *
-//						sin(np * atan2(z_i, tmp)) + c_i;
+//			z_r = ft_abs(ft_pow(z_r, 2)) - ft_pow(z_i, 2) + c_r;
+//			z_i = 2 * ft_abs(z_i * tmp) + c_i;
+//			z_r = (ft_pow(z_r, 2)) - ft_pow(z_i, 2) + c_r;
+//			z_i = -2 * (z_i * tmp) + c_i;
+			z_r = ft_pow(z_r * z_r + z_i * z_i, np / 2) *
+						cos(np * atan2(z_i, z_r)) + c_r;
+			z_i = ft_pow(tmp * tmp + z_i * z_i, np / 2) *
+						sin(np * atan2(z_i, tmp)) + c_i;
 			i++;
 		}
 	}

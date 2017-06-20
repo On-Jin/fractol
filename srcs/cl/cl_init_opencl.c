@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 03:02:43 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/15 05:06:36 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/20 07:11:47 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		cl_load_src(t_env *e, char *k_src, size_t *src_size)
 	if (e->num)
 		fd = open("./mandelbrot.cl", O_RDONLY);
 	else
-		fd = open("./buddhabrot.c", O_RDONLY);
+		fd = open("./buddhabrot.cl", O_RDONLY);
 	if (!fd)
 	{
 		ft_putstr_fd("Failed to load source.\n", 2);
@@ -35,11 +35,30 @@ static void		cl_load_src(t_env *e, char *k_src, size_t *src_size)
 	close(fd);
 }
 
-//k_src Malloc car clCreateProgramWithSource fait surrement des modifs
+static void		cl_create_buffer(t_env *e, t_cl *cl)
+{
+	if (e->num)
+	{
+		cl->mem = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
+				WIDTH * HEIGHT * 4 * sizeof(char), NULL, &(cl->err));
+		cl_check_err(cl->err, "clCreateBuffer");
+	}
+	else
+	{
+		cl->mem = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
+				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
+		cl_check_err(cl->err, "clCreateBuffer");
+		cl->mem2 = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
+				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
+		cl_check_err(cl->err, "clCreateBuffer");
+		cl->mem3 = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
+				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
+		cl_check_err(cl->err, "clCreateBuffer");
+	}
+}
 
 static void		cl_create_base(t_env *e, t_cl *cl)
 {
-	(void)e;
 	char	*k_src;
 	size_t	src_size;
 
@@ -49,30 +68,16 @@ static void		cl_create_base(t_env *e, t_cl *cl)
 	cl->err = clGetDeviceIDs(cl->platform_id, CL_DEVICE_TYPE_GPU,
 			1, &(cl->device_id), &(cl->ret_num_devices));
 	cl_check_err(cl->err, "clGetDeviceIDs");
-
-	cl->context = clCreateContext(NULL, 1, &(cl->device_id), NULL, NULL, &(cl->err));
+	cl->context = clCreateContext(NULL, 1,
+								&(cl->device_id), NULL, NULL, &(cl->err));
 	cl_check_err(cl->err, "clCreateContext");
-	cl->cq = clCreateCommandQueue(cl->context, cl->device_id, 0, &(cl->err));
+	cl->cq = clCreateCommandQueue(cl->context,
+								cl->device_id, 0, &(cl->err));
 	cl_check_err(cl->err, "clCreateCommandQueue");
-
 	cl_load_src(e, k_src, &src_size);
-	if (e->num)
-	{
-		cl->mem = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
-				MEM_OPENCL * sizeof(char), NULL, &(cl->err));
-	}
-	else
-	{
-		cl->mem = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
-				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
-		cl->mem2 = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
-				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
-		cl->mem3 = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
-				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
-	}
-	cl_check_err(cl->err, "clCreateBuffer");
-
-	cl->program = clCreateProgramWithSource(cl->context, 1, (const char **)&k_src,
+	cl_create_buffer(e, cl);
+	cl->program = clCreateProgramWithSource(cl->context,
+										1, (const char **)&k_src,
 			(const size_t *)&src_size, &(cl->err));
 	cl_check_err(cl->err, "clCreateProgramWithSource");
 	ft_strdel(&k_src);
@@ -85,7 +90,8 @@ static void		cl_compile_kernel(t_env *e, t_cl *cl)
 
 	(void)e;
 	if (M_PRECI)
-		cl->err = clBuildProgram(cl->program, 0, NULL, "-D MODE_PRECI -I.", NULL, NULL);
+		cl->err = clBuildProgram(cl->program, 0,
+								NULL, "-D MODE_PRECI -I.", NULL, NULL);
 	else
 		cl->err = clBuildProgram(cl->program, 0, NULL, "-I.", NULL, NULL);
 	if (cl->err != CL_SUCCESS)
@@ -103,7 +109,7 @@ static void		cl_compile_kernel(t_env *e, t_cl *cl)
 	}
 }
 
-int		cl_init_opencl(t_env *e)
+int				cl_init_opencl(t_env *e)
 {
 	t_cl *cl;
 
@@ -111,16 +117,19 @@ int		cl_init_opencl(t_env *e)
 	cl_create_base(e, &e->cl);
 	cl_compile_kernel(e, &e->cl);
 	if (e->num)
-		e->cl.kernel = clCreateKernel(e->cl.program, "mandelbrot", &(e->cl.err));
+		e->cl.kernel = clCreateKernel(e->cl.program,
+												"mandelbrot", &(e->cl.err));
 	else
-		e->cl.kernel = clCreateKernel(e->cl.program, "buddhabrot", &(e->cl.err));
+		e->cl.kernel = clCreateKernel(e->cl.program,
+												"buddhabrot", &(e->cl.err));
 	cl_check_err(e->cl.err, "clCreateKernel");
 	if (e->num)
 		e->cl.global_item_size = WIDTH * HEIGHT;
 	else
 		e->cl.global_item_size = e->width_bud * e->height_bud;
 	cl->err = clGetKernelWorkGroupInfo(cl->kernel, cl->device_id,
-			CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &e->cl.local_item_size, NULL);
+						CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t),
+									&e->cl.local_item_size, NULL);
 	cl_check_err(e->cl.err, "clGetKernelWorkGroup");
 	return (1);
 }
