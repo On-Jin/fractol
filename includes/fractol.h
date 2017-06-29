@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/20 18:13:58 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/27 12:40:53 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 # define NC_CYAN 5
 
 #if defined(MODE_GPU)
-	# define HEIGHT 1080
-	# define WIDTH 1920
+	# define HEIGHT 720
+	# define WIDTH 1280
 	# define GPU 1
 #else
 	# define HEIGHT 820

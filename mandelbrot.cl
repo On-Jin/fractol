@@ -43,8 +43,8 @@ float jul_x)
 		return ;
 	int		x = recup % WIDTH;
 	int		y = recup / WIDTH;
-	long int	d_x = x + (V_PRECI)tool.ajj_x;
-	long int	d_y = y + (V_PRECI)tool.ajj_y;
+	long int	d_x = x;
+	long int	d_y = y;
 	V_PRECI	c_r = 0;
 	V_PRECI	c_i = 0;
 	V_PRECI	z_r = 0;
@@ -56,14 +56,25 @@ float jul_x)
 	float	s = 0.7;
 	float	v = 0.7;
 	V_PRECI	np = 2;
+	V_PRECI ret;
 
 	i = 0;
 	if (num == 1)
 	{
-		c_r = (d_x) / (V_PRECI)tool.zoom + X1;
-		c_i = (d_y) / (V_PRECI)tool.zoom + Y1;
+//		c_r = (d_x) / (V_PRECI)tool.zoom + tool.xmin;
+//		c_i = (d_y) / (V_PRECI)tool.zoom + tool.ymin;
+
+c_r = ((V_PRECI)d_x / ((V_PRECI)HEIGHT * 1.125)) *
+			((V_PRECI)tool.xmax - (V_PRECI)tool.xmin) + tool.xmin;
+		c_i = ((V_PRECI)d_y / (V_PRECI)HEIGHT) *
+			((V_PRECI)tool.ymax - (V_PRECI)tool.ymin) + tool.ymin;
+
+//		ret = 9;
 		while (z_r * z_r + z_i * z_i < 4 && i < tool.iter)
 		{
+//			if (ret == z_r * z_r + z_i * z_i)
+//				break ;
+//			ret = z_r * z_r + z_i * z_i;
 			tmp = z_r;
 //			z_r = ft_abs(ft_pow(z_r, 2)) - ft_pow(z_i, 2) + c_r;
 //			z_i = 2 * ft_abs(z_i * tmp) + c_i;

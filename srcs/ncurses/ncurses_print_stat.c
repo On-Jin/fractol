@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 10:56:37 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/18 09:22:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/29 07:21:23 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,7 @@ void		ncurses_print_stat(t_env *e, t_nc *nc)
 
 	mvwprintw(nc->win, 11, 4, "____x : [%f]", e->tool.ajj_x / e->tool.zoom);
 	mvwprintw(nc->win, 12, 4, "____y : [%f]", e->tool.ajj_y / e->tool.zoom);
+
+	mvwprintw(nc->win, 14, 4, "____x : Min[%.2f] Max[%.2f]", e->tool.xmin, e->tool.xmax);
+	mvwprintw(nc->win, 15, 4, "____y : Min[%.2f] Max[%.2f]", e->tool.ymin, e->tool.ymax);
 }

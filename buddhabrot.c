@@ -15,16 +15,13 @@ int				cl_is_ok(V_PRECI c_r, V_PRECI c_i, long int zoom, long int iter)
 	int i;
 
 	i = 0;
-//	barrier(CLK_GLOBAL_MEM_FENCE);	
 	while (z_r * z_r + z_i * z_i < 4 && i < iter)
 	{
 		tmp = z_r;
 		z_r = z_r * z_r - z_i * z_i + c_r;
 		z_i = 2 * z_i * tmp + c_i;
 		i++;
-//		barrier(CLK_GLOBAL_MEM_FENCE);	
 	}
-//	barrier(CLK_GLOBAL_MEM_FENCE);	
 	return (i);
 }
 
@@ -45,9 +42,7 @@ __kernel void	buddhabrot(
 	int			x = recup % width_bud;
 	int			y = recup / width_bud;
 	long int	d_x = x + (V_PRECI)tool.ajj_x + tool.move_x;
-//	printf("D_x = %f + %i\n", tool.ajj_x, tool.move_x);
 	long int	d_y = y + (V_PRECI)tool.ajj_y + tool.move_y;
-//	printf("D_y = %f + %i\n", tool.ajj_y, tool.move_y);
 	V_PRECI		c_r = 0;
 	V_PRECI		c_i = 0;
 	V_PRECI		z_r = 0;
@@ -60,15 +55,12 @@ __kernel void	buddhabrot(
 	i = 0;
 
 	c_r = (d_x) / (V_PRECI)tool.zoom + X1;
-//	printf("c_r = %i / %.2f + %i\n", d_x, tool.zoom + X1);
 	c_i = (d_y) / (V_PRECI)tool.zoom + Y1;
-//	printf("c_r = %i / %.2f + %i\n", d_y, tool.zoom + Y1);
 	
 	i = cl_is_ok((d_x) / (V_PRECI)tool.zoom + X1,
 				(d_y) / (V_PRECI)tool.zoom + Y1,
 				tool.zoom, tool.iter);
 
-	//barrier(CLK_GLOBAL_MEM_FENCE);
 	
 	if (i != tool.iter)
 	{
@@ -103,9 +95,7 @@ __kernel void	buddhabrot(
 					atomic_inc(ptr);
 				}
 			}
-	//		barrier(CLK_GLOBAL_MEM_FENCE);
 			k++;
 		}
 	}
-	//barrier(CLK_GLOBAL_MEM_FENCE);
 }

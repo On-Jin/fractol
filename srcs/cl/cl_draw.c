@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/20 07:10:24 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/29 07:07:47 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ static void	cl_run_kernel(t_env *e, t_cl *cl)
 	cl->err = clGetKernelWorkGroupInfo(cl->kernel, cl->device_id,
 	CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &e->cl.local_item_size, NULL);
 	cl_check_err(cl->err, "clGetKernelWorkGroupInfo");
+	//	ft_printf("%i %i\n", cl->global_item_size, cl->local_item_size);
 	if (e->cl.global_item_size % cl->local_item_size)
-		end_of_program(e, "Global_item_size % Local item size != 0");
+	{
+		end_of_program(e, "Global_item_size %% Local item size != 0");
+	}
 	cl_check_err(e->cl.err, "clGetKernelWorkGroup");
 	cl->err = clEnqueueNDRangeKernel(cl->cq, cl->kernel, 1, NULL,
 			&cl->global_item_size, &cl->local_item_size, 0, NULL, &event);

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/20 18:21:25 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/06/29 08:46:44 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ static void init_basic(t_env *e, t_tool *tool)
 	tool->move_x = (WIDTH / 2 * -1) + ((2.1) * tool->zoom);
 	tool->move_y = (HEIGHT / 2 * -1) + ((1.2) * tool->zoom);
 	e->bud.over = 1;
+	tool->xmin = -2.1;
+	tool->xmax = 0.6;
+	tool->ymin = -1.2;
+	tool->ymax = 1.2;
 }
 
 static void init_bud(t_env *e, t_tool *tool, t_bud *bud)
