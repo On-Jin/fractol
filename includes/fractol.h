@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/27 12:40:53 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/07 16:28:25 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # define NB_FRACTAL 4
 # define NB_PRESET_BUD 5
+# define MAX_INCR 1000000
 
 # define NC_WIDTH  50
 # define NC_HEIGHT 100
@@ -186,6 +187,9 @@ typedef struct	s_env
 	int			mouse_x;
 	int			mouse_y;
 
+	int			incr_dir;
+	int			max_iter;
+	int			min_iter;
 }				t_env;
 
 void			init_mlx(t_env *e);

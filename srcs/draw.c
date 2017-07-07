@@ -6,19 +6,19 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 22:46:52 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/19 05:37:02 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/07 16:12:29 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void		mandelbrot(t_env *e, t_px *px,  int y, int x)
+static void		mandelbrot(t_env *e, t_px *px, int y, int x)
 {
 	t_kit	kit;
 
 	ft_bzero(&kit, sizeof(t_kit));
-	kit.c_r = (x + e->tool.ajj_x + e->tool.move_x) / (long int)e->tool.zoom + X1_MAN;
-	kit.c_i = (y + e->tool.ajj_y + e->tool.move_y) / (long int)e->tool.zoom + Y1_MAN;
+	kit.c_r = (x / (V_PRECI)(HEIGHT * 1.125)) * ((V_PRECI)e->tool.xmax - (V_PRECI)e->tool.xmin) + e->tool.xmin;
+	kit.c_i = (y / (V_PRECI)HEIGHT) * ((V_PRECI)e->tool.ymax - (V_PRECI)e->tool.ymin) + e->tool.ymin;
 	while (kit.z_r * kit.z_r + kit.z_i * kit.z_i < 4 && kit.i < e->tool.iter)
 	{
 		kit.tmp = kit.z_r;
@@ -39,13 +39,13 @@ static void		mandelbrot(t_env *e, t_px *px,  int y, int x)
 	}
 }
 
-static void		julia(t_env *e, t_px *px,  int y, int x)
+static void		julia(t_env *e, t_px *px, int y, int x)
 {
 	t_kit	kit;
 
 	ft_bzero(&kit, sizeof(t_kit));
-	kit.z_r = (x + e->tool.ajj_x + e->tool.move_x) / (long int)e->tool.zoom + X1_MAN;
-	kit.z_i = (y + e->tool.ajj_y + e->tool.move_y) / (long int)e->tool.zoom + Y1_MAN;
+	kit.z_r = (x + e->tool.ajj_x + e->tool.move_x) / (long)e->tool.zoom + X1_MAN;
+	kit.z_i = (y + e->tool.ajj_y + e->tool.move_y) / (long)e->tool.zoom + Y1_MAN;
 	kit.c_r = e->jul_x;
 	kit.c_i = e->jul_y;
 	while (kit.z_r * kit.z_r + kit.z_i * kit.z_i < 4 && kit.i < e->tool.iter)
@@ -68,7 +68,7 @@ static void		julia(t_env *e, t_px *px,  int y, int x)
 	}
 }
 
-static void	draw_mandel_set(t_env *e)
+static void		draw_mandel_set(t_env *e)
 {
 	t_px	px;
 	int		y;
@@ -94,7 +94,7 @@ static void	draw_mandel_set(t_env *e)
 	}
 }
 
-int			draw(t_env *e)
+int				draw(t_env *e)
 {
 	if (e->num == 3)
 		draw_tri(e);

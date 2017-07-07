@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 18:00:11 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/18 09:10:11 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/07 16:13:19 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	free_mlx(t_env *e, t_img *img)
 	if (!e || !img)
 		return ;
 	if (e->mlx && e->img)
-	mlx_destroy_image(e->mlx, e->img->img);
+		mlx_destroy_image(e->mlx, e->img->img);
 	if (e->mlx && e->win)
 		mlx_destroy_window(e->mlx, e->win);
 	if (e->img)

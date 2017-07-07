@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/06/21 11:12:29 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/07/07 15:57:40 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = fractol
 
 DIR_LFT = libft/
 DIR_MLXJI = libmlxji/
-#DIR_MLX = minilibx_macos/
-DIR_MLX = minilibxcaptain/
+DIR_MLX = minilibx_macos/
+#DIR_MLX = minilibxcaptain/
 DIR_LIB = all_lib/
 
 FLAGS = -Wall -Werror -Wextra -g -I ./include/

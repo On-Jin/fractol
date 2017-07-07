@@ -64,7 +64,7 @@ float jul_x)
 //		c_r = (d_x) / (V_PRECI)tool.zoom + tool.xmin;
 //		c_i = (d_y) / (V_PRECI)tool.zoom + tool.ymin;
 
-c_r = ((V_PRECI)d_x / ((V_PRECI)HEIGHT * 1.125)) *
+		c_r = ((V_PRECI)d_x / ((V_PRECI)HEIGHT * 1.125)) *
 			((V_PRECI)tool.xmax - (V_PRECI)tool.xmin) + tool.xmin;
 		c_i = ((V_PRECI)d_y / (V_PRECI)HEIGHT) *
 			((V_PRECI)tool.ymax - (V_PRECI)tool.ymin) + tool.ymin;

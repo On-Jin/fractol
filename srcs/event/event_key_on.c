@@ -6,43 +6,32 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/19 06:41:10 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/07 16:57:58 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
+static void	incr_iter(int keycode, t_env *e)
+{
+	if (keycode == 69 && e->num != NUM_TRI)
+		(e->tool.iter + e->incr_dir) < (e->max_iter) ?
+								(e->tool.iter) += e->incr_dir : 0;
+	else if (keycode == 78 && e->num != NUM_TRI)
+		(e->tool.iter + e->incr_dir) > (e->min_iter) ?
+								(e->tool.iter) -= e->incr_dir : 0;
+	else if (keycode == 88)
+		e->incr_dir < MAX_INCR ? (e->incr_dir) *= 10 : 0;
+	else if (keycode == 92)
+		e->incr_dir > 10 ? (e->incr_dir) /= 10 : 0;
+}
+
 int			event_key_on(int keycode, t_env *e)
 {
 	if (keycode == 53)
 		end_of_program(e, NULL);
-	if (keycode == 69 && e->num != NUM_TRI)
-	{
-		if (e->tool.iter < 2000)
-			e->tool.iter += 10;
-//		ft_printf("Iter [%i]\n", e->tool.iter);
-	}
-	else if (keycode == 78 && e->num != NUM_TRI)
-	{
-		if (e->num != 3 && e->tool.iter > 10)
-			e->tool.iter -= 10;
-	}
-	else if (keycode == 92)
-	{
-		if (e->tool.iter > 2)
-			e->tool.iter--;
-	}
-	else if (keycode == 82 && e->num != NUM_TRI)
-	{
-		if (!e->num)
-			e->tool.iter+=100000;
-	}
-	else if (keycode == 88)
-	{
-		if (e->tool.iter < 14)
-			e->tool.iter++;
-	}
-	else if (keycode == 123) //G
+	incr_iter(keycode, e);
+	if (keycode == 123) //G
 		e->tool.move_x -= 10;
 	else if (keycode == 124) //D
 		e->tool.move_x += 10;

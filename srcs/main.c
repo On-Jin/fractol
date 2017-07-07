@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/29 08:46:44 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/07 16:29:55 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static void init_basic(t_env *e, t_tool *tool)
 	tool->xmax = 0.6;
 	tool->ymin = -1.2;
 	tool->ymax = 1.2;
+	e->max_iter = 10000;
+	e->min_iter = 10;
 }
 
 static void init_bud(t_env *e, t_tool *tool, t_bud *bud)
@@ -40,7 +42,27 @@ static void init_bud(t_env *e, t_tool *tool, t_bud *bud)
 	(void)tool;
 	tool->move_y = (e->height_bud / 2 * -1) + ((1.2) * set_zoom[bud->over]);
 	e->buff_patern = ft_memalloc(e->mem_opencl_bud * sizeof(int));
-	e->ftab = ft_memalloc(e->mem_opencl_bud * 4);		
+	e->ftab = ft_memalloc(e->mem_opencl_bud * 4);
+	e->max_iter = 100000000;
+	e->min_iter = 10;
+}
+
+static void init_sierpinski(t_env *e, t_tool *tool)
+{
+	(void)e;
+	tool->zoom = 1;
+	tool->iter = 1;
+	e->bud.over = 1;
+	tool->move_x = 0;
+	tool->move_y = 0;
+	e->tr.tx[0] = WIDTH / 2;
+	e->tr.ty[0] = 300;
+	e->tr.tx[1] = WIDTH / 2 + 100;
+	e->tr.ty[1] = 400;
+	e->tr.tx[2] = WIDTH / 2 - 100;
+	e->tr.ty[2] = 400;
+	e->max_iter = 12;
+	e->min_iter = 1;
 }
 
 static void	init_env(t_env *e)
@@ -60,22 +82,7 @@ static void	init_env(t_env *e)
 	ft_strcpy(e->name_preset[2], "mandelbrot.cl");
 	ft_strcpy(e->name_preset[3], "preset_bud/");
 	ft_strcpy(e->name_preset[4], "");
-}
-
-static void init_sierpinski(t_env *e, t_tool *tool)
-{
-	(void)e;
-	tool->zoom = 1;
-	tool->iter = 1;
-	e->bud.over = 1;
-	tool->move_x = 0;
-	tool->move_y = 0;
-	e->tr.tx[0] = WIDTH / 2;
-	e->tr.ty[0] = 300;
-	e->tr.tx[1] = WIDTH / 2 + 100;
-	e->tr.ty[1] = 400;
-	e->tr.tx[2] = WIDTH / 2 - 100;
-	e->tr.ty[2] = 400;
+	e->incr_dir = 1;
 }
 
 static void	init_dir(t_env *e)
