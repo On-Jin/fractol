@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/07/07 15:57:40 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/07/10 20:35:04 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC = main.c \
 		 init_mlx.c \
 		 draw.c \
 		 loop.c \
+		 zoom.c \
 		 draw_tri.c \
 		 draw_tree.c \
 		 menu.c \

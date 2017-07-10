@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 08:33:22 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/10 22:07:34 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/10 22:04:11 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	parsing_special(t_env *e, char *line, int fd)
 	if (e->bud.anti < 0 || e->bud.anti > 1)
 		end_of_program(e, "Erreur de parsing, Anti [0-1]\n");
 	call_gnl(e, &line, fd);
-	e->bud.gain = (float)ft_atoi(line);
+	e->bud.gain = (float)ft_atoi(line) / 10;
 	ft_strdel(&line);
 	if (e->bud.gain < 0)
 		end_of_program(e, "Erreur de parsing, Gain < 0\n");

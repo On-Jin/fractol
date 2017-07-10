@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/07 16:28:25 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/10 22:17:51 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 # define NC_CYAN 5
 
 #if defined(MODE_GPU)
-	# define HEIGHT 720
-	# define WIDTH 1280
+	# define HEIGHT 1080
+	# define WIDTH 1920
 	# define GPU 1
 #else
 	# define HEIGHT 820
@@ -202,8 +202,14 @@ int				event_key_off(int keycode, t_env *e);
 int				menu(t_env *e);
 
 int				draw_tri(t_env *e);
+int				tri_recur(t_env *e, int iter, t_tr tr);
 int				draw_tree(t_env *e);
 
+
+void			zoom_complexe_in(t_env *e, int y, int x);
+void			zoom_basic_in(t_env *e, int y, int x);
+void			zoom_complexe_ar(t_env *e, int y, int x);
+void			zoom_basic_ar(t_env *e, int y, int x);
 
 void			cl_check_err(cl_int err, const char *name);
 void			cl_end_opencl(t_env *e, t_cl *cl);

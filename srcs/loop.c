@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:21:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/07 16:02:45 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/10 20:34:07 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ int			loop(t_env *e)
 	e->turn = 0;
 	if (e->num == 3)
 		ft_bzero(e->img->data, MEM_OPENCL);
-#if (GPU == 1)
-	cl_draw(e);
-#else
-	draw(e);
-#endif
+	if (GPU == 1)
+		cl_draw(e);
+	else
+		draw(e);
 	mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
 	return (1);
 }

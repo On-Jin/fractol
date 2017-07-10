@@ -6,18 +6,11 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 07:12:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/19 05:41:57 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/10 22:15:43 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-static void	ncurses_key_putnbr(t_nc *nc, int ret)
-{
-	(void)nc;(void)ret;
-//	if (ret == NC_PUT_NBR)
-//		mvwscanw(nc->inf, 50, 2, "%i", &nc->wall_cycle);
-}
 
 static void	ncurses_key_move(t_env *e, t_nc *nc, int ret)
 {
@@ -33,6 +26,35 @@ static void	ncurses_key_move(t_env *e, t_nc *nc, int ret)
 		nc->cursor--;
 }
 
+static int	ncurses_key_right(t_env *e, t_nc *nc)
+{
+	if (nc->menu_bud)
+	{
+		ncurses_parsing(e, nc);
+		nc->menu = 1;
+		return (0);
+	}
+	if (!nc->menu_bud)
+		e->num = nc->cursor;
+	if (e->num)
+		nc->menu = 1;
+	else
+		nc->menu_bud = 1;
+	if (e->num == NUM_TRI && GPU)
+	{
+		end_of_program(e, "[Make re] pour désactiver le mode GPU\n");
+	}
+	return (1);
+}
+
+static void	ncurses_key_left(t_env *e, t_nc *nc)
+{
+	(void)e;
+	nc->menu = 0;
+	nc->menu_bud = 0;
+	nc->cursor = 0;
+}
+
 void		ncurses_key(t_env *e, t_nc *nc)
 {
 	int		ret;
@@ -42,29 +64,12 @@ void		ncurses_key(t_env *e, t_nc *nc)
 	ret = getch();
 	if (ret > 'A' && ret < 'z')
 		nc->key = ret;
-	ncurses_key_putnbr(nc, ret);
 	ncurses_key_move(e, nc, ret);
 	if (ret == KEY_RIGHT)
 	{
-		if (nc->menu_bud)
-		{
-			ncurses_parsing(e, nc);
-			nc->menu = 1;
+		if (!(ncurses_key_right(e, nc)))
 			return ;
-		}
-		if (!nc->menu_bud)
-			e->num = nc->cursor;
-		if (e->num)
-			nc->menu = 1;
-		else
-			nc->menu_bud = 1;
-		if (e->num == NUM_TRI && GPU)
-			end_of_program(e, "[Make re] pour désactiver le mode GPU pour afficher Sierpinski\n");
 	}
 	else if (ret == KEY_LEFT)
-	{
-		nc->menu = 0;
-		nc->menu_bud = 0;
-		nc->cursor = 0;
-	}
+		ncurses_key_left(e, nc);
 }

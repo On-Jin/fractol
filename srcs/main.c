@@ -6,13 +6,13 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/07 16:29:55 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/10 22:08:50 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void init_basic(t_env *e, t_tool *tool)
+static void	init_basic(t_env *e, t_tool *tool)
 {
 	e->tool.iter = 50;
 	tool->zoom = 300;
@@ -27,7 +27,7 @@ static void init_basic(t_env *e, t_tool *tool)
 	e->min_iter = 10;
 }
 
-static void init_bud(t_env *e, t_tool *tool, t_bud *bud)
+static void	init_bud(t_env *e, t_tool *tool, t_bud *bud)
 {
 	int		set_zoom[5];
 
@@ -47,7 +47,7 @@ static void init_bud(t_env *e, t_tool *tool, t_bud *bud)
 	e->min_iter = 10;
 }
 
-static void init_sierpinski(t_env *e, t_tool *tool)
+static void	init_sierpinski(t_env *e, t_tool *tool)
 {
 	(void)e;
 	tool->zoom = 1;
@@ -87,7 +87,7 @@ static void	init_env(t_env *e)
 
 static void	init_dir(t_env *e)
 {
-	t_tool * tool;
+	t_tool *tool;
 
 	tool = &e->tool;
 	tool->xmin = -2.1;
@@ -102,7 +102,7 @@ static void	init_dir(t_env *e)
 		init_bud(e, &e->tool, &e->bud);
 }
 
-static int get_arg(t_env *e, int argc, char **argv)
+static int	get_arg(t_env *e, int argc, char **argv)
 {
 	(void)e;
 	(void)argv;

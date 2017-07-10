@@ -6,13 +6,13 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 06:36:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/17 09:31:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/10 21:55:20 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void ncurses_print_fractal(t_env *e, t_nc *nc)
+static void	ncurses_print_fractal(t_env *e, t_nc *nc)
 {
 	int i;
 
@@ -23,7 +23,7 @@ static void ncurses_print_fractal(t_env *e, t_nc *nc)
 			wattron(nc->win, WA_REVERSE);
 		wattron(nc->win, COLOR_PAIR(i));
 		mvwprintw(nc->win, 9 + i, 2, "%s", e->name_fractal[i]);
-			wattroff(nc->win, COLOR_PAIR(i));
+		wattroff(nc->win, COLOR_PAIR(i));
 		if (nc->cursor == i && !nc->menu && !nc->menu_bud)
 			wattroff(nc->win, WA_REVERSE);
 		i++;

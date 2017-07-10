@@ -6,13 +6,13 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 08:03:27 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/18 08:54:06 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/10 21:55:44 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void ncurses_print_set(t_env *e, t_nc *nc)
+static void	ncurses_print_set(t_env *e, t_nc *nc)
 {
 	int i;
 
@@ -32,7 +32,7 @@ static void ncurses_print_set(t_env *e, t_nc *nc)
 void		ncurses_menu_bud(t_env *e, t_nc *nc)
 {
 	wattron(nc->win, COLOR_PAIR(e->num));
-	mvwprintw(nc->win, 9 , 13, "---------->");
+	mvwprintw(nc->win, 9, 13, "---------->");
 	wattroff(nc->win, COLOR_PAIR(e->num));
 	ncurses_print_set(e, nc);
 }
