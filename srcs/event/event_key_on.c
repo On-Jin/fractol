@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/10 20:24:42 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/10 22:34:17 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void	event_iter(int keycode, t_env *e)
 {
-	if (keycode == 69 && e->num)
+	if (keycode == 69)
 		(e->tool.iter + e->incr_dir) < (e->max_iter) ?
 								(e->tool.iter) += e->incr_dir : 0;
-	else if (keycode == 78 && e->num)
+	else if (keycode == 78)
 		(e->tool.iter - e->incr_dir) > (e->min_iter) ?
 								(e->tool.iter) -= e->incr_dir : 0;
 	else if (keycode == 88)

@@ -16,6 +16,7 @@ static void	cl_run_kernel(t_env *e, t_cl *cl)
 {
 	cl_event event;
 
+	event = 0;
 	if (e->num)
 		e->cl.global_item_size = WIDTH * HEIGHT;
 	else
@@ -34,6 +35,13 @@ static void	cl_run_kernel(t_env *e, t_cl *cl)
 	cl_check_err(cl->err, "clFlush");
 }
 
+static unsigned char	char_max(int nb)
+{
+	if (nb > 254)
+		return (254);
+	return (nb);
+}
+
 static void	cl_stock_in_buff(t_env *e, char *dest, int *src, int add)
 {
 	int i;
@@ -41,7 +49,7 @@ static void	cl_stock_in_buff(t_env *e, char *dest, int *src, int add)
 	i = 0;
 	while (i < e->mem_opencl_bud)
 	{
-		dest[i * 4 + add] = src[i];
+		dest[i * 4 + add] = char_max(src[i]);
 		i++;
 	}
 }

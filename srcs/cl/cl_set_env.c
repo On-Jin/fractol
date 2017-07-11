@@ -55,6 +55,7 @@ void		cl_set_buffer_and_arg(t_env *e, t_cl *cl)
 				sizeof(char) * MEM_OPENCL, e->img->data, 0, NULL, NULL);
 	else
 	{
+		/*
 		bzero(e->buff_patern, e->mem_opencl_bud * 4);
 		cl->err = clEnqueueWriteBuffer(cl->cq, cl->mem, CL_TRUE, 0,
 				sizeof(int) * e->mem_opencl_bud, e->buff_patern, 0, NULL, NULL);
@@ -62,6 +63,7 @@ void		cl_set_buffer_and_arg(t_env *e, t_cl *cl)
 				sizeof(int) * e->mem_opencl_bud, e->buff_patern, 0, NULL, NULL);
 		cl->err = clEnqueueWriteBuffer(cl->cq, cl->mem3, CL_TRUE, 0,
 				sizeof(int) * e->mem_opencl_bud, e->buff_patern, 0, NULL, NULL);
+				*/
 	}
 	if (e->num)
 		cl_set_arg_mandelbrot(e, cl);

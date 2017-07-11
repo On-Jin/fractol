@@ -174,6 +174,7 @@ typedef struct	s_env
 	int			width_bud;
 	int			height_bud;
 	int			mem_opencl_bud;
+	int			status_bud;
 
 	int			num;
 	char		open_var_jul;

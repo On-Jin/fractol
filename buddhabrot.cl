@@ -15,23 +15,20 @@ int				cl_is_ok(V_PRECI c_r, V_PRECI c_i, long int zoom, long int iter)
 	int i;
 
 	i = 0;
-//	barrier(CLK_GLOBAL_MEM_FENCE);	
 	while (z_r * z_r + z_i * z_i < 4 && i < iter)
 	{
 		tmp = z_r;
 		z_r = z_r * z_r - z_i * z_i + c_r;
 		z_i = 2 * z_i * tmp + c_i;
 		i++;
-//		barrier(CLK_GLOBAL_MEM_FENCE);	
 	}
-//	barrier(CLK_GLOBAL_MEM_FENCE);	
 	return (i);
 }
 
 __kernel void	buddhabrot(
-		__global volatile int *out,
-		__global volatile int *out2,
-		__global volatile int *out3,
+		volatile __global int *out,
+		volatile __global int *out2,
+		volatile __global int *out3,
 		t_tool tool,
 		int clock,
 		t_bud bud)
@@ -64,7 +61,6 @@ __kernel void	buddhabrot(
 				(d_y) / (V_PRECI)tool.zoom + Y1,
 				tool.zoom, tool.iter);
 
-	
 	if (i != tool.iter)
 	{
 		k = 0;
@@ -79,24 +75,24 @@ __kernel void	buddhabrot(
 			z_i = 2 * z_i * tmp + c_i;
 			ky = (int)((z_i - Y1) * (V_PRECI)tool.zoom - (V_PRECI)tool.ajj_y - tool.move_y);
 			kx = (int)((z_r - X1) * (V_PRECI)tool.zoom - (V_PRECI)tool.ajj_x - tool.move_x);
-			if (ky > 0 && ky < height_bud &&
-					kx > 0 && kx < width_bud)
+			if (ky > 1 && ky < height_bud - 1 &&
+					kx > 1 && kx < width_bud - 1)
 			{
-				if (out[(kx * OPP) + (ky * width_bud) + 0] < 254)
+				if (atomic_max(&(out[(kx * OPP) + (ky * width_bud) + 0]), 0) < 254)
 				{
 					ptr = (&(out[((kx) + (ky * width_bud) + 0)]));
 					atomic_inc(ptr);
 				}
-				if (out2[(kx * OPP) + (ky * width_bud) + 1] < 254)
-				{
-					ptr = (&(out2[((kx) + (ky * width_bud) + 1)]));
-					atomic_inc(ptr);
-				}
-				if (out3[(kx * OPP) + (ky * width_bud) + 2] < 254)
-				{
-					ptr = (&(out3[((kx) + (ky * width_bud) + 2)]));
-					atomic_inc(ptr);
-				}
+//				if (out2[(kx * OPP) + (ky * width_bud) + 1] < 254)
+//				{
+//					ptr = (&(out2[((kx) + (ky * width_bud) + 1)]));
+//					atomic_inc(ptr);
+//				}
+//				if (out3[(kx * OPP) + (ky * width_bud) + 2] < 254)
+//				{
+//					ptr = (&(out3[((kx) + (ky * width_bud) + 2)]));
+//					atomic_inc(ptr);
+//				}
 			}
 			k++;
 		}
