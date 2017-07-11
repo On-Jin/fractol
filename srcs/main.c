@@ -122,9 +122,9 @@ int			main(int argc, char **argv)
 	if (!(get_arg(&e, argc, argv)))
 		return (0);
 	init_env(&e);
-	ncurses_init(&e, &e.nc, NC_HEIGHT, NC_WIDTH);
-	while (!e.nc.menu)
-		ncurses_menu(&e, &e.nc);
+//	ncurses_init(&e, &e.nc, NC_HEIGHT, NC_WIDTH);
+//	while (!e.nc.menu)
+//		ncurses_menu(&e, &e.nc);
 	init_dir(&e);
 	init_mlx(&e);
 	if (GPU)

@@ -14,7 +14,7 @@
 
 int			loop(t_env *e)
 {
-	ncurses_refresh(e, &e->nc);
+//	ncurses_refresh(e, &e->nc);
 	gettimeofday(&(e->cur), NULL);
 	if ((e->cur.tv_sec - e->step.tv_sec))
 	{
@@ -26,8 +26,8 @@ int			loop(t_env *e)
 	if (e->clock > 360)
 		e->clock = 0;
 	e->fps++;
-//	draw_tree(e);
-//	return (2);
+	draw_tree(e);
+	return (2);
 	if (!e->num && !e->turn)
 		return (1);
 	e->turn = 0;
