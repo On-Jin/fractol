@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/13 00:14:23 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/13 01:04:57 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ typedef struct	s_env
 
 	int			mode;
 	int			color;
+	int			psy;
 }				t_env;
 
 void			init_mlx(t_env *e);

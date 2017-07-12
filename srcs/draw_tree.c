@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/19 06:48:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/13 00:46:34 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/13 01:07:20 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int				recur_tree(t_env *e, t_pxtopx to,
 {
 	if (iter == 0)
 		return (1);
-	if (!(e->mode & 1))
+	if (e->mode % 2 == 0)
 		to.x2 = to.x1 - (e->size_tree / (e->tool.iter - iter + 1));
 	else
 		to.x2 = to.x1 - (e->size_tree / 2 / (e->tool.iter / iter));
@@ -65,7 +65,10 @@ int				draw_tree(t_env *e)
 {
 
 	ft_bzero(e->img->data, WIDTH * HEIGHT * 4);
-	recur_tree(e, e->to, e->tool.iter, 90);
+	if (!e->psy)
+		recur_tree(e, e->to, e->tool.iter, 90);
+	else
+		recur_tree(e, e->to, e->tool.iter, e->mouse_x / 5);
 	mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
 	return (1);
 }

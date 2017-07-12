@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/13 00:40:52 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/13 01:06:42 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ static void	event_other(int keycode, t_env *e)
 		e->satu < 1 ? (e->satu += 0.1): 0;
 	else if (keycode == 85)
 		e->value < 1 ? (e->value += 0.1): 0;
+	else if (keycode == 7)
+		e->psy == 0 ? (e->psy = 1) : (e->psy = 0);
 }
 
 int			event_key_on(int keycode, t_env *e)
