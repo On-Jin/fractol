@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:12:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 00:13:29 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/13 00:34:24 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int			event_key_off(int keycode, t_env *e)
 {
 	if (keycode)
-		e->key[keycode] = 1;
+		e->key[keycode] = 0;
 	return (1);
 }

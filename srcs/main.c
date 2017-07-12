@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/10 22:08:50 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/12 23:52:48 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,19 @@ static void	init_sierpinski(t_env *e, t_tool *tool)
 	e->min_iter = 1;
 }
 
+static void	init_tree(t_env *e, t_tool *tool)
+{
+	tool->zoom = 1;
+	tool->iter = 12;
+	e->max_iter = 17;
+	e->min_iter = 1;
+	e->to.x1 = WIDTH / 2;
+	e->to.y1 = HEIGHT - HEIGHT / 8;
+	e->size_tree = 200;
+	e->value = 0.9;
+	e->satu = 0.9;
+}
+
 static void	init_env(t_env *e)
 {
 	e->varover[0] = 0;
@@ -77,6 +90,7 @@ static void	init_env(t_env *e)
 	ft_strcpy(e->name_fractal[1], "mandelbrot");
 	ft_strcpy(e->name_fractal[2], "julia");
 	ft_strcpy(e->name_fractal[3], "sierpinski (NO_GPU)");
+	ft_strcpy(e->name_fractal[4], "tree (NO_GPU)");
 	ft_strcpy(e->name_preset[0], "preset_bud/example3");
 	ft_strcpy(e->name_preset[1], "preset_bud/example2");
 	ft_strcpy(e->name_preset[2], "mandelbrot.cl");
@@ -96,6 +110,8 @@ static void	init_dir(t_env *e)
 	tool->ymax = 1.2;
 	if (e->num == 3)
 		init_sierpinski(e, &e->tool);
+	else if (e->num == 4)
+		init_tree(e, &e->tool);
 	else if (e->num || !GPU)
 		init_basic(e, &e->tool);
 	else
@@ -122,9 +138,9 @@ int			main(int argc, char **argv)
 	if (!(get_arg(&e, argc, argv)))
 		return (0);
 	init_env(&e);
-//	ncurses_init(&e, &e.nc, NC_HEIGHT, NC_WIDTH);
-//	while (!e.nc.menu)
-//		ncurses_menu(&e, &e.nc);
+	ncurses_init(&e, &e.nc, NC_HEIGHT, NC_WIDTH);
+	while (!e.nc.menu)
+	ncurses_menu(&e, &e.nc);
 	init_dir(&e);
 	init_mlx(&e);
 	if (GPU)

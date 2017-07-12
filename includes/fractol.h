@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/10 22:17:51 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/13 00:14:23 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <ncurses.h>
 # include <math.h>
 
-# define NB_FRACTAL 4
+# define NB_FRACTAL 5
 # define NB_PRESET_BUD 5
 # define MAX_INCR 1000000
 
@@ -59,6 +59,7 @@
 # define NUM_MANDEL 1
 # define NUM_JULIA 2
 # define NUM_TRI 3
+# define NUM_TREE 4
 
 # define MEM_OPENCL (HEIGHT * WIDTH * 4)
 # define MAX_SOURCE_SIZE (11000)
@@ -158,7 +159,10 @@ typedef struct	s_env
 	t_bud		bud;
 	t_nc		nc;
 	t_tr		tr;
+	t_pxtopx	to;
+	t_px		px;
 
+	int			size_tree;
 	struct		timeval step;
 	struct		timeval cur;
 	int			fps;
@@ -191,6 +195,13 @@ typedef struct	s_env
 	int			incr_dir;
 	int			max_iter;
 	int			min_iter;
+
+	float		hue;
+	float		satu;
+	float		value;
+
+	int			mode;
+	int			color;
 }				t_env;
 
 void			init_mlx(t_env *e);
@@ -208,9 +219,11 @@ int				draw_tree(t_env *e);
 
 
 void			zoom_complexe_in(t_env *e, int y, int x);
-void			zoom_basic_in(t_env *e, int y, int x);
 void			zoom_complexe_ar(t_env *e, int y, int x);
-void			zoom_basic_ar(t_env *e, int y, int x);
+void			zoom_tri_basic_in(t_env *e, int y, int x);
+void			zoom_tri_basic_ar(t_env *e, int y, int x);
+void			zoom_tree_basic_in(t_env *e, int y, int x);
+void			zoom_tree_basic_ar(t_env *e, int y, int x);
 
 void			cl_check_err(cl_int err, const char *name);
 void			cl_end_opencl(t_env *e, t_cl *cl);

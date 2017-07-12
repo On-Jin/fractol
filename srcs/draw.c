@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 22:46:52 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/07 16:12:29 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/12 22:43:18 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ int				draw(t_env *e)
 {
 	if (e->num == 3)
 		draw_tri(e);
+	else if (e->num == 4)
+		draw_tree(e);
 	else
 		draw_mandel_set(e);
 	return (1);

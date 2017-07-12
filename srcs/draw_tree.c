@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/19 06:48:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/12 19:56:06 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/13 00:46:34 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,17 @@ int				recur_tree(t_env *e, t_pxtopx to,
 {
 	if (iter == 0)
 		return (1);
-	to.x2 = to.x1 - (200 / (12 - iter + 1));
+	if (!(e->mode & 1))
+		to.x2 = to.x1 - (e->size_tree / (e->tool.iter - iter + 1));
+	else
+		to.x2 = to.x1 - (e->size_tree / 2 / (e->tool.iter / iter));
 	to.y2 = to.y1;
 	to = rotation_tree(to, angle);
-	mlxji_draw_line(e->img, e->px, &to);
+	if (e->color & 1)
+		mlxji_hsv_to_rgb(&e->px, ((360 / (e->tool.iter / iter)) + e->clock) % 360, e->satu, e->value);
+	else
+		mlxji_hsv_to_rgb(&e->px, ((int)e->hue + e->clock) % 360, e->satu, e->value);
+	mlxji_draw_line(e->img, &e->px, &to);
 	to.x1 = to.x2;
 	to.y1 = to.y2;
 	recur_tree(e, to, iter - 1, loop_angle(angle - (e->mouse_x / 10)));
@@ -56,18 +63,9 @@ int				recur_tree(t_env *e, t_pxtopx to,
 
 int				draw_tree(t_env *e)
 {
-	t_pxtopx	to;
-	t_px		px;
 
 	ft_bzero(e->img->data, WIDTH * HEIGHT * 4);
-	px.r = 255;
-	px.b = 255;
-	px.g = 0;
-	e->px = &px;
-	to.x1 = WIDTH / 2;
-	to.y1 = HEIGHT - HEIGHT / 8;
-	recur_tree(e, to, 12, 90);
+	recur_tree(e, e->to, e->tool.iter, 90);
 	mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
-	e->px = NULL;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 07:12:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/10 22:15:43 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/12 22:28:38 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	ncurses_key_right(t_env *e, t_nc *nc)
 		nc->menu = 1;
 	else
 		nc->menu_bud = 1;
-	if (e->num == NUM_TRI && GPU)
+	if ((e->num == NUM_TRI || e->num == NUM_TREE) && GPU)
 	{
 		end_of_program(e, "[Make re] pour désactiver le mode GPU\n");
 	}
