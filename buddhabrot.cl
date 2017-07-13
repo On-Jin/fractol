@@ -7,7 +7,7 @@
 #pragma OPENCL EXTENSION cl_intel_printf : enable
 #pragma OPENCL EXTENSION cl_khr_int64_base_atomics : enable
 
-int				cl_is_ok(V_PRECI c_r, V_PRECI c_i, long int zoom, long int iter)
+int				cl_is_ok(V_PRECI c_r, V_PRECI c_i, long int iter)
 {
 	V_PRECI tmp;
 	V_PRECI z_r = 0;
@@ -41,8 +41,8 @@ __kernel void	buddhabrot(
 		return ;
 	int			x = recup % width_bud;
 	int			y = recup / width_bud;
-	long int	d_x = x + (V_PRECI)tool.ajj_x + tool.move_x;
-	long int	d_y = y + (V_PRECI)tool.ajj_y + tool.move_y;
+	long int	d_x = x + tool.move_x;
+	long int	d_y = y + tool.move_y;
 	V_PRECI		c_r = 0;
 	V_PRECI		c_i = 0;
 	V_PRECI		z_r = 0;
@@ -54,27 +54,25 @@ __kernel void	buddhabrot(
 	volatile __global int *ptr;
 	i = 0;
 
-	c_r = (d_x) / (V_PRECI)tool.zoom + X1;
-	c_i = (d_y) / (V_PRECI)tool.zoom + Y1;
+	c_r = (((V_PRECI)d_x) / ((V_PRECI)HEIGHT * 1.125)) *
+				((V_PRECI)tool.xmax - (V_PRECI)tool.xmin) + tool.xmin;
+	c_i = (((V_PRECI)d_y) / (V_PRECI)HEIGHT) *
+				((V_PRECI)tool.ymax - (V_PRECI)tool.ymin) + tool.ymin;
 	
-	i = cl_is_ok((d_x) / (V_PRECI)tool.zoom + X1,
-				(d_y) / (V_PRECI)tool.zoom + Y1,
-				tool.zoom, tool.iter);
+	i = cl_is_ok(c_r, c_i, tool.iter);
 
 	if (i != tool.iter)
 	{
 		k = 0;
 		z_r = 0;
 		z_i = 0;
-		c_r = (d_x) / (V_PRECI)tool.zoom + X1;
-		c_i = (d_y) / (V_PRECI)tool.zoom + Y1;
 		while (k < i)
 		{
 			tmp = z_r;
 			z_r = z_r * z_r - z_i * z_i + c_r;
 			z_i = 2 * z_i * tmp + c_i;
-			ky = (int)((z_i - Y1) * (V_PRECI)tool.zoom - (V_PRECI)tool.ajj_y - tool.move_y);
-			kx = (int)((z_r - X1) * (V_PRECI)tool.zoom - (V_PRECI)tool.ajj_x - tool.move_x);
+			kx = (int)(((z_r - tool.xmin) / ((V_PRECI)tool.xmax - (V_PRECI)tool.xmin)) * ((V_PRECI)HEIGHT * 1.125)) - tool.move_x;
+			ky = (int)(((z_i - tool.ymin) / ((V_PRECI)tool.ymax - (V_PRECI)tool.ymin)) * ((V_PRECI)HEIGHT)) - tool.move_y;
 			if (ky > 1 && ky < height_bud - 1 &&
 					kx > 1 && kx < width_bud - 1)
 			{
