@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/19 06:48:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/13 01:11:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/13 20:03:38 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ int				recur_tree(t_env *e, t_pxtopx to,
 {
 	if (iter == 0)
 		return (1);
-	if (e->mode % 2 == 0)
+	if (e->tool.mode % 2 == 0)
 		to.x2 = to.x1 - (e->size_tree / (e->tool.iter - iter + 1));
 	else
 		to.x2 = to.x1 - (e->size_tree / 2 / (e->tool.iter / iter));
 	to.y2 = to.y1;
 	to = rotation_tree(to, angle);
-	if (e->color & 1)
+	if (e->tool.color & 1)
 		mlxji_hsv_to_rgb(&e->px, ((360 / (e->tool.iter / iter)) + e->clock) % 360, e->satu, e->value);
 	else
 		mlxji_hsv_to_rgb(&e->px, ((int)e->hue + e->clock) % 360, e->satu, e->value);

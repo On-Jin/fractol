@@ -30,6 +30,59 @@ V_PRECI		ft_abs(V_PRECI a)
 	return (a);
 }
 
+void		init_color_value(t_tool *tool, t_color *c, int clock)
+{
+	if (tool->color == 0 || tool->color == 2)
+	{
+		c->h = clock;
+		c->s = 0.8;
+		c->v = 0.8;
+	}
+	else if (tool->color == 1)
+	{
+		c->h = clock;
+		c->s = 0.8;
+		c->v = 0.2;
+	}
+	else if (tool->color == 3)
+	{
+		c->s = 0;
+		c->h = 0;
+		c->v = 0.9 / 360 * clock;
+	}
+}
+
+void		set_color_value(t_tool *tool, t_color *hsv, t_px *px, int i, int clock)
+{
+		if (tool->color == 2 || tool->color == 1)
+		{
+			hsv->s = hsv->s + (0.2 / tool->iter) * i;
+			hsv->v = hsv->v + (0.8 / tool->iter) * i;
+			hsv->h += (360 / (float)tool->iter) * i;
+			if (hsv->h > 360)
+			{
+				hsv->h -= 360;
+			}
+			mlxji_hsv_to_rgb(px, hsv->h, hsv->s, hsv->v);
+		}
+		else if (tool->color == 0)
+		{
+			hsv->h += (360 / (float)tool->iter) * i;
+			if (hsv->h > 360)
+			{
+				hsv->h -= 360;
+			}
+			mlxji_hsv_to_rgb(px, hsv->h, hsv->s, hsv->v);
+		}
+		else if (tool->color == 3)
+		{
+			hsv->v += (0.9 / (float)tool->iter) * (float)i;
+			if (hsv->v > 0.9)
+				hsv->v -= 0.9;
+			mlxji_hsv_to_rgb(px, hsv->h, hsv->s, hsv->v);
+		}
+}
+
 __kernel void	mandelbrot(
 __global char *out,
 t_tool tool,
@@ -52,63 +105,70 @@ float jul_x)
 	V_PRECI	tmp;
 	int		i;
 	t_px	px;
-	float	h = clock;
-	float	s = 0.7;
-	float	v = 0.7;
-	V_PRECI	np = 2;
+	t_color	hsv;
 	V_PRECI ret;
+	V_PRECI res;
 
+	init_color_value(&tool, &hsv, clock);
 	i = 0;
+	c_r = (((V_PRECI)d_x + tool.move_x) / ((V_PRECI)HEIGHT * 1.125)) *
+		((V_PRECI)tool.xmax - (V_PRECI)tool.xmin) + tool.xmin;
+	c_i = (((V_PRECI)d_y + tool.move_y) / (V_PRECI)HEIGHT) *
+		((V_PRECI)tool.ymax - (V_PRECI)tool.ymin) + tool.ymin;
 	if (num == 1)
 	{
-//		c_r = (d_x) / (V_PRECI)tool.zoom + tool.xmin;
-//		c_i = (d_y) / (V_PRECI)tool.zoom + tool.ymin;
-
-		c_r = ((V_PRECI)d_x / ((V_PRECI)HEIGHT * 1.125)) *
-			((V_PRECI)tool.xmax - (V_PRECI)tool.xmin) + tool.xmin;
-		c_i = ((V_PRECI)d_y / (V_PRECI)HEIGHT) *
-			((V_PRECI)tool.ymax - (V_PRECI)tool.ymin) + tool.ymin;
-
-//		ret = 9;
-		while (z_r * z_r + z_i * z_i < 4 && i < tool.iter)
+		while ((res = z_r * z_r + z_i * z_i) < 4 && i < tool.iter)
 		{
-//			if (ret == z_r * z_r + z_i * z_i)
-//				break ;
-//			ret = z_r * z_r + z_i * z_i;
+			if (tool.mode == 1)
+			{
+				if (ret == res)
+						break ;
+					ret = res;
+			}
 			tmp = z_r;
-//			z_r = ft_abs(ft_pow(z_r, 2)) - ft_pow(z_i, 2) + c_r;
-//			z_i = 2 * ft_abs(z_i * tmp) + c_i;
-//			z_r = (ft_pow(z_r, 2)) - ft_pow(z_i, 2) + c_r;
-//			z_i = -2 * (z_i * tmp) + c_i;
-			z_r = ft_pow(z_r * z_r + z_i * z_i, np / 2) *
-						cos(np * atan2(z_i, z_r)) + c_r;
-			z_i = ft_pow(tmp * tmp + z_i * z_i, np / 2) *
-						sin(np * atan2(z_i, tmp)) + c_i;
+			z_r = z_r * z_r - z_i * z_i + c_r;
+			z_i = 2 * z_i * tmp + c_i;
+			x;
+			i++;
+		}
+	}
+	else if (num == 5)
+	{
+		while ((res = z_r * z_r + z_i * z_i) < 4 && i < tool.iter)
+		{
+			if (tool.mode & 1)
+			{
+				if (ret == res)
+					break ;
+				ret = res;
+			}
+			z_r = ft_abs(ft_pow(z_r, 2)) - ft_pow(z_i, 2) + c_r;
+			z_i = 2 * ft_abs(z_i * tmp) + c_i;
+			tmp = z_r;
 			i++;
 		}
 	}
 	else
 	{
-		z_r = (d_x) / (V_PRECI)tool.zoom + X1;
-		z_i = (d_y) / (V_PRECI)tool.zoom + Y1;
-		c_r = jul_x;
-		c_i = jul_y;
-		while (z_r * z_r + z_i * z_i < 4 && i < tool.iter)
+		z_r = jul_x;
+		z_i = jul_y;
+		while ((res = c_r * c_r + c_i * c_i) < 4 && i < tool.iter)
 		{
-			tmp = z_r;
-			z_r = z_r * z_r - z_i * z_i + c_r;
-			z_i = 2 * z_i * tmp + c_i;
+			if (tool.mode & 1)
+			{
+				if (ret == res)
+					break ;
+				ret = res;
+			}
+			tmp = c_r;
+			c_r = c_r * c_r - c_i * c_i + z_r;
+			c_i = 2 * c_i * tmp + z_i;
 			i++;
 		}
 	}
-	if (i != tool.iter)// && (i > 1)
+	if (i != tool.iter)
 	{
-		h += (360 / (float)tool.iter) * i;
-		if (h > 360)
-		{
-			h -= 360;
-		}
-		mlxji_hsv_to_rgb(&px, h, s, v);
+		set_color_value(&tool, &hsv, &px, i, clock);
 		out[x * OPP + y * (WIDTH * 4)] = px.b;
 		out[x * OPP + y * (WIDTH * 4) + 1] = px.g;
 		out[x * OPP + y * (WIDTH * 4) + 2] = px.r;
@@ -120,14 +180,3 @@ float jul_x)
 		out[x * OPP + y * (WIDTH * 4) + 2] = 0;
 	}
 }
-//		px.r = (255 / tool.iter) * i;
-//		px.r = 0;
-//		px.g = 0;
-//		px.b = 0;
-//		s = s + (0.30 / tool.iter) * i;
-//		v = v + (0.10 / tool.iter) * i;
-/*
-HSV baic
-g = 0;
-b = 0;
-*/

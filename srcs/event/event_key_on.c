@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/13 01:06:42 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/14 01:05:36 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,14 @@ static void	event_other(int keycode, t_env *e)
 			e->dir_clock--;
 	}
 	else if (keycode == 49)
+	{
+		e->move == 0 ? (e->move = 1) : (e->move = 0);
 		e->turn = 1;
-	else if (keycode == 86)
-		e->mode++;
-	else if (keycode == 89)
-		e->color++;
+	}
+	else if (keycode == 86 && e->tab_mode[e->num])
+		e->tool.mode = (e->tool.mode + 1) % e->tab_mode[e->num];
+	else if (keycode == 89 && e->tab_color[e->num])
+		e->tool.color = (e->tool.color + 1) % e->tab_color[e->num];
 	else if (keycode == 83)
 		e->hue = e->hue + 1 % 360;
 	else if (e->key[82] && keycode == 84)

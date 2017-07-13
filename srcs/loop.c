@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:21:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/12 22:12:39 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/14 00:06:40 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int			loop(t_env *e)
 	gettimeofday(&(e->cur), NULL);
 	if ((e->cur.tv_sec - e->step.tv_sec))
 	{
+		e->ret_fps = e->fps;
 		e->fps = 0;
 		gettimeofday(&e->step, NULL);
-		//add_print_fps
 	}
 	e->clock += e->dir_clock;
 	if (e->clock > 360)

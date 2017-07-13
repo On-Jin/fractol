@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/12 23:52:48 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/14 00:11:47 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ static void	init_basic(t_env *e, t_tool *tool)
 {
 	e->tool.iter = 50;
 	tool->zoom = 300;
-	tool->move_x = (WIDTH / 2 * -1) + ((2.1) * tool->zoom);
-	tool->move_y = (HEIGHT / 2 * -1) + ((1.2) * tool->zoom);
 	e->bud.over = 1;
 	tool->xmin = -2.1;
 	tool->xmax = 0.6;
@@ -78,6 +76,18 @@ static void	init_tree(t_env *e, t_tool *tool)
 	e->satu = 0.9;
 }
 
+static void	init_tab(t_env *e)
+{
+	e->tab_mode[NUM_TREE] = 2;
+	e->tab_color[NUM_TREE] = 2;
+	e->tab_color[NUM_MANDEL] = 4;
+	e->tab_mode[NUM_MANDEL] = 2;
+	e->tab_color[NUM_JULIA] = 4;
+	e->tab_mode[NUM_JULIA] = 2;
+	e->tab_color[NUM_BURN] = 4;
+	e->tab_mode[NUM_BURN] = 2;
+}
+
 static void	init_env(t_env *e)
 {
 	e->varover[0] = 0;
@@ -91,11 +101,13 @@ static void	init_env(t_env *e)
 	ft_strcpy(e->name_fractal[2], "julia");
 	ft_strcpy(e->name_fractal[3], "sierpinski (NO_GPU)");
 	ft_strcpy(e->name_fractal[4], "tree (NO_GPU)");
+	ft_strcpy(e->name_fractal[5], "burningship");
 	ft_strcpy(e->name_preset[0], "preset_bud/example3");
 	ft_strcpy(e->name_preset[1], "preset_bud/example2");
 	ft_strcpy(e->name_preset[2], "mandelbrot.cl");
 	ft_strcpy(e->name_preset[3], "preset_bud/");
 	ft_strcpy(e->name_preset[4], "");
+	init_tab(e);
 	e->incr_dir = 1;
 }
 

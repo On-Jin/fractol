@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/18 05:55:11 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/12 22:46:06 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/13 19:34:40 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ static void		tri_top(t_env *e, t_tr *tr, t_tr *new_tr, int iter)
 
 static void		tri_take_middle(t_tr *new_tr, t_tr tr)
 {
-	new_tr->tx[0] = (tr.tx[0] - (ft_abs(tr.tx[0] - tr.tx[2]) / 2));
-	new_tr->ty[0] = (tr.ty[2] - (ft_abs(tr.ty[2] - tr.ty[0]) / 2));
-	new_tr->tx[1] = (tr.tx[1] - (ft_abs(tr.tx[1] - tr.tx[0]) / 2));
-	new_tr->ty[1] = (tr.ty[1] - (ft_abs(tr.ty[1] - tr.ty[0]) / 2));
-	new_tr->tx[2] = (tr.tx[1] - (ft_abs(tr.tx[1] - tr.tx[2]) / 2));
-	new_tr->ty[2] = (tr.ty[1] - (ft_abs(tr.ty[1] - tr.ty[2]) / 2));
+	new_tr->tx[0] = (tr.tx[0] - ((tr.tx[0] - tr.tx[2]) / 2));
+	new_tr->ty[0] = (tr.ty[2] - ((tr.ty[2] - tr.ty[0]) / 2));
+	new_tr->tx[1] = (tr.tx[1] - ((tr.tx[1] - tr.tx[0]) / 2));
+	new_tr->ty[1] = (tr.ty[1] - ((tr.ty[1] - tr.ty[0]) / 2));
+	new_tr->tx[2] = (tr.tx[1] - ((tr.tx[1] - tr.tx[2]) / 2));
+	new_tr->ty[2] = (tr.ty[1] - ((tr.ty[1] - tr.ty[2]) / 2));
 }
 
 static void		tri_draw_tri(t_env *e, t_tr new_tr)
@@ -87,14 +87,42 @@ int				tri_recur(t_env *e, int iter, t_tr tr)
 	return (1);
 }
 
+static void		rotation_tri(t_tr *tr, double angle, t_env *e)
+{
+	int nx;
+	int ny;
+
+	angle = (angle / 180 * 3.1415);
+(void)e;
+	nx = 0;
+	ny = 0;
+	int i = 0;
+	while (i < 3)
+	{
+		tr->tx[i] += (int)((nx) * cos(angle) - (ny) * sin(angle));
+		tr->ty[i] += (int)((ny) * cos(angle) + (nx) * sin(angle));
+		i++;
+	}
+}
+
 int				draw_tri(t_env *e)
 {
-	t_tr		*tr;
+	t_tr		tr;
 	t_tool		*tool;
 
-	tr = &e->tr;
+	tr = e->tr;
 	tool = &e->tool;
-	tri_draw_tri(e, e->tr);
-	tri_recur(e, 0, e->tr);
+	if (e->move == 2)
+	{
+		tr.tx[0] += tool->move_x / 30;
+		tr.tx[1] += tool->move_x / 30 + e->mouse_x;
+		tr.tx[2] += tool->move_x / 30 - e->mouse_x;
+		tr.ty[0] += tool->move_y / 30 - e->mouse_y;
+		tr.ty[1] += tool->move_y / 30;
+		tr.ty[2] += tool->move_y / 30;
+	}
+	rotation_tri(&tr, 80, e);
+	tri_draw_tri(e, tr);
+	tri_recur(e, 0, tr);
 	return (1);
 }

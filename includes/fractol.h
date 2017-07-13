@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/13 01:04:57 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/14 01:10:53 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <ncurses.h>
 # include <math.h>
 
-# define NB_FRACTAL 5
+# define NB_FRACTAL 6
 # define NB_PRESET_BUD 5
 # define MAX_INCR 1000000
 
@@ -60,6 +60,7 @@
 # define NUM_JULIA 2
 # define NUM_TRI 3
 # define NUM_TREE 4
+# define NUM_BURN 5
 
 # define MEM_OPENCL (HEIGHT * WIDTH * 4)
 # define MAX_SOURCE_SIZE (11000)
@@ -120,6 +121,8 @@ typedef struct	s_tool
 	V_PRECI		ajj_y;
 	int			move_x;
 	int			move_y;
+	int			mode;
+	int			color;
 	V_PRECI		xmax;
 	V_PRECI		xmin;
 	V_PRECI		ymax;
@@ -155,6 +158,8 @@ typedef struct	s_env
 	char		name_fractal[NB_FRACTAL][30];
 	char		name_preset[NB_PRESET_BUD][30];
 
+	int			tab_mode[NB_FRACTAL];
+	int			tab_color[NB_FRACTAL];
 	t_tool		tool;
 	t_bud		bud;
 	t_nc		nc;
@@ -166,6 +171,7 @@ typedef struct	s_env
 	struct		timeval step;
 	struct		timeval cur;
 	int			fps;
+	int			ret_fps;
 	int			min;
 	int			sec;
 
@@ -200,9 +206,8 @@ typedef struct	s_env
 	float		satu;
 	float		value;
 
-	int			mode;
-	int			color;
 	int			psy;
+	int			move;
 }				t_env;
 
 void			init_mlx(t_env *e);

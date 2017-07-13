@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 20:34:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/12 23:03:26 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/14 00:18:24 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	zoom_complexe_in(t_env *e, int y, int x)
 	V_PRECI dx;
 	V_PRECI dy;
 
-	ratio_x = (V_PRECI)x / (HEIGHT * 1.125);
-	ratio_y = (V_PRECI)y / HEIGHT;
+	ratio_x = ((V_PRECI)x + e->tool.move_x) / (HEIGHT * 1.125);
+	ratio_y = ((V_PRECI)y + e->tool.move_y) / HEIGHT;
 	dx = e->tool.xmax - e->tool.xmin;
 	dy = e->tool.ymax - e->tool.ymin;
 	e->tool.xmin += (dx / 20) * ratio_x;
@@ -36,8 +36,8 @@ void	zoom_complexe_ar(t_env *e, int y, int x)
 	V_PRECI dx;
 	V_PRECI dy;
 
-	ratio_x = (V_PRECI)x / (HEIGHT * 1.125);
-	ratio_y = (V_PRECI)y / HEIGHT;
+	ratio_x = ((V_PRECI)x + e->tool.move_x) / (HEIGHT * 1.125);
+	ratio_y = ((V_PRECI)y + e->tool.move_y) / HEIGHT;
 	dx = e->tool.xmax - e->tool.xmin;
 	dy = e->tool.ymax - e->tool.ymin;
 	e->tool.xmin -= (dx / 20) * ratio_x;
@@ -49,35 +49,27 @@ void	zoom_complexe_ar(t_env *e, int y, int x)
 void	zoom_tri_basic_ar(t_env *e, int y, int x)
 {
 	t_tr	*tr;
-	t_tool	*tool;
 
-	e->tool.ajj_x = x;
-	e->tool.ajj_y = y;
 	tr = &e->tr;
-	tool = &e->tool;
-	tr->tx[0] = 0.8 * (tr->tx[0] - tool->ajj_x) + tool->ajj_x;
-	tr->ty[0] = 0.8 * (tr->ty[0] - tool->ajj_y) + tool->ajj_y;
-	tr->tx[1] = 0.8 * (tr->tx[1] - tool->ajj_x) + tool->ajj_x;
-	tr->ty[1] = 0.8 * (tr->ty[1] - tool->ajj_y) + tool->ajj_y;
-	tr->tx[2] = 0.8 * (tr->tx[2] - tool->ajj_x) + tool->ajj_x;
-	tr->ty[2] = 0.8 * (tr->ty[2] - tool->ajj_y) + tool->ajj_y;
+	tr->tx[0] = 0.8 * (tr->tx[0] - x) + x;
+	tr->ty[0] = 0.8 * (tr->ty[0] - y) + y;
+	tr->tx[1] = 0.8 * (tr->tx[1] - x) + x;
+	tr->ty[1] = 0.8 * (tr->ty[1] - y) + y;
+	tr->tx[2] = 0.8 * (tr->tx[2] - x) + x;
+	tr->ty[2] = 0.8 * (tr->ty[2] - y) + y;
 }
 
 void	zoom_tri_basic_in(t_env *e, int y, int x)
 {
 	t_tr	*tr;
-	t_tool	*tool;
 
-	e->tool.ajj_x = x;
-	e->tool.ajj_y = y;
 	tr = &e->tr;
-	tool = &e->tool;
-	tr->tx[0] = 1.2 * (tr->tx[0] - tool->ajj_x) + tool->ajj_x;
-	tr->ty[0] = 1.2 * (tr->ty[0] - tool->ajj_y) + tool->ajj_y;
-	tr->tx[1] = 1.2 * (tr->tx[1] - tool->ajj_x) + tool->ajj_x;
-	tr->ty[1] = 1.2 * (tr->ty[1] - tool->ajj_y) + tool->ajj_y;
-	tr->tx[2] = 1.2 * (tr->tx[2] - tool->ajj_x) + tool->ajj_x;
-	tr->ty[2] = 1.2 * (tr->ty[2] - tool->ajj_y) + tool->ajj_y;
+	tr->tx[0] = 1.2 * (tr->tx[0] - x) + x;
+	tr->ty[0] = 1.2 * (tr->ty[0] - y) + y;
+	tr->tx[1] = 1.2 * (tr->tx[1] - x) + x;
+	tr->ty[1] = 1.2 * (tr->ty[1] - y) + y;
+	tr->tx[2] = 1.2 * (tr->tx[2] - x) + x;
+	tr->ty[2] = 1.2 * (tr->ty[2] - y) + y;
 }
 
 void	zoom_tree_basic_ar(t_env *e, int y, int x)
