@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:11:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/14 01:05:36 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/16 00:00:39 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,31 @@ static void	event_move(int keycode, t_env *e)
 		e->tool.move_y -= 10;
 }
 
+static void	event_mode(int keycode, t_env *e)
+{
+	if (keycode == 86 && e->tab_mode[e->num])
+		e->tool.mode = (e->tool.mode + 1) % e->tab_mode[e->num];
+	else if (keycode == 89 && e->tab_color[e->num])
+		e->tool.color = (e->tool.color + 1) % e->tab_color[e->num];
+	else if (keycode == 83)
+		e->hue = e->hue + 1 % 360;
+	else if (e->key[82] && keycode == 84)
+		e->satu > 0 ? (e->satu -= 0.1) : 0;
+	else if (e->key[82] && keycode == 85)
+		e->value > 0 ? (e->value -= 0.1) : 0;
+	else if (keycode == 84)
+		e->satu < 1 ? (e->satu += 0.1) : 0;
+	else if (keycode == 85)
+		e->value < 1 ? (e->value += 0.1) : 0;
+	else if (keycode == 7)
+	{
+		if (e->psy == 0)
+			(e->psy = 1);
+		else
+			(e->psy = 0);
+	}
+}
+
 static void	event_other(int keycode, t_env *e)
 {
 	if (keycode == 91)
@@ -52,25 +77,12 @@ static void	event_other(int keycode, t_env *e)
 	}
 	else if (keycode == 49)
 	{
-		e->move == 0 ? (e->move = 1) : (e->move = 0);
+		if (e->move == 0)
+			(e->move = 1);
+		else
+			(e->move = 0);
 		e->turn = 1;
 	}
-	else if (keycode == 86 && e->tab_mode[e->num])
-		e->tool.mode = (e->tool.mode + 1) % e->tab_mode[e->num];
-	else if (keycode == 89 && e->tab_color[e->num])
-		e->tool.color = (e->tool.color + 1) % e->tab_color[e->num];
-	else if (keycode == 83)
-		e->hue = e->hue + 1 % 360;
-	else if (e->key[82] && keycode == 84)
-		e->satu > 0 ? (e->satu -= 0.1): 0;
-	else if (e->key[82] && keycode == 85)
-		e->value > 0 ? (e->value -= 0.1): 0;
-	else if (keycode == 84)
-		e->satu < 1 ? (e->satu += 0.1): 0;
-	else if (keycode == 85)
-		e->value < 1 ? (e->value += 0.1): 0;
-	else if (keycode == 7)
-		e->psy == 0 ? (e->psy = 1) : (e->psy = 0);
 }
 
 int			event_key_on(int keycode, t_env *e)
@@ -80,6 +92,7 @@ int			event_key_on(int keycode, t_env *e)
 	event_iter(keycode, e);
 	event_move(keycode, e);
 	event_other(keycode, e);
+	event_mode(keycode, e);
 	if (keycode)
 		e->key[keycode] = 1;
 	return (1);

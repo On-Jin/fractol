@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 20:34:50 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/14 00:18:24 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/15 22:00:16 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	zoom_complexe_in(t_env *e, int y, int x)
 	V_PRECI dx;
 	V_PRECI dy;
 
-	ratio_x = ((V_PRECI)x + e->tool.move_x) / (HEIGHT * 1.125);
-	ratio_y = ((V_PRECI)y + e->tool.move_y) / HEIGHT;
+	ratio_x = ((V_PRECI)x + e->tool.move_x) / (e->height * 1.125);
+	ratio_y = ((V_PRECI)y + e->tool.move_y) / e->height;
 	dx = e->tool.xmax - e->tool.xmin;
 	dy = e->tool.ymax - e->tool.ymin;
 	e->tool.xmin += (dx / 20) * ratio_x;
@@ -36,8 +36,8 @@ void	zoom_complexe_ar(t_env *e, int y, int x)
 	V_PRECI dx;
 	V_PRECI dy;
 
-	ratio_x = ((V_PRECI)x + e->tool.move_x) / (HEIGHT * 1.125);
-	ratio_y = ((V_PRECI)y + e->tool.move_y) / HEIGHT;
+	ratio_x = ((V_PRECI)x + e->tool.move_x) / (e->height * 1.125);
+	ratio_y = ((V_PRECI)y + e->tool.move_y) / e->height;
 	dx = e->tool.xmax - e->tool.xmin;
 	dy = e->tool.ymax - e->tool.ymin;
 	e->tool.xmin -= (dx / 20) * ratio_x;

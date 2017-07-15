@@ -52,10 +52,7 @@ typedef struct	s_bud
 
 typedef struct	s_tool
 {
-	long int	zoom;
 	long int	iter;
-	V_PRECI		ajj_x;
-	V_PRECI		ajj_y;
 	int			move_x;
 	int			move_y;
 	int			mode;

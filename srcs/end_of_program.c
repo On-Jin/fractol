@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 18:00:11 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/07 16:13:19 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/15 22:03:42 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		end_of_program(t_env *e, char *str)
 {
 	if (e->nc.menu)
 		free_mlx(e, e->img);
-	if (GPU)
+	if (e->flag & F_GPU)
 		cl_end_opencl(e, &(e->cl));
 	if (e->buff_patern)
 		free(e->buff_patern);

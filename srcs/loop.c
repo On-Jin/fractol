@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 00:21:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/14 01:31:18 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/15 22:07:40 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			loop(t_env *e)
 	e->turn = 0;
 	if (e->num == 3)
 		ft_bzero(e->img->data, MEM_OPENCL);
-	if (GPU == 1)
+	if (e->flag & F_GPU)
 		cl_draw(e);
 	else
 		draw(e);

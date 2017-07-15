@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/18 05:55:11 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/13 19:34:40 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/15 23:57:45 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static void		tri_draw_tri(t_env *e, t_tr new_tr)
 		to.y1 = new_tr.ty[k % 3] + e->tool.move_y;
 		to.y2 = new_tr.ty[(k + 1) % 3] + e->tool.move_y;
 		if ((to.x1 >= 0 || to.x2 >= 0) && (to.y1 >= 0 || to.y2 >= 0) &&
-			(to.x1 < WIDTH || to.x2 < WIDTH) &&
-										(to.y1 < HEIGHT || to.y2 < HEIGHT))
+			(to.x1 < e->width || to.x2 < e->width) &&
+							(to.y1 < e->height || to.y2 < e->height))
 			mlxji_draw_line(e->img, &px, &to);
 		k++;
 	}
@@ -87,24 +87,6 @@ int				tri_recur(t_env *e, int iter, t_tr tr)
 	return (1);
 }
 
-static void		rotation_tri(t_tr *tr, double angle, t_env *e)
-{
-	int nx;
-	int ny;
-
-	angle = (angle / 180 * 3.1415);
-(void)e;
-	nx = 0;
-	ny = 0;
-	int i = 0;
-	while (i < 3)
-	{
-		tr->tx[i] += (int)((nx) * cos(angle) - (ny) * sin(angle));
-		tr->ty[i] += (int)((ny) * cos(angle) + (nx) * sin(angle));
-		i++;
-	}
-}
-
 int				draw_tri(t_env *e)
 {
 	t_tr		tr;
@@ -112,7 +94,7 @@ int				draw_tri(t_env *e)
 
 	tr = e->tr;
 	tool = &e->tool;
-	if (e->move == 2)
+	if (e->move == 1)
 	{
 		tr.tx[0] += tool->move_x / 30;
 		tr.tx[1] += tool->move_x / 30 + e->mouse_x;
@@ -121,7 +103,6 @@ int				draw_tri(t_env *e)
 		tr.ty[1] += tool->move_y / 30;
 		tr.ty[2] += tool->move_y / 30;
 	}
-	rotation_tri(&tr, 80, e);
 	tri_draw_tri(e, tr);
 	tri_recur(e, 0, tr);
 	return (1);

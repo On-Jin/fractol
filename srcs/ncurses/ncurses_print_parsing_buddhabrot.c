@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 10:29:37 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/10 22:32:40 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/16 00:06:52 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 void	ncurses_print_parsing_buddhabrot(t_env *e, t_nc *nc)
 {
-	mvwprintw(nc->win, 20, 4, "Iter : [%i]", e->tool.iter);
-	mvwprintw(nc->win, 21, 4, "Zoom : [%i]", e->tool.zoom);
-	mvwprintw(nc->win, 22, 4, "X    : [%i]", 0);
-	mvwprintw(nc->win, 23, 4, "Y    : [%i]", 0);
 	mvwprintw(nc->win, 24, 4, "Over : [%i]", e->bud.over);
 	mvwprintw(nc->win, 25, 4, "Anti : [%i]", e->bud.anti);
 	mvwprintw(nc->win, 26, 4, "Gain : [%.2f]", e->bud.gain);

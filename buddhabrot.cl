@@ -71,8 +71,8 @@ __kernel void	buddhabrot(
 			tmp = z_r;
 			z_r = z_r * z_r - z_i * z_i + c_r;
 			z_i = 2 * z_i * tmp + c_i;
-			kx = (int)(((z_r - tool.xmin) / ((V_PRECI)tool.xmax - (V_PRECI)tool.xmin)) * ((V_PRECI)HEIGHT * 1.125)) - tool.move_x;
-			ky = (int)(((z_i - tool.ymin) / ((V_PRECI)tool.ymax - (V_PRECI)tool.ymin)) * ((V_PRECI)HEIGHT)) - tool.move_y;
+			kx = (int)(((z_r - tool.xmin) / ((V_PRECI)tool.xmax - (V_PRECI)tool.xmin)) * ((V_PRECI)HEIGHT * 1.125)) + tool.move_x;
+			ky = (int)(((z_i - tool.ymin) / ((V_PRECI)tool.ymax - (V_PRECI)tool.ymin)) * ((V_PRECI)HEIGHT)) + tool.move_y;
 			if (ky > 1 && ky < height_bud - 1 &&
 					kx > 1 && kx < width_bud - 1)
 			{

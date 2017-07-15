@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 03:02:43 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/20 07:11:47 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/15 22:49:56 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ static void		cl_create_buffer(t_env *e, t_cl *cl)
 	if (e->num)
 	{
 		cl->mem = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
-				WIDTH * HEIGHT * 4 * sizeof(char), NULL, &(cl->err));
+				e->width * e->height * 4 * sizeof(char), NULL, &(cl->err));
 		cl_check_err(cl->err, "clCreateBuffer");
 	}
 	else
 	{
 		cl->mem = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
-				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
+				(e->mem_opencl) * sizeof(int), NULL, &(cl->err));
 		cl_check_err(cl->err, "clCreateBuffer");
 		cl->mem2 = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
-				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
+				(e->mem_opencl) * sizeof(int), NULL, &(cl->err));
 		cl_check_err(cl->err, "clCreateBuffer");
 		cl->mem3 = clCreateBuffer(cl->context, CL_MEM_READ_WRITE,
-				(e->mem_opencl_bud) * sizeof(int), NULL, &(cl->err));
+				(e->mem_opencl) * sizeof(int), NULL, &(cl->err));
 		cl_check_err(cl->err, "clCreateBuffer");
 	}
 }
@@ -89,7 +89,7 @@ static void		cl_compile_kernel(t_env *e, t_cl *cl)
 	size_t		len;
 
 	(void)e;
-	if (M_PRECI)
+	if (e->flag & F_PRECISION)
 		cl->err = clBuildProgram(cl->program, 0,
 								NULL, "-D MODE_PRECI -I.", NULL, NULL);
 	else
@@ -124,7 +124,7 @@ int				cl_init_opencl(t_env *e)
 												"buddhabrot", &(e->cl.err));
 	cl_check_err(e->cl.err, "clCreateKernel");
 	if (e->num)
-		e->cl.global_item_size = WIDTH * HEIGHT;
+		e->cl.global_item_size = e->width * e->height;
 	else
 		e->cl.global_item_size = e->width_bud * e->height_bud;
 	cl->err = clGetKernelWorkGroupInfo(cl->kernel, cl->device_id,

@@ -96,8 +96,6 @@ float jul_x)
 		return ;
 	int		x = recup % WIDTH;
 	int		y = recup / WIDTH;
-	long int	d_x = x;
-	long int	d_y = y;
 	V_PRECI	c_r = 0;
 	V_PRECI	c_i = 0;
 	V_PRECI	z_r = 0;
@@ -111,9 +109,9 @@ float jul_x)
 
 	init_color_value(&tool, &hsv, clock);
 	i = 0;
-	c_r = (((V_PRECI)d_x + tool.move_x) / ((V_PRECI)HEIGHT * 1.125)) *
+	c_r = ((x + tool.move_x) / ((V_PRECI)HEIGHT * 1.125)) *
 		((V_PRECI)tool.xmax - (V_PRECI)tool.xmin) + tool.xmin;
-	c_i = (((V_PRECI)d_y + tool.move_y) / (V_PRECI)HEIGHT) *
+	c_i = ((y + tool.move_y) / (V_PRECI)HEIGHT) *
 		((V_PRECI)tool.ymax - (V_PRECI)tool.ymin) + tool.ymin;
 	if (num == 1)
 	{
@@ -128,7 +126,6 @@ float jul_x)
 			tmp = z_r;
 			z_r = z_r * z_r - z_i * z_i + c_r;
 			z_i = 2 * z_i * tmp + c_i;
-			x;
 			i++;
 		}
 	}

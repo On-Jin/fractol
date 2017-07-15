@@ -6,21 +6,28 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/14 01:32:22 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/15 23:44:19 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void	cl_run_kernel(t_env *e, t_cl *cl)
+static unsigned char	char_max(int nb)
+{
+	if (nb > 254)
+		return (254);
+	return (nb);
+}
+
+static void				cl_run_kernel(t_env *e, t_cl *cl)
 {
 	cl_event event;
 
 	event = 0;
 	if (e->num)
-		e->cl.global_item_size = WIDTH * HEIGHT;
+		e->cl.global_item_size = e->width * e->height;
 	else
-		e->cl.global_item_size = e->width_bud * e->height_bud;
+		e->cl.global_item_size = e->width * e->height;
 	cl->err = clGetKernelWorkGroupInfo(cl->kernel, cl->device_id,
 	CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &e->cl.local_item_size, NULL);
 	cl_check_err(cl->err, "clGetKernelWorkGroupInfo");
@@ -35,43 +42,37 @@ static void	cl_run_kernel(t_env *e, t_cl *cl)
 	cl_check_err(cl->err, "clFlush");
 }
 
-static unsigned char	char_max(int nb)
-{
-	if (nb > 254)
-		return (254);
-	return (nb);
-}
-
-static void	cl_stock_in_buff(t_env *e, char *dest, int *src, int add)
+static void				cl_stock_in_buff(t_env *e, char *dest,
+												int *src, int add)
 {
 	int i;
 
 	i = 0;
-	while (i < e->mem_opencl_bud)
+	while (i < e->mem_opencl)
 	{
 		dest[i * 4 + add] = char_max(src[i]);
 		i++;
 	}
 }
 
-static void	cl_get_ret(t_env *e, t_cl *cl)
+static void				cl_get_ret(t_env *e, t_cl *cl)
 {
 	if (e->num)
 	{
 		cl->err = clEnqueueReadBuffer(cl->cq, cl->mem, CL_TRUE, 0,
-				WIDTH * HEIGHT * 4 * sizeof(char), e->img->data, 0, NULL, NULL);
+				e->width * e->height * 4, e->img->data, 0, NULL, NULL);
 		cl_check_err(cl->err, "clEnqueueReadBuffer");
 	}
 	else
 	{
 		cl->err = clEnqueueReadBuffer(cl->cq, cl->mem, CL_TRUE, 0,
-				e->mem_opencl_bud * sizeof(int), e->buff_patern, 0, NULL, NULL);
+				e->mem_opencl * sizeof(int), e->buff_patern, 0, NULL, NULL);
 		cl_stock_in_buff(e, e->ftab, e->buff_patern, 0);
 		cl->err = clEnqueueReadBuffer(cl->cq, cl->mem2, CL_TRUE, 0,
-				e->mem_opencl_bud * sizeof(int), e->buff_patern, 0, NULL, NULL);
+				e->mem_opencl * sizeof(int), e->buff_patern, 0, NULL, NULL);
 		cl_stock_in_buff(e, e->ftab, e->buff_patern, 1);
 		cl->err = clEnqueueReadBuffer(cl->cq, cl->mem3, CL_TRUE, 0,
-				e->mem_opencl_bud * sizeof(int), e->buff_patern, 0, NULL, NULL);
+				e->mem_opencl * sizeof(int), e->buff_patern, 0, NULL, NULL);
 		cl_stock_in_buff(e, e->ftab, e->buff_patern, 2);
 		cl_check_err(cl->err, "clEnqueueReadBuffer");
 		clFinish(cl->cq);
@@ -82,7 +83,7 @@ static void	cl_get_ret(t_env *e, t_cl *cl)
 	}
 }
 
-int			cl_draw(t_env *e)
+int						cl_draw(t_env *e)
 {
 	time_t		t1;
 	time_t		t2;

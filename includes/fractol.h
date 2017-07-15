@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/14 01:47:07 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/15 23:11:06 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,19 @@
 # define NC_MAGENTA 4
 # define NC_CYAN 5
 
-#if defined(MODE_GPU)
-	# define HEIGHT 1080
-	# define WIDTH 1920
-	# define GPU 1
-#else
-	# define HEIGHT 820
-	# define WIDTH 1300
-	# define GPU 0
-#endif
+# define F_GPU (1 << 1)
+# define F_PRECISION (1 << 2)
+
+# define HEIGHT_GPU 1080
+# define WIDTH_GPU 1920
+# define HEIGHT_CPU 820
+# define WIDTH_CPU 1300
 
 //# define HEIGHT_BUD (1080 * 8)
 //# define WIDTH_BUD (1920 * 8)
 //# define MEM_OPENCL_BUD (HEIGHT_BUD * WIDTH_BUD * 4)
 
-#if defined(MODE_PRECI)
-	#define M_PRECI 1
-	#define V_PRECI double
-#else
-	#define M_PRECI 0
-	#define V_PRECI float
-#endif
+#define V_PRECI float
 
 # define NUM_BUDD 0
 # define NUM_MANDEL 1
@@ -62,7 +54,7 @@
 # define NUM_TREE 4
 # define NUM_BURN 5
 
-# define MEM_OPENCL (HEIGHT * WIDTH * 4)
+# define MEM_OPENCL (e->height * e->width * 4)
 # define MAX_SOURCE_SIZE (11000)
 # define OPP 4
 
@@ -115,10 +107,7 @@ typedef struct	s_bud
 
 typedef struct	s_tool
 {
-	long int	zoom;
 	long int	iter;
-	V_PRECI		ajj_x;
-	V_PRECI		ajj_y;
 	int			move_x;
 	int			move_y;
 	int			mode;
@@ -158,6 +147,8 @@ typedef struct	s_env
 	char		name_fractal[NB_FRACTAL][30];
 	char		name_preset[NB_PRESET_BUD][30];
 
+	char		flag;
+	int			flag_f;
 	int			tab_mode[NB_FRACTAL];
 	int			tab_color[NB_FRACTAL];
 	t_tool		tool;
@@ -167,7 +158,6 @@ typedef struct	s_env
 	t_pxtopx	to;
 	t_px		px;
 
-	int			size_tree;
 	struct		timeval step;
 	struct		timeval cur;
 	int			fps;
@@ -178,16 +168,18 @@ typedef struct	s_env
 	char		*ftab;
 	int			*buff_patern;
 
-	int			turn;
+	int			size_tree;
+	char		turn;
 
 	int			varover[6];
+	int			width;
+	int			height;
 	int			width_bud;
 	int			height_bud;
-	int			mem_opencl_bud;
+	int			mem_opencl;
 	int			status_bud;
 
 	int			num;
-	char		open_var_jul;
 	float		jul_y;
 	float		jul_x;
 
@@ -218,6 +210,9 @@ int				event_key_on(int keycode, t_env *e);
 int				event_key_off(int keycode, t_env *e);
 
 int				menu(t_env *e);
+
+int				flag_arg(t_env *e, int argc, char **argv);
+void			init_dir(t_env *e);
 
 int				draw_tri(t_env *e);
 int				tri_recur(t_env *e, int iter, t_tr tr);

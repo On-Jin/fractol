@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/19 06:48:09 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/13 20:03:38 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/15 23:54:35 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,12 @@ int				recur_tree(t_env *e, t_pxtopx to,
 	to.y2 = to.y1;
 	to = rotation_tree(to, angle);
 	if (e->tool.color & 1)
-		mlxji_hsv_to_rgb(&e->px, ((360 / (e->tool.iter / iter)) + e->clock) % 360, e->satu, e->value);
+		mlxji_hsv_to_rgb(&e->px,
+				((360 / (e->tool.iter / iter)) + e->clock) % 360,
+				e->satu, e->value);
 	else
-		mlxji_hsv_to_rgb(&e->px, ((int)e->hue + e->clock) % 360, e->satu, e->value);
+		mlxji_hsv_to_rgb(&e->px, ((int)e->hue + e->clock) % 360,
+				e->satu, e->value);
 	mlxji_draw_line(e->img, &e->px, &to);
 	to.x1 = to.x2;
 	to.y1 = to.y2;
@@ -68,7 +71,7 @@ int				draw_tree(t_env *e)
 	to = e->to;
 	to.x1 += e->tool.move_x;
 	to.y1 += e->tool.move_y;
-	ft_bzero(e->img->data, WIDTH * HEIGHT * 4);
+	ft_bzero(e->img->data, e->width * e->height * 4);
 	if (!e->psy)
 		recur_tree(e, to, e->tool.iter, 90);
 	else

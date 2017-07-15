@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 08:33:22 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/14 00:20:11 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/15 23:33:09 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ static void	parsing(t_env *e, char *line, int fd)
 		end_of_program(e, "Erreur de parsing\n");
 	ft_strdel(&line);
 	call_gnl(e, &line, fd);
-	e->tool.zoom = ft_atoi(line);
+//	e->tool.zoom = ft_atoi(line);
 	ft_strdel(&line);
-	if (e->tool.zoom < 0)
-		end_of_program(e, "Erreur de parsing\n");
+//	if (e->tool.zoom < 0)
+//		end_of_program(e, "Erreur de parsing\n");
 	call_gnl(e, &line, fd);
 //	e->tool.ajj_x = (V_PRECI)ft_atoi(line);
 	ft_strdel(&line);
