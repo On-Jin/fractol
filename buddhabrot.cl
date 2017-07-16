@@ -34,8 +34,8 @@ __kernel void	buddhabrot(
 		t_bud bud)
 {
 	int tab[6] = {0, 1, 2, 4, 8, 16};
-	int			height_bud = WIDTH * tab[bud.over];
-	int			width_bud = HEIGHT * tab[bud.over];
+	int			width_bud = WIDTH * tab[bud.over];
+	int			height_bud = HEIGHT * tab[bud.over];
 	int		recup = get_global_id(0);
 	if (recup < 0 || recup >= width_bud * height_bud)
 		return ;
@@ -54,9 +54,9 @@ __kernel void	buddhabrot(
 	volatile __global int *ptr;
 	i = 0;
 
-	c_r = (((V_PRECI)d_x) / ((V_PRECI)HEIGHT * 1.125)) *
+	c_r = (((V_PRECI)d_x) / ((V_PRECI)height_bud * 1.125)) *
 				((V_PRECI)tool.xmax - (V_PRECI)tool.xmin) + tool.xmin;
-	c_i = (((V_PRECI)d_y) / (V_PRECI)HEIGHT) *
+	c_i = (((V_PRECI)d_y) / (V_PRECI)height_bud) *
 				((V_PRECI)tool.ymax - (V_PRECI)tool.ymin) + tool.ymin;
 	
 	i = cl_is_ok(c_r, c_i, tool.iter);
@@ -71,8 +71,8 @@ __kernel void	buddhabrot(
 			tmp = z_r;
 			z_r = z_r * z_r - z_i * z_i + c_r;
 			z_i = 2 * z_i * tmp + c_i;
-			kx = (int)(((z_r - tool.xmin) / (((V_PRECI)tool.xmax - (V_PRECI)tool.xmin)) * ((V_PRECI)HEIGHT * 1.125)));
-			ky = (int)(((z_i - tool.ymin) / (((V_PRECI)tool.ymax - (V_PRECI)tool.ymin)) * ((V_PRECI)HEIGHT)));
+			kx = (int)(((z_r - tool.xmin) / (((V_PRECI)tool.xmax - (V_PRECI)tool.xmin)) * ((V_PRECI)height_bud * 1.125)));
+			ky = (int)(((z_i - tool.ymin) / (((V_PRECI)tool.ymax - (V_PRECI)tool.ymin)) * ((V_PRECI)height_bud)));
 			if (ky > 1 && ky < height_bud - 1 &&
 					kx > 1 && kx < width_bud - 1)
 			{

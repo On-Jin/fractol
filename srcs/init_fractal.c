@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 21:52:37 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/16 05:09:43 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/16 23:12:12 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static void	init_basic(t_env *e, t_tool *tool)
 static void	init_bud(t_env *e, t_tool *tool, t_bud *bud)
 {
 	(void)tool;
-	e->width_bud = e->height * e->varover[bud->over];
-	e->height_bud = e->width * e->varover[bud->over];
+	e->height_bud = e->height * e->varover[bud->over];
+	e->width_bud = e->width * e->varover[bud->over];
 	e->mem_opencl = e->width_bud * e->height_bud;
 	e->buff_patern = ft_memalloc(e->mem_opencl * sizeof(int));
 	e->ftab = ft_memalloc(e->mem_opencl * 4);

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 06:17:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/16 05:01:28 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/16 23:12:15 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static void	put_val_in_image(t_env *e, t_coord coord, char *tab, char *new_data)
 	div = e->varover[e->bud.over];
 	val = 0;
 	val = add_val(e, coord, tab, 0);
+	new_data[(coord.x / div) * OPP + (coord.y / div) * (e->width * 4)] = val;
+	/*
 	new_data[((e->height_bud - coord.y - 1) / div) * OPP
 						+ (coord.x / div) * (e->width * 4)] = val;
 	val = add_val(e, coord, tab, 1);
@@ -57,6 +59,7 @@ static void	put_val_in_image(t_env *e, t_coord coord, char *tab, char *new_data)
 	val = add_val(e, coord, tab, 2);
 	new_data[((e->height_bud - coord.y - 1) / div) * OPP
 		+ (coord.x / div) * (e->width * 4) + 2] = val;
+	*/
 }
 
 void		over_sampling_resize_buddha(t_env *e, char *tab)
