@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/16 03:56:30 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/16 05:39:09 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void				cl_run_kernel(t_env *e, t_cl *cl)
 	if (e->num)
 		e->cl.global_item_size = e->width * e->height;
 	else
-		e->cl.global_item_size = e->width * e->height;
+		e->cl.global_item_size = e->width_bud * e->height_bud;
 	cl->err = clGetKernelWorkGroupInfo(cl->kernel, cl->device_id,
 	CL_KERNEL_WORK_GROUP_SIZE, sizeof(size_t), &e->cl.local_item_size, NULL);
 	cl_check_err(cl->err, "clGetKernelWorkGroupInfo");
