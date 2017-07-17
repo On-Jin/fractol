@@ -1,0 +1,10 @@
+iteration
+oversampling [1-4]
+Gain * 10
+Antibrot ?
+min_b min_g min_r
+max_b max_g max_r
+xmin * 100000
+xmax * 100000
+ymin * 100000
+ymax * 100000

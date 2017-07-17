@@ -61,7 +61,7 @@ __kernel void	buddhabrot(
 	
 	i = cl_is_ok(c_r, c_i, tool.iter);
 
-	if (i != tool.iter)
+	if (i < tool.iter)
 	{
 		k = 0;
 		z_r = 0;
@@ -76,21 +76,21 @@ __kernel void	buddhabrot(
 			if (ky > 1 && ky < height_bud - 1 &&
 					kx > 1 && kx < width_bud - 1)
 			{
-				if (atomic_max(&(out[(kx * OPP) + (ky * width_bud) + 0]), 0) < 254)
+				if (k > bud.min[0] && k < bud.max[0])
 				{
 					ptr = (&(out[((kx) + (ky * width_bud) + 0)]));
 					atomic_inc(ptr);
 				}
-//				if (out2[(kx * OPP) + (ky * width_bud) + 1] < 254)
-//				{
-//					ptr = (&(out2[((kx) + (ky * width_bud) + 1)]));
-//					atomic_inc(ptr);
-//				}
-//				if (out3[(kx * OPP) + (ky * width_bud) + 2] < 254)
-//				{
-//					ptr = (&(out3[((kx) + (ky * width_bud) + 2)]));
-//					atomic_inc(ptr);
-//				}
+				if (k > bud.min[1] && k < bud.max[1])
+				{
+					ptr = (&(out2[((kx) + (ky * width_bud) + 1)]));
+					atomic_inc(ptr);
+				}
+				if (k > bud.min[2] && k < bud.max[2])
+				{
+					ptr = (&(out3[((kx) + (ky * width_bud) + 2)]));
+					atomic_inc(ptr);
+				}
 			}
 			k++;
 		}

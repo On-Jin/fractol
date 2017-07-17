@@ -6,13 +6,13 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 05:13:30 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/16 04:56:35 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 02:37:59 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void	find_max_rgb(t_env *e, char *img, int *px, int *max)
+static void	find_max_rgb(t_env *e, int *img, int *px, int *max)
 {
 	int i;
 	int j;
@@ -36,6 +36,7 @@ static void	find_max_rgb(t_env *e, char *img, int *px, int *max)
 		}
 		i++;
 	}
+	ft_printf("Max pixel %i %i %i\n", max[0], max[1], max[2]);
 }
 
 static int	set_ret(t_env *e, int *px, int *max, int pixel)
@@ -48,7 +49,7 @@ static int	set_ret(t_env *e, int *px, int *max, int pixel)
 	return (ret);
 }
 
-static void	set_color(t_env *e, char *img, int *px, int *max)
+static void	set_color(t_env *e, int *img, int *px, int *max)
 {
 	int i;
 	int j;
@@ -71,7 +72,7 @@ static void	set_color(t_env *e, char *img, int *px, int *max)
 	}
 }
 
-void		buddhabrot_color(t_env *e, char *img)
+void		buddhabrot_color(t_env *e, int *img)
 {
 	int max[3];
 	int px[3];

@@ -6,13 +6,13 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 06:17:47 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/16 23:12:15 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 02:43:14 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static int	add_val(t_env *e, t_coord coord, char *data, int add)
+static int	add_val(t_env *e, t_coord coord, int *data, int add)
 {
 	int			i;
 	int			val;
@@ -41,7 +41,7 @@ static int	add_val(t_env *e, t_coord coord, char *data, int add)
 	return (val);
 }
 
-static void	put_val_in_image(t_env *e, t_coord coord, char *tab, char *new_data)
+static void	put_val_in_image(t_env *e, t_coord coord, int *tab, char *new_data)
 {
 	int	val;
 	int	div;
@@ -49,20 +49,17 @@ static void	put_val_in_image(t_env *e, t_coord coord, char *tab, char *new_data)
 	div = e->varover[e->bud.over];
 	val = 0;
 	val = add_val(e, coord, tab, 0);
-	new_data[(coord.x / div) * OPP + (coord.y / div) * (e->width * 4)] = val;
-	/*
-	new_data[((e->height_bud - coord.y - 1) / div) * OPP
-						+ (coord.x / div) * (e->width * 4)] = val;
+	new_data[(coord.x / div) * OPP +
+					(coord.y / div) * (e->width * 4)] = val;
 	val = add_val(e, coord, tab, 1);
-	new_data[((e->height_bud - coord.y - 1) / div) * OPP
-					+ (coord.x / div) * (e->width * 4) + 1] = val;
+	new_data[(coord.x / div) * OPP +
+					(coord.y / div) * (e->width * 4) + 1] = val;
 	val = add_val(e, coord, tab, 2);
-	new_data[((e->height_bud - coord.y - 1) / div) * OPP
-		+ (coord.x / div) * (e->width * 4) + 2] = val;
-	*/
+	new_data[(coord.x / div) * OPP +
+					(coord.y / div) * (e->width * 4) + 2] = val;
 }
 
-void		over_sampling_resize_buddha(t_env *e, char *tab)
+void		over_sampling_resize_buddha(t_env *e, int *tab)
 {
 	char	*new_data;
 	t_coord coord;

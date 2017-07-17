@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/16 05:09:46 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 02:37:15 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ typedef struct	s_env
 	int			min;
 	int			sec;
 
-	char		*ftab;
+	int		*ftab;
 	int			*buff_patern;
 
 	int			size_tree;
@@ -231,8 +231,8 @@ void			cl_end_opencl(t_env *e, t_cl *cl);
 int				cl_init_opencl(t_env *e);
 void			cl_set_buffer_and_arg(t_env *e, t_cl *cl);
 
-void			buddhabrot_color(t_env *e, char *tab);
-void			over_sampling_resize_buddha(t_env *e, char *tab);
+void			buddhabrot_color(t_env *e, int *tab);
+void			over_sampling_resize_buddha(t_env *e, int *tab);
 
 int				cl_draw(t_env *e);
 

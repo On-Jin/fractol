@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 21:52:37 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/16 23:12:12 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 03:39:15 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	init_bud(t_env *e, t_tool *tool, t_bud *bud)
 	e->width_bud = e->width * e->varover[bud->over];
 	e->mem_opencl = e->width_bud * e->height_bud;
 	e->buff_patern = ft_memalloc(e->mem_opencl * sizeof(int));
-	e->ftab = ft_memalloc(e->mem_opencl * 4);
+	e->ftab = ft_memalloc(e->mem_opencl * 4 * 4);
 	e->max_iter = 100000000;
 	e->min_iter = 10;
 }
@@ -84,13 +84,6 @@ static int	verif_fract(t_env *e)
 
 void		init_dir(t_env *e)
 {
-	t_tool *tool;
-
-	tool = &e->tool;
-	tool->xmin = -2.1;
-	tool->xmax = 0.6;
-	tool->ymin = -1.2;
-	tool->ymax = 1.2;
 	if (e->flag & F_GPU)
 	{
 		e->width = WIDTH_GPU;
