@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/16 00:05:29 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 04:06:08 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,12 @@ int			main(int argc, char **argv)
 	if (!(flag_arg(&e, argc, argv)))
 		return (0);
 	init_env(&e);
-	ncurses_init(&e, &e.nc, NC_HEIGHT, NC_WIDTH);
-	while (!e.nc.menu)
-		ncurses_menu(&e, &e.nc);
+	if (!e.num)
+	{
+		ncurses_init(&e, &e.nc, NC_HEIGHT, NC_WIDTH);
+		while (!e.nc.menu)
+			ncurses_menu(&e, &e.nc);
+	}
 	init_dir(&e);
 	init_mlx(&e);
 	if (e.flag & F_GPU)

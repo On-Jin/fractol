@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 07:12:56 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/15 22:04:05 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 04:12:18 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ static int	ncurses_key_right(t_env *e, t_nc *nc)
 	else
 		nc->menu_bud = 1;
 	if ((e->num == NUM_TRI || e->num == NUM_TREE) && (e->flag & F_GPU))
-	{
-		end_of_program(e, "[Make re] pour désactiver le mode GPU\n");
-	}
+		end_of_program(e, "Enlevez le flag -G pour désactiver le mode GPU\n");
+	if ((e->num == NUM_BUDD || e->num == NUM_BURN) && (e->flag & F_GPU))
+		end_of_program(e, "-G pour activer le mode GPU\n");
 	return (1);
 }
 
