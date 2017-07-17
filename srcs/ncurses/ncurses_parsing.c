@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/17 08:33:22 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/17 03:26:31 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 06:32:38 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static void	parsing(t_env *e, char *line, int fd)
 	e->tool.iter = (long int)ft_atoi(line);
 	if (e->tool.iter < 0)
 		end_of_program(e, "Erreur de parsing\n");
+	ft_strdel(&line);
 	call_gnl(e, &line, fd);
 	e->bud.over = ft_atoi(line);
 	ft_strdel(&line);

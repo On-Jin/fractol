@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/17 05:14:26 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 06:55:10 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ static void	init_env(t_env *e)
 	ft_strcpy(e->name_fractal[3], "sierpinski (NO_GPU)");
 	ft_strcpy(e->name_fractal[4], "tree (NO_GPU)");
 	ft_strcpy(e->name_fractal[5], "burningship");
-	ft_strcpy(e->name_preset[0], "preset_bud/example3");
-	ft_strcpy(e->name_preset[1], "preset_bud/example2");
-	ft_strcpy(e->name_preset[2], "mandelbrot.cl");
-	ft_strcpy(e->name_preset[3], "preset_bud/");
-	ft_strcpy(e->name_preset[4], "");
+	ft_strcpy(e->name_preset[0], "preset_bud/nebuleuse_classic");
+	ft_strcpy(e->name_preset[1], "preset_bud/running_bud");
+	ft_strcpy(e->name_preset[2], "preset_bud/antibrot_classic");
+	ft_strcpy(e->name_preset[3], "preset_bud/testing");
+	ft_strcpy(e->name_preset[4], "preset_bud/test");
 	init_tab(e);
 	e->incr_dir = 1;
 }

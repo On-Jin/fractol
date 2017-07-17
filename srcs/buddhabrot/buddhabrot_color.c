@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 05:13:30 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/17 02:37:59 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 06:40:47 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	find_max_rgb(t_env *e, int *img, int *px, int *max)
 		}
 		i++;
 	}
-	ft_printf("Max pixel %i %i %i\n", max[0], max[1], max[2]);
 }
 
 static int	set_ret(t_env *e, int *px, int *max, int pixel)
