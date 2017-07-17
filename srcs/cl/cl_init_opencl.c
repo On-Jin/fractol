@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 03:02:43 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/17 03:57:36 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 04:24:14 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,14 @@ static void		cl_compile_kernel(t_env *e, t_cl *cl)
 	cl->err = clBuildProgram(cl->program, 0, NULL, "-I.", NULL, NULL);
 	if (cl->err != CL_SUCCESS)
 	{
+		ft_bzero(buffer, 10000);
 		cl->err = clGetProgramBuildInfo(cl->program, cl->device_id,
 				CL_PROGRAM_BUILD_LOG, 10000, buffer, &len);
 		if (cl->err == CL_SUCCESS)
-			ft_printf("\033[31mCompiler error message :\033[0m\n%s\n", buffer);
+			ft_printf("\033[31mCompiler error message :\033[0m\n", buffer);
 		else
-		{
-			ft_printf("Error while retrieving compiler log%;\n");
-			ft_printf("Try increasing buffer size to 100 000%;\n");
-		}
-		exit(0);
+			ft_printf("Erreur étonnate\n");
+		end_of_program(e, buffer);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/17 04:06:08 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 05:14:26 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,5 @@ int			main(int argc, char **argv)
 	mlx_loop_hook(e.mlx, &loop, &e);
 	mlx_loop(e.mlx);
 	end_of_program(&e, NULL);
-//	ft_bzero(&e, sizeof(t_env));
-//	while(1);
 	return (0);
 }

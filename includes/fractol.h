@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:18:53 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/17 02:37:15 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 05:22:57 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,7 @@
 # define HEIGHT_CPU 820
 # define WIDTH_CPU 1300
 
-//# define HEIGHT_BUD (1080 * 8)
-//# define WIDTH_BUD (1920 * 8)
-//# define MEM_OPENCL_BUD (HEIGHT_BUD * WIDTH_BUD * 4)
-
-#define V_PRECI float
+# define V_PRECI float
 
 # define NUM_BUDD 0
 # define NUM_MANDEL 1
@@ -84,7 +80,7 @@ typedef struct	s_cl
 	size_t				local_item_size;
 }				t_cl;
 
-typedef struct 	s_coord
+typedef struct	s_coord
 {
 	int x;
 	int y;
@@ -139,67 +135,67 @@ typedef struct	s_nc
 
 typedef struct	s_env
 {
-	t_cl		cl;
-	void		*mlx;
-	void		*win;
-	t_img		*img;
+	t_cl			cl;
+	void			*mlx;
+	void			*win;
+	t_img			*img;
 
-	char		name_fractal[NB_FRACTAL][30];
-	char		name_preset[NB_PRESET_BUD][30];
+	char			name_fractal[NB_FRACTAL][30];
+	char			name_preset[NB_PRESET_BUD][30];
 
-	char		flag;
-	int			flag_f;
-	int			tab_mode[NB_FRACTAL];
-	int			tab_color[NB_FRACTAL];
-	t_tool		tool;
-	t_bud		bud;
-	t_nc		nc;
-	t_tr		tr;
-	t_pxtopx	to;
-	t_px		px;
+	char			flag;
+	int				flag_f;
+	int				tab_mode[NB_FRACTAL];
+	int				tab_color[NB_FRACTAL];
+	t_tool			tool;
+	t_bud			bud;
+	t_nc			nc;
+	t_tr			tr;
+	t_pxtopx		to;
+	t_px			px;
 
-	struct		timeval step;
-	struct		timeval cur;
-	int			fps;
-	int			ret_fps;
-	int			min;
-	int			sec;
+	struct timeval	step;
+	struct timeval	cur;
+	int				fps;
+	int				ret_fps;
+	int				min;
+	int				sec;
 
-	int		*ftab;
-	int			*buff_patern;
+	int				*ftab;
+	int				*buff_patern;
 
-	int			size_tree;
-	char		turn;
+	int				size_tree;
+	char			turn;
 
-	int			varover[6];
-	int			width;
-	int			height;
-	int			width_bud;
-	int			height_bud;
-	int			mem_opencl;
-	int			status_bud;
+	int				varover[6];
+	int				width;
+	int				height;
+	int				width_bud;
+	int				height_bud;
+	int				mem_opencl;
+	int				status_bud;
 
-	int			num;
-	float		jul_y;
-	float		jul_x;
+	int				num;
+	float			jul_y;
+	float			jul_x;
 
-	int			key[269];
-	int			dir_clock;
-	int			clock;
+	int				key[269];
+	int				dir_clock;
+	int				clock;
 
-	int			mouse_x;
-	int			mouse_y;
+	int				mouse_x;
+	int				mouse_y;
 
-	int			incr_dir;
-	int			max_iter;
-	int			min_iter;
+	int				incr_dir;
+	int				max_iter;
+	int				min_iter;
 
-	float		hue;
-	float		satu;
-	float		value;
+	float			hue;
+	float			satu;
+	float			value;
 
-	int			psy;
-	int			move;
+	int				psy;
+	int				move;
 }				t_env;
 
 void			init_mlx(t_env *e);
@@ -217,7 +213,6 @@ void			init_dir(t_env *e);
 int				draw_tri(t_env *e);
 int				tri_recur(t_env *e, int iter, t_tr tr);
 int				draw_tree(t_env *e);
-
 
 void			zoom_complexe_in(t_env *e, int y, int x);
 void			zoom_complexe_ar(t_env *e, int y, int x);

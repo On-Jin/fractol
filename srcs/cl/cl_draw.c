@@ -6,19 +6,12 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/17 02:44:39 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 05:13:06 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-/*
-static unsigned char	char_max(int nb)
-{
-//	if (nb > 254)
-//		return (254);
-	return (nb);
-}
-*/
+
 static void				cl_run_kernel(t_env *e, t_cl *cl)
 {
 	cl_event event;

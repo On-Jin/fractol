@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 22:13:46 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/17 04:05:44 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 05:13:56 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	check_name(t_env *e, char **argv, int *i)
 			e->num = NUM_JULIA;
 		else
 		{
-			ft_putstr_fd("./fractol [-GP] {NOTHING} or {mandelbrot,julia}\n", 2);
+			ft_putstr_fd("./fractol [-GP] {NOTHING}or{mandelbrot,julia}\n", 2);
 			return (0);
 		}
 		(*i)++;
@@ -43,7 +43,7 @@ static int	check_arg_argv(t_env *e, char **argv, int i)
 			(e->flag |= F_PRECISION);
 		else
 		{
-			ft_putstr_fd("./fractol [-GP] {NOTHING} or {mandelbrot,julia}\n", 2);
+			ft_putstr_fd("./fractol [-GP] {NOTHING}or{mandelbrot,julia}\n", 2);
 			return (0);
 		}
 		k++;

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 21:52:37 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/17 03:39:15 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 05:17:38 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,6 @@ static void	init_tree(t_env *e, t_tool *tool)
 	e->satu = 0.9;
 }
 
-static int	verif_fract(t_env *e)
-{
-	if ((e->num == NUM_BUDD || e->num == NUM_BURN)
-			&& !(e->flag & F_GPU))
-	{
-		ft_putstr_fd("Impossible en mode CPU\n", 2);
-		return (0);
-	}
-	if ((e->num == NUM_TRI || e->num == NUM_TREE)
-			&& (e->flag & F_GPU))
-	{
-		ft_putstr_fd("IMpossible en mode GPU\n", 2);
-		return (0);
-	}
-	return (1);
-}
-
 void		init_dir(t_env *e)
 {
 	if (e->flag & F_GPU)
@@ -94,8 +77,6 @@ void		init_dir(t_env *e)
 		e->width = WIDTH_CPU;
 		e->height = HEIGHT_CPU;
 	}
-	if (!(verif_fract(e)))
-		end_of_program(e, NULL);
 	if (e->num == 3)
 		init_sierpinski(e, &e->tool);
 	else if (e->num == 4)

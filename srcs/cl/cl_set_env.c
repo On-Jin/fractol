@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 07:07:04 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/16 01:26:27 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 05:14:15 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,15 @@ static void	cl_set_arg_mandelbrot(t_env *e, t_cl *cl)
 void		cl_set_buffer_and_arg(t_env *e, t_cl *cl)
 {
 	if (e->num)
+	{
 		cl->err = clEnqueueWriteBuffer(cl->cq, cl->mem, CL_TRUE, 0,
 				sizeof(char) * MEM_OPENCL, e->img->data, 0, NULL, NULL);
+	}
 	else
 	{
 		bzero(e->buff_patern, e->mem_opencl * 4);
-		cl->err = clEnqueueWriteBuffer(cl->cq, cl->mem, CL_TRUE, 0, e->mem_opencl * 4, e->buff_patern, 0, NULL, NULL);
-		
+		cl->err = clEnqueueWriteBuffer(cl->cq, cl->mem, CL_TRUE, 0,
+				e->mem_opencl * 4, e->buff_patern, 0, NULL, NULL);
 		cl->err = clEnqueueWriteBuffer(cl->cq, cl->mem2, CL_TRUE, 0,
 				sizeof(int) * e->mem_opencl, e->buff_patern, 0, NULL, NULL);
 		cl->err = clEnqueueWriteBuffer(cl->cq, cl->mem3, CL_TRUE, 0,

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/02 17:02:51 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/06/09 22:44:13 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/17 04:57:50 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 /*
 ** V = Max color;
 **
+** S = CAP_MAX
+**
 ** hue on 360
 **
 **			      R  |   G  |  B
 **				     |	    |
-** hue [0-1[ =	V    | Up   | Min
+** hue [0-1[ =	Max  | Up   | Min
 ** hue [1-2[ =	Down | Max  | Mi
 ** hue [2-3[ =	Min  | Max  | Up
 ** hue [3-4[ =	Min  | Down | Max
