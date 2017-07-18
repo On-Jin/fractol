@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 21:52:37 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/17 05:17:38 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/18 02:10:07 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,17 @@ static void	init_basic(t_env *e, t_tool *tool)
 static void	init_bud(t_env *e, t_tool *tool, t_bud *bud)
 {
 	(void)tool;
+	if (e->bud.over == 1)
+		e->max_iter = 100000000;
+	else
+		e->max_iter = 500000000;
+	if (e->tool.iter > e->max_iter)
+		end_of_program(e, "iter is too hight\n");
 	e->height_bud = e->height * e->varover[bud->over];
 	e->width_bud = e->width * e->varover[bud->over];
 	e->mem_opencl = e->width_bud * e->height_bud;
 	e->buff_patern = ft_memalloc(e->mem_opencl * sizeof(int));
 	e->ftab = ft_memalloc(e->mem_opencl * 4 * 4);
-	e->max_iter = 100000000;
 	e->min_iter = 10;
 }
 

@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/18 00:26:40 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/18 02:14:36 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static void				cl_run_kernel(t_env *e, t_cl *cl)
 {
+	cl_event event;
+
+	event = 0;
 	if (e->num)
 		e->cl.global_item_size = e->width * e->height;
 	else
@@ -25,7 +28,8 @@ static void				cl_run_kernel(t_env *e, t_cl *cl)
 		end_of_program(e, "Global_item_size %% Local item size != 0");
 	cl_check_err(e->cl.err, "clGetKernelWorkGroup");
 	cl->err = clEnqueueNDRangeKernel(cl->cq, cl->kernel, 1, NULL,
-			&cl->global_item_size, &cl->local_item_size, 0, NULL, NULL);
+			&cl->global_item_size, &cl->local_item_size, 0, NULL, &event);
+	clWaitForEvents(1, &event);
 	cl_check_err(cl->err, "clEnqueueNDRangeKernel");
 	cl->err = clFlush(cl->cq);
 	cl_check_err(cl->err, "clFlush");
@@ -39,7 +43,7 @@ static void				cl_stock_in_buff(t_env *e, int *dest,
 	i = 0;
 	while (i < e->mem_opencl)
 	{
-		dest[i * 4 + add] = src[i];
+		dest[i * 4 + add] = src[i] % 254;
 		i++;
 	}
 }

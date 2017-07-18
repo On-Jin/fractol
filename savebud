@@ -5,7 +5,6 @@
 #pragma OPENCL EXTENSION cl_khr_global_int64_base_atomics : enable
 #pragma OPENCL EXTENSION cl_khr_printf : enable
 #pragma OPENCL EXTENSION cl_intel_printf : enable
-#pragma OPENCL EXTENSION cl_khr_int64_base_atomics : enable
 
 int				cl_is_ok(V_PRECI c_r, V_PRECI c_i, long int iter)
 {
@@ -25,62 +24,12 @@ int				cl_is_ok(V_PRECI c_r, V_PRECI c_i, long int iter)
 	return (i);
 }
 
-void			buddhabrot_color(V_PRECI c_r, V_PRECI c_i, int i,
-									int height_bud, int width_bud,
-									t_tool *tool, t_bud *bud,
-									volatile __global int *out,
-									volatile __global int *out2,
-									volatile __global int *out3)
-{
-	int		k;
-	int		kx;
-	int		ky;
-
-	volatile __global int *ptr;
-	V_PRECI z_r;
-	V_PRECI z_i;
-	V_PRECI tmp;
-
-	k = 0;
-	z_r = 0;
-	z_i = 0;
-	while (k < i)
-	{
-		tmp = z_r;
-		z_r = z_r * z_r - z_i * z_i + c_r;
-		z_i = 2 * z_i * tmp + c_i;
-		kx = (int)(((z_r - tool->xmin) / (((V_PRECI)tool->xmax - (V_PRECI)tool->xmin)) * ((V_PRECI)height_bud * 1.125)));
-		ky = (int)(((z_i - tool->ymin) / (((V_PRECI)tool->ymax - (V_PRECI)tool->ymin)) * ((V_PRECI)height_bud)));
-		if (ky > 1 && ky < height_bud - 1 &&
-				kx > 1 && kx < width_bud - 1)
-		{
-			if (k > bud->min[0] && k < bud->max[0])
-			{
-				ptr = (&(out[((kx) + (ky * width_bud) + 0)]));
-				atomic_inc(ptr);
-			}
-			if (k > bud->min[1] && k < bud->max[1])
-			{
-				ptr = (&(out2[((kx) + (ky * width_bud) + 1)]));
-				atomic_inc(ptr);
-			}
-			if (k > bud->min[2] && k < bud->max[2])
-			{
-				ptr = (&(out3[((kx) + (ky * width_bud) + 2)]));
-				atomic_inc(ptr);
-			}
-		}
-		k++;
-	}
-}
-
-__kernel void	buddhabrot(
-		volatile __global int *out,
-		volatile __global int *out2,
-		volatile __global int *out3,
-		t_tool tool,
-		int clock,
-		t_bud bud)
+__kernel void	buddhabrot(volatile __global int *out,
+							volatile __global int *out2,
+							volatile __global int *out3,
+							t_tool tool,
+							int clock,
+							t_bud bud)
 {
 	int tab[6] = {0, 1, 2, 4, 8, 16};
 	int			width_bud = WIDTH * tab[bud.over];
@@ -90,28 +39,58 @@ __kernel void	buddhabrot(
 		return ;
 	int			x = recup % width_bud;
 	int			y = recup / width_bud;
-	V_PRECI		c_r;
-	V_PRECI		c_i;
+	long int	d_x = x;
+	long int	d_y = y;
+	V_PRECI		c_r = 0;
+	V_PRECI		c_i = 0;
+	V_PRECI		z_r = 0;
+	V_PRECI		z_i = 0;
+	V_PRECI		tmp;
 	int			i;
-
+	int		kx, ky;
+	int			k;
+	volatile __global int *ptr;
 	i = 0;
-	c_r = (((V_PRECI)x) / ((V_PRECI)height_bud * 1.125)) *
+
+	c_r = (((V_PRECI)d_x) / ((V_PRECI)height_bud * 1.125)) *
 				((V_PRECI)tool.xmax - (V_PRECI)tool.xmin) + tool.xmin;
-	c_i = (((V_PRECI)y) / (V_PRECI)height_bud) *
+	c_i = (((V_PRECI)d_y) / (V_PRECI)height_bud) *
 				((V_PRECI)tool.ymax - (V_PRECI)tool.ymin) + tool.ymin;
 	
 	i = cl_is_ok(c_r, c_i, tool.iter);
 
-	if (!bud.anti)
+	if (i < tool.iter)
 	{
-		if (i < tool.iter)
-			buddhabrot_color(c_r, c_i, i, height_bud, width_bud,
-								  &tool, &bud, out, out2, out3);
-	}
-	else
-	{
-		if (i == tool.iter)
-			buddhabrot_color(c_r, c_i, i, height_bud, width_bud,
-								  &tool, &bud, out, out2, out3);
+		k = 0;
+		z_r = 0;
+		z_i = 0;
+		while (k < i)
+		{
+			tmp = z_r;
+			z_r = z_r * z_r - z_i * z_i + c_r;
+			z_i = 2 * z_i * tmp + c_i;
+			kx = (int)(((z_r - tool.xmin) / (((V_PRECI)tool.xmax - (V_PRECI)tool.xmin)) * ((V_PRECI)height_bud * 1.125)));
+			ky = (int)(((z_i - tool.ymin) / (((V_PRECI)tool.ymax - (V_PRECI)tool.ymin)) * ((V_PRECI)height_bud)));
+			if (ky > 1 && ky < height_bud - 1 &&
+				   					kx > 1 && kx < width_bud - 1)
+			{
+				if (k > bud.min[0] && k < bud.max[0])
+				{
+					ptr = (&(out[((kx) + (ky * width_bud) + 0)]));
+					atomic_inc(ptr);
+				}
+				if (k > bud.min[1] && k < bud.max[1])
+				{
+					ptr = (&(out2[((kx) + (ky * width_bud) + 1)]));
+					atomic_inc(ptr);
+				}
+				if (k > bud.min[2] && k < bud.max[2])
+				{
+					ptr = (&(out3[((kx) + (ky * width_bud) + 2)]));
+					atomic_inc(ptr);
+				}
+			}
+			k++;
+		}
 	}
 }
