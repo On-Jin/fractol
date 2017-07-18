@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 02:10:14 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/17 06:55:10 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/18 05:00:56 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ static void	init_env(t_env *e)
 	ft_strcpy(e->name_fractal[5], "burningship");
 	ft_strcpy(e->name_preset[0], "preset_bud/nebuleuse_classic");
 	ft_strcpy(e->name_preset[1], "preset_bud/running_bud");
-	ft_strcpy(e->name_preset[2], "preset_bud/antibrot_classic");
-	ft_strcpy(e->name_preset[3], "preset_bud/testing");
-	ft_strcpy(e->name_preset[4], "preset_bud/test");
+	ft_strcpy(e->name_preset[2], "preset_bud/in_buddha");
+	ft_strcpy(e->name_preset[3], "preset_bud/burn_eyes");
+	ft_strcpy(e->name_preset[4], "preset_bud/one_per_one");
 	init_tab(e);
 	e->incr_dir = 1;
 }

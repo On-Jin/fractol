@@ -6,7 +6,7 @@
 #    By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/02 18:45:43 by ntoniolo          #+#    #+#              #
-#    Updated: 2017/07/17 05:15:24 by ntoniolo         ###   ########.fr        #
+#    Updated: 2017/07/18 05:07:02 by ntoniolo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,6 @@ SRC = main.c \
 		 zoom_complexe.c \
 		 draw_tri.c \
 		 draw_tree.c \
-		 menu.c \
 		 init_fractal.c \
 		 end_of_program.c \
 		 event/event_key_off.c \
@@ -73,24 +72,6 @@ OBJ_DIR = objs/
 
 
 all: $(OBJ_DIR) lib $(NAME)
-
-p: make_preci all
-
-make_preci:
-	$(eval MODE := -D MODE_PRECI)
-	@echo $(MODE)
-
-gp: make_gpupreci all
-
-make_gpupreci:
-	$(eval MODE := -D MODE_GPU -D MODE_PRECI)
-	@echo $(MODE)
-
-g: make_gpu all
-
-make_gpu :
-	$(eval MODE := -D MODE_GPU)
-	@echo $(MODE)
 
 $(NAME): $(addprefix $(OBJ_DIR), $(OBJET)) $(INC_FILES)
 	@$(CC) $(MODE) -I$(INC) $(addprefix $(OBJ_DIR), $(OBJET)) -L./$(DIR_LIB) -lft -lmlx -lmlxji  $(FRAMEWORK) -o $(NAME)
@@ -136,9 +117,3 @@ fclean: clean
 	@(cd $(DIR_MLXJI) && make fclean)
 
 re: fclean all
-
-rep : fclean p
-
-reg : fclean g
-
-regp : fclean gp

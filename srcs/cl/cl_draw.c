@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/09 05:06:58 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/18 02:14:36 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/18 04:27:44 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void				cl_run_kernel(t_env *e, t_cl *cl)
 	cl_check_err(cl->err, "clEnqueueNDRangeKernel");
 	cl->err = clFlush(cl->cq);
 	cl_check_err(cl->err, "clFlush");
+	clReleaseEvent(event);
 }
 
 static void				cl_stock_in_buff(t_env *e, int *dest,

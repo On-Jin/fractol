@@ -6,7 +6,7 @@
 /*   By: ntoniolo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 21:52:37 by ntoniolo          #+#    #+#             */
-/*   Updated: 2017/07/18 02:10:07 by ntoniolo         ###   ########.fr       */
+/*   Updated: 2017/07/18 04:26:50 by ntoniolo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static void	init_bud(t_env *e, t_tool *tool, t_bud *bud)
 {
 	(void)tool;
 	if (e->bud.over == 1)
-		e->max_iter = 100000000;
+		e->max_iter = 1000000;
 	else
-		e->max_iter = 500000000;
+		e->max_iter = 100000;
 	if (e->tool.iter > e->max_iter)
 		end_of_program(e, "iter is too hight\n");
 	e->height_bud = e->height * e->varover[bud->over];
