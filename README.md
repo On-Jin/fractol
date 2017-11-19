@@ -17,7 +17,7 @@ Mandelbrot ✅<br />
 Julia ✅<br />
 Burningship ✅<br />
 <br />
-Geométrique : lien()<br />
+Geométrique : https://youtu.be/7n5VFX73ewQ<br />
 Triangle de Sierpinski ✅<br />
 Tree ✅<br />
 <br />
