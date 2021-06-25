@@ -31,7 +31,5 @@ Pourtant l'utilisation des fonctions atomic pour incrémenter les variable a bie
 <br />
 Anyway, OpenCl, j'en est loins d'en fini avec lui :D <3
 
-Les rendus sont au final un peut sombre, mais je n'ai plus eu le courage a la fin de chercher des parametres sexy :3
-
 ![Julia](https://github.com/Jino42/fractol/blob/master/Buddhamult.png)
 ![Julia](https://github.com/Jino42/fractol/blob/master/Buddhabase.png)
